@@ -3,7 +3,7 @@ import Footer from "./Footer/footer";
 import TopBar from "./Topbar/topbar";
 
 interface IProps {
-  children: ReactElement;
+  children: ReactElement | Array<ReactElement>;
 }
 const ClientLayout = (props: IProps) => {
   return (

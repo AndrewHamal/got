@@ -1,130 +1,24 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import LogoImage from "@/public/client/assets/img/logoSVG.svg";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const TopBar = () => {
   const router = useRouter();
+  console.log(router.asPath)
   return (
     <>
       <header className="main_header_arae">
-        {/* Top Bar */}
-        <div className="topbar-area">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-lg-6 col-md-6">
-                <ul className="topbar-list">
-                  <li>
-                    <a href="#!">
-                      <i className="fab fa-facebook" />
-                    </a>
-                    <a href="#!">
-                      <i className="fab fa-twitter-square" />
-                    </a>
-                    <a href="#!">
-                      <i className="fab fa-instagram" />
-                    </a>
-                    <a href="#!">
-                      <i className="fab fa-linkedin" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#!">
-                      <span>+977-9868108816</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#!">
-                      <span>contact@xyz.com</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="col-lg-6 col-md-6">
-                <ul className="topbar-others-options">
-                  <li>
-                    <a
-                      href="_target"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        router.push("/login");
-                      }}
-                    >
-                      Login
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="_target"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        router.push("/register");
-                      }}
-                    >
-                      Sign up
-                    </a>
-                  </li>
-                  <li>
-                    <div className="dropdown language-option">
-                      <button
-                        className="dropdown-toggle"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <span className="lang-name" />
-                      </button>
-                      <div className="dropdown-menu language-dropdown-menu">
-                        <a className="dropdown-item" href="#">
-                          English
-                        </a>
-                        <a className="dropdown-item" href="#">
-                          Arabic
-                        </a>
-                        <a className="dropdown-item" href="#">
-                          French
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className="dropdown language-option">
-                      <button
-                        className="dropdown-toggle"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <span className="lang-name" />
-                      </button>
-                      <div className="dropdown-menu language-dropdown-menu">
-                        <a className="dropdown-item" href="#">
-                          USD
-                        </a>
-                        <a className="dropdown-item" href="#">
-                          BD
-                        </a>
-                        <a className="dropdown-item" href="#">
-                          URO
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
         {/* Navbar Bar */}
         <div className="navbar-area">
           <div className="main-responsive-nav">
             <div className="container">
               <div className="main-responsive-menu">
                 <div className="logo">
-                  <a href="index.html">
+                  <Link href="/">
                     <img src={LogoImage.src} alt="logo" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -147,7 +41,7 @@ const TopBar = () => {
                           router.push("/");
                         }}
                         href="_target"
-                        className="nav-link active"
+                        className={`nav-link ${router.asPath === "/" && "active"}`}
                       >
                         Home
                       </a>
@@ -244,15 +138,15 @@ const TopBar = () => {
                       </ul>
                     </li>
                     <li className="nav-item">
-                      <a href="#" className="nav-link">
+                      <a href="#" className={`nav-link ${router.asPath.includes("/news") && "active"}`}>
                         News
                         <i className="fas fa-angle-down" />
                       </a>
                       <ul className="dropdown-menu">
                         <li className="nav-item">
-                          <a href="news.html" className="nav-link">
+                          <Link href="/news" className="nav-link">
                             News
-                          </a>
+                          </Link>
                         </li>
                         <li className="nav-item">
                           <a href="news-details.html" className="nav-link">
@@ -261,161 +155,12 @@ const TopBar = () => {
                         </li>
                       </ul>
                     </li>
-                    {/* <li className="nav-item">
-                      <a href="#" className="nav-link">
-                        Pages
-                        <i className="fas fa-angle-down" />
-                      </a>
-                      <ul className="dropdown-menu">
-                        <li className="nav-item">
-                          <a href="about.html" className="nav-link">
-                            About
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a href="tour-guides.html" className="nav-link">
-                            Team
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a href="testimonials.html" className="nav-link">
-                            Testimonials
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a href="faqs.html" className="nav-link">
-                            FAQ
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a
-                            href="booking-confirmation.html"
-                            className="nav-link"
-                          >
-                            Booking Confirmation
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a href="#" className="nav-link">
-                            User Pages
-                          </a>
-                          <ul className="dropdown-menu">
-                            <li className="nav-item">
-                              <a href="login.html" className="nav-link">
-                                Login
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a href="register.html" className="nav-link">
-                                Register
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a
-                                href="forgot-password.html"
-                                className="nav-link"
-                              >
-                                Forget Password
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a href="verify-otp.html" className="nav-link">
-                                Verify OTP
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a
-                                href="reset-password.html"
-                                className="nav-link"
-                              >
-                                Reset Password
-                              </a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="nav-item">
-                          <a href="#" className="nav-link">
-                            Customer Dashboard
-                          </a>
-                          <ul className="dropdown-menu">
-                            <li className="nav-item">
-                              <a href="dashboard.html" className="nav-link">
-                                Dashboard
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a href="hotel-booking.html" className="nav-link">
-                                Hotel booking
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a
-                                href="flight-booking.html"
-                                className="nav-link"
-                              >
-                                Flight booking
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a href="tour-booking.html" className="nav-link">
-                                Tour booking
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a
-                                href="booking-history.html"
-                                className="nav-link"
-                              >
-                                Booking history
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a href="my-profile.html" className="nav-link">
-                                My profile
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a href="wallet.html" className="nav-link">
-                                Wallet
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a href="notification.html" className="nav-link">
-                                Notifications
-                              </a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="nav-item">
-                          <a href="privacy-policy.html" className="nav-link">
-                            Privacy Policy
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a href="error.html" className="nav-link">
-                            404 Error
-                          </a>
-                        </li>
-                      </ul>
-                    </li> */}
                     <li className="nav-item">
                       <a href="contact.html" className="nav-link">
                         Contact
                       </a>
                     </li>
                   </ul>
-                  <div className="others-options d-flex align-items-center">
-                    <div className="option-item">
-                      <a href="#" className="search-box">
-                        <i className="bi bi-search" />
-                      </a>
-                    </div>
-                    <div className="option-item">
-                      <a href="become-vendor.html" className="btn  btn_navber">
-                        Become a partner
-                      </a>
-                    </div>
-                  </div>
                 </div>
               </nav>
             </div>

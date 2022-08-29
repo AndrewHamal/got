@@ -31,8 +31,6 @@ function SuperAdminLogin() {
         toast.success(res.message);
         // @ts-ignore
         setCookie(TOKEN_KEY, appEncrypt(res.data.token));
-        // @ts-ignore
-        setCookie(USER_TYPE_KEY, appEncrypt("superadmin"));
         Router.push("/superadmin");
       })
       .catch((err) => responseErrorHandler(err, setError))

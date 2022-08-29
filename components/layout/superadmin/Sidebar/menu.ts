@@ -5,6 +5,81 @@ export const SuperadminSidebarMenus = [
         icon: "/admin/img/menu-icon/7.svg"
     },
     {
+        title: "Blogs",
+        parent: true,
+        icon: "/admin/img/menu-icon/7.svg",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/blogs/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/blogs"
+            },
+        ]
+    },
+    {
+        title: "Destinations",
+        parent: true,
+        icon: "/admin/img/menu-icon/7.svg",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/destinations/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/destinations"
+            },
+        ]
+    },
+    {
+        title: "Itenary",
+        parent: true,
+        icon: "/admin/img/menu-icon/7.svg",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/itenary/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/itenary"
+            },
+        ]
+    },
+    {
+        title: "Packages",
+        parent: true,
+        icon: "/admin/img/menu-icon/7.svg",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/packages/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/packages"
+            },
+        ]
+    },
+    {
+        title: "FAQ",
+        parent: true,
+        icon: "/admin/img/menu-icon/7.svg",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/faq/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/faq"
+            },
+        ]
+    },
+    {
         title: "Superadmins",
         parent: true,
         icon: "/admin/img/menu-icon/7.svg",

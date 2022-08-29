@@ -19,6 +19,7 @@ a {
   html {
     color-scheme: dark;
   }
+
   body {
     color: white;
     background: black;
@@ -52,6 +53,7 @@ a {
   align-items: center;
   color: white;
 }
+
 input[type="email"],
 input[type="password"] {
   border-radius: 8px;
@@ -59,9 +61,11 @@ input[type="password"] {
   color: white !important;
   background: transparent;
 }
+
 form {
   width: 100%;
 }
+
 input[type="email"]:focus,
 input[type="password"]:focus {
   background: #00000040;
@@ -69,10 +73,12 @@ input[type="password"]:focus {
 
   border: 1px solid white;
 }
+
 input[type="email"]::placeholder,
 input[type="password"]::placeholder {
   color: white;
 }
+
 input[type="submit"] {
   width: 100%;
   border-radius: 8px;
@@ -80,6 +86,7 @@ input[type="submit"] {
   font-weight: bold;
   font-size: 14px;
 }
+
 .custom-btn-login {
   border-radius: 8px !important;
   border: 1px solid white;
@@ -123,9 +130,6 @@ textarea[aria-invalid="true"] {
   color: white !important;
 }
 
-.navbar-area {
-  display: none;
-}
 
 .is-sticky {
   display: block !important;
@@ -137,7 +141,7 @@ textarea[aria-invalid="true"] {
 }
 
 #home_one_banner {
-  padding: 0px;
+  padding: 200px 0 280px 0;
   height: 100%;
 }
 
@@ -147,6 +151,7 @@ textarea[aria-invalid="true"] {
   width: 100%;
   margin: 0px;
 }
+
 .theme_search_form_tabbtn .nav-tabs {
   position: absolute;
   background: white;
@@ -156,6 +161,7 @@ textarea[aria-invalid="true"] {
   left: calc(50% - 165px);
   box-shadow: 2px 1px 2px #392e2e7a;
 }
+
 .theme_search_form_tabbtn .nav-tabs .nav-link {
   border-radius: 0px !important;
   border: none;
