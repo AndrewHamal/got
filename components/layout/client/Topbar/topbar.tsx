@@ -6,7 +6,6 @@ import Link from "next/link";
 
 const TopBar = () => {
   const router = useRouter();
-  console.log(router.asPath)
   return (
     <>
       <header className="main_header_arae">

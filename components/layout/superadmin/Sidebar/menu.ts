@@ -5,6 +5,21 @@ export const SuperadminSidebarMenus = [
         icon: "/admin/img/menu-icon/7.svg"
     },
     {
+        title: "Miscs",
+        parent: true,
+        icon: "/admin/img/menu-icon/7.svg",
+        children: [
+            {
+                title: "Country",
+                link: "/superadmin/miscs/country"
+            },
+            {
+                title: "Region",
+                link: "/superadmin/miscs/region"
+            },
+        ]
+    },
+    {
         title: "Blogs",
         parent: true,
         icon: "/admin/img/menu-icon/7.svg",
