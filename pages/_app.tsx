@@ -4,14 +4,31 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { SWRConfig } from 'swr';
 import axiosClient from '@/services/axios/clientfetch';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import "@/public/admin/css/custom.css"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { deleteCookie } from 'cookies-next';
+import { logout } from '@/api/auth';
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig
       value={{
+        onError: async (error: any) => {
+
+          if (error?.status === 401) {
+            deleteCookie("token");
+            await logout();
+          }
+
+          if (error?.status === 400) {
+            toast.error(error?.message || error?.data?.message);
+          }
+
+          if (error?.status === 404) {
+            toast.error("Requested Content Not Found!");
+          }
+        },
         revalidateOnFocus: false,
         revalidateIfStale: false,
         fetcher: (resource, init) => axiosClient(resource, init).then(res => res.data)

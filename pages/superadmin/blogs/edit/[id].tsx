@@ -1,18 +1,21 @@
 import SuperadminLayout from '@/components/layout/superadmin'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { UploadFile } from 'antd/lib/upload';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { createBlog } from '@/api/superadmin/blog';
+import { updateBlog } from '@/api/superadmin/blog';
 import { objectToFormData, responseErrorHandler } from '@/services/helper';
 import { toast } from 'react-toastify';
 import CreateOrUpdateBlogForm from '@/components/superadmin/forms/blog';
+import useSWR from 'swr';
+import { Skeleton } from 'antd';
 
-function CreateBlog() {
+function UpdateBlog() {
+  const { data } = useSWR('/blogs');
   const [loading, setLoading] = useState(false);
   const formMethods = useForm();
 
-  function createBlogHandler(data: any) {
+  function updateBlogHandler(data: any) {
     const dto = {
       ...data,
       description: JSON.stringify(data.description),
@@ -20,7 +23,7 @@ function CreateBlog() {
     }
     console.log({ dto })
     // setLoading(true);
-    // createBlog(objectToFormData(dto))
+    // updateBlog(objectToFormData(dto))
     //   .then((res: any) => {
     //     toast.success(res.message);
     //     formMethods.reset();
@@ -29,23 +32,47 @@ function CreateBlog() {
     //   .finally(() => setLoading(false))
   }
 
+  useEffect(() => {
+
+    if (data) {
+      formMethods.reset({
+        name: data.name,
+        description: data.description,
+        read_time: data.read_time,
+        files: data.files,
+        tags: data.tags
+      })
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
+
   return (
-    <SuperadminLayout title="Create Blog">
+    <SuperadminLayout title="Update Blog">
       <div className="col-lg-6">
         <div className="white_card card_height_100 mb_30">
           <div className="white_card_header">
             <div className="box_header m-0">
               <div className="main-title">
-                <h3 className="m-0">Create Blog Form</h3>
+                <h3 className="m-0">Update Blog Form</h3>
               </div>
             </div>
           </div>
           <div className="white_card_body">
-            <CreateOrUpdateBlogForm
-              loading={loading}
-              submitHandler={createBlogHandler}
-              formMethods={formMethods}
-            />
+            {
+              !data ?
+                <>
+
+                  <Skeleton active />
+                  <Skeleton active />
+                  <Skeleton active />
+                </> :
+                <CreateOrUpdateBlogForm
+                  loading={loading}
+                  submitHandler={updateBlogHandler}
+                  formMethods={formMethods}
+                />
+            }
           </div>
         </div>
       </div>
@@ -53,4 +80,4 @@ function CreateBlog() {
   )
 }
 
-export default CreateBlog
+export default UpdateBlog
