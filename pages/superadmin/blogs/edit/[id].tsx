@@ -9,9 +9,12 @@ import { toast } from 'react-toastify';
 import CreateOrUpdateBlogForm from '@/components/superadmin/forms/blog';
 import useSWR from 'swr';
 import { Skeleton } from 'antd';
+import { useRouter } from 'next/router';
 
 function UpdateBlog() {
-  const { data } = useSWR('/blogs');
+  const router = useRouter();
+  const { id } = router.query;
+  const { data } = useSWR(`/blogs/${id}`);
   const [loading, setLoading] = useState(false);
   const formMethods = useForm();
 
