@@ -61,13 +61,13 @@ function CreateHotels() {
   }
 
   return (
-    <SuperadminLayout title="Create Destinations">
+    <SuperadminLayout title="Create Blog">
       <div className="col-lg-6">
         <div className="white_card card_height_100 mb_30">
           <div className="white_card_header">
             <div className="box_header m-0">
               <div className="main-title">
-                <h3 className="m-0">Create Destination Form</h3>
+                <h3 className="m-0">Create Blog Form</h3>
               </div>
             </div>
           </div>
@@ -77,61 +77,46 @@ function CreateHotels() {
             </h6>
             <form onSubmit={handleSubmit(createHotelHandler)}>
               {/* 1st row */}
-              <div className="form-group mb-3">
-                <label className="form-label">Destination Name<span className='text-danger'> *</span></label>
-                <input
-                  {...register("name", { required: "Destination Name is required!" })}
-                  aria-invalid={!!errors?.name?.message}
-                  className="form-control"
-                  placeholder="Enter Destination Name"
-                />
-                {errors?.name?.message &&
-                  <div className="text-danger">
-                    {errors?.name?.message + ""}
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="form-group mb-3">
+                    <label className="form-label">Title<span className='text-danger'> *</span></label>
+                    <input
+                      {...register("name", { required: "Title is required!" })}
+                      aria-invalid={!!errors?.name?.message}
+                      className="form-control"
+                      placeholder="Enter Blog Title"
+                    />
+                    {errors?.name?.message &&
+                      <div className="text-danger">
+                        {errors?.name?.message + ""}
+                      </div>
+                    }
                   </div>
-                }
+                </div>
+                <div className="col-md-6">
+                  <div className="form-group mb-3">
+                    <label className="form-label">Read Time (in minutes)<span className='text-danger'> *</span></label>
+                    <input
+                      {...register("name", { required: "Title is required!" })}
+                      aria-invalid={!!errors?.name?.message}
+                      className="form-control"
+                      placeholder="eg: 8"
+                    />
+                    {errors?.name?.message &&
+                      <div className="text-danger">
+                        {errors?.name?.message + ""}
+                      </div>
+                    }
+                  </div>
+                </div>
               </div>
               {/* 2nd row */}
-              <div className='row'>
-                <div className='col-md-6'>
-                  <div className="form-group mb-3">
-                    <label className="form-label">Trip Duration (in days)<span className='text-danger'> *</span></label>
-                    <input
-                      {...register("duration", { required: "Trip Duration is required!" })}
-                      aria-invalid={!!errors?.duration?.message}
-                      className="form-control"
-                      placeholder="eg: 5"
-                    />
-                    {errors?.name?.message &&
-                      <div className="text-danger">
-                        {errors?.name?.message + ""}
-                      </div>
-                    }
-                  </div>
-                </div>
-                <div className='col-md-6'>
-                  <div className="form-group mb-3">
-                    <label className="form-label">Cost<span className='text-danger'> *</span></label>
-                    <input
-                      {...register("duration", { required: "Trip Duration is required!" })}
-                      aria-invalid={!!errors?.duration?.message}
-                      className="form-control"
-                      placeholder="eg: NRs 4000"
-                    />
-                    {errors?.name?.message &&
-                      <div className="text-danger">
-                        {errors?.name?.message + ""}
-                      </div>
-                    }
-                  </div>
-                </div>
-              </div>
-              {/* 3rd row */}
               <div className="form-group mb-3">
-                <label className="form-label">Overview<span className='text-danger'> *</span></label>
-                <Controller name="overview"
+                <label className="form-label">Description<span className='text-danger'> *</span></label>
+                <Controller name="description"
                   control={control}
-                  rules={{ required: "Overview is required!" }}
+                  rules={{ required: "Description is required!" }}
                   render={({ field: { value, onChange } }) =>
                     <>
                       <div className='wysiwyg-wrapper'>
@@ -141,57 +126,9 @@ function CreateHotels() {
                           onContentStateChange={onChange}
                         />
                       </div>
-                      {errors?.overview?.message &&
+                      {errors?.description?.message &&
                         <div className="text-danger">
-                          {errors?.overview?.message + ""}
-                        </div>
-                      }
-                    </>
-                  }
-                />
-              </div>
-              {/* 4th row */}
-              <div className="form-group mb-3">
-                <label className="form-label">Itenaries<span className='text-danger'> *</span></label>
-                <Controller name="included/excluded"
-                  control={control}
-                  rules={{ required: "Included/Excluded is required!" }}
-                  render={({ field: { value, onChange } }) =>
-                    <>
-                      <div className='wysiwyg-wrapper'>
-                        <Editor
-                          // @ts-ignore
-                          initialContentState={null}
-                          onContentStateChange={onChange}
-                        />
-                      </div>
-                      {errors?.["included/excluded"]?.message &&
-                        <div className="text-danger">
-                          {errors?.["included/excluded"]?.message + ""}
-                        </div>
-                      }
-                    </>
-                  }
-                />
-              </div>
-              {/* 5th row */}
-              <div className="form-group mb-3">
-                <label className="form-label">Included/Excluded<span className='text-danger'> *</span></label>
-                <Controller name="included/excluded"
-                  control={control}
-                  rules={{ required: "Included/Excluded is required!" }}
-                  render={({ field: { value, onChange } }) =>
-                    <>
-                      <div className='wysiwyg-wrapper'>
-                        <Editor
-                          // @ts-ignore
-                          initialContentState={null}
-                          onContentStateChange={onChange}
-                        />
-                      </div>
-                      {errors?.["included/excluded"]?.message &&
-                        <div className="text-danger">
-                          {errors?.["included/excluded"]?.message + ""}
+                          {errors?.description?.message + ""}
                         </div>
                       }
                     </>
