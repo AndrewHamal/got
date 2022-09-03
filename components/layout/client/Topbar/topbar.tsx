@@ -137,27 +137,14 @@ const TopBar = () => {
                       </ul>
                     </li>
                     <li className="nav-item">
-                      <a href="#" className={`nav-link ${router.asPath.includes("/news") && "active"}`}>
-                        News
-                        <i className="fas fa-angle-down" />
-                      </a>
-                      <ul className="dropdown-menu">
-                        <li className="nav-item">
-                          <Link href="/news" className="nav-link">
-                            News
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <a href="news-details.html" className="nav-link">
-                            New Details
-                          </a>
-                        </li>
-                      </ul>
+                      <Link href="/blogs" className="nav-link">
+                        Blogs
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <a href="contact.html" className="nav-link">
+                      <Link href="/contact" className="nav-link">
                         Contact
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>

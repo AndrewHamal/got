@@ -34,7 +34,9 @@ export const config = {
   matcher: [
     // public routes
     '/',
-    '/news',
+    '/blogs',
+    '/blogs/detail',
+    '/contact',
     '/register',
 
     // admin routes
