@@ -1,154 +1,108 @@
-import SuperadminLayout from '@/components/layout/superadmin'
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { UploadFile } from 'antd/lib/upload';
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { createBlog } from '@/api/superadmin/blog';
-import { objectToFormData, responseErrorHandler } from '@/services/helper';
+import { deleteDestination } from '@/api/superadmin/destination';
+import SuperadminLayout from '@/components/layout/superadmin';
+import { cropTitle, responseErrorHandler } from '@/services/helper';
+import { Popconfirm, Skeleton, Table, Typography } from 'antd';
+import type { ColumnsType, TableProps } from 'antd/es/table';
+import Router from 'next/router';
+import React from 'react';
 import { toast } from 'react-toastify';
-import CreateOrUpdateBlogForm from '@/components/superadmin/forms/blog';
-import { Pagination } from 'antd';
+import useSWR from 'swr';
 
-function CreateBlog() {
-  const [loading, setLoading] = useState(false);
-  const formMethods = useForm();
-  return (
-
-    <SuperadminLayout title="Create Blog">
-      <div className="col-lg-12">
-        <div className="white_card card_height_100 mb_30">
-          <div className="white_card_header">
-            <div className="box_header m-0">
-              <div className="main-title">
-                <h3 className="m-0">Destination Listing</h3>
-              </div>
-            </div>
-          </div>
-          <div className="white_card_body">
-            <div className="QA_section">
-              <div className="QA_table mb_30">
-                <table className="table lms_table_active3 ">
-                  <thead>
-                    <tr>
-                      <th scope="col">title</th>
-                      <th scope="col">Category</th>
-                      <th scope="col">Teacher</th>
-                      <th scope="col">Lesson</th>
-                      <th scope="col">Enrolled</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row"> <a href="#" className="question_content"> title here 1</a></th>
-                      <td>Category name</td>
-                      <td>Teacher James</td>
-                      <td>Lessons name</td>
-                      <td>16</td>
-                      <td>$25.00</td>
-                      <td><a href="#" className="status_btn">Active</a></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <Pagination style={{ textAlign: 'right' }} defaultCurrent={1} total={50} />
-            </div>
-          </div>
-        </div>
-      </div>
-    </SuperadminLayout>
-  )
+interface DataType {
+  key: React.Key;
+  name: string;
+  age: number;
+  no_of_days: number;
+  starting_from: number;
+  address: string;
 }
 
-export default CreateBlog
+const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
+  console.log('params', pagination, filters, sorter, extra);
+};
+
+const App: React.FC = () => {
+
+  const { data, mutate, error } = useSWR('/admin/destinations');
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      // @ts-ignore
+      sorter: (a, b) => a.name > b.name,
+      filterSearch: true,
+    },
+    {
+      title: 'Region',
+      dataIndex: 'region',
+      sorter: (a, b) => a.age - b.age,
+      filterSearch: true,
+    },
+    {
+      title: 'No. of Days',
+      dataIndex: 'no_of_days',
+      sorter: (a, b) => a.no_of_days - b.no_of_days,
+      filterSearch: true,
+    },
+    {
+      title: 'Price',
+      dataIndex: 'starting_from',
+      sorter: (a, b) => a.starting_from - b.starting_from,
+      filterSearch: true,
+    },
+    {
+      title: 'Overview',
+      dataIndex: 'overview'
+    },
+    {
+      title: 'Action',
+      dataIndex: 'id',
+      width: '20%',
+      render: id => (
+        <>
+          <Typography.Link style={{ marginRight: 8 }} onClick={() => Router.push(`/superadmin/destinations/edit/${id}`)}>
+            Edit
+          </Typography.Link>
+          <Popconfirm title="Are you sure to delete this destination?" onConfirm={() => deleteDestinationHandler(id)}>
+            <Typography.Link>
+              Delete
+            </Typography.Link>
+          </Popconfirm>
+        </>
+      )
+    }
+  ];
+
+  function deleteDestinationHandler(id: number) {
+    mutate(data?.filter((dest: any) => dest.id !== id), false)
+    deleteDestination(id)
+      .then((res: any) => {
+        toast.success(res.message);
+      })
+      .catch(responseErrorHandler)
+      .finally(mutate)
+  }
+
+  return (
+    <SuperadminLayout title="Destinations">
+      {
+        !data && !error ?
+          <Skeleton active />
+          :
+          <Table
+            columns={columns}
+            dataSource={data?.map((dest: any) => ({
+              ...dest,
+              region: dest.region?.name,
+              overview: cropTitle(JSON.parse(dest.overview)?.blocks[0]?.text, 50)
+            }))}
+            onChange={onChange}
+            pagination={false}
+          />
+      }
+    </SuperadminLayout>
+  )
+};
+
+export default App;

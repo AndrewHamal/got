@@ -126,3 +126,9 @@ export function capitalizeInitials(str?: string) {
   // Directly return the joined string
   return splitStr.join(" ");
 }
+
+export function cropTitle(text: string, wordLimit = 100) {
+  if (text.length > wordLimit) {
+    return text.substring(0, wordLimit) + "...";
+  } else return text
+}
