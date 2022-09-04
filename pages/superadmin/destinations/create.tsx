@@ -3,33 +3,47 @@ import { objectToFormData, responseErrorHandler } from '@/services/helper';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
-import { createDestination } from '@/api/superadmin/destination';
+import { createDestination, uploadDestinationFiles } from '@/api/superadmin/destination';
 import CreateOrUpdateDestinationForm from '@/components/superadmin/forms/destination';
 import { UploadFile } from 'antd';
+import { useRouter } from 'next/router';
 
 function CreateHotels() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const formMethods = useForm();
 
   function createDestinationHandler(data: any) {
-    console.log({ data })
     const dto = {
       ...data,
       files: data.files.map((file: UploadFile) => file.originFileObj),
       overview: JSON.stringify(data.overview),
-      itenaries: JSON.stringify(data.itenaries),
-      ["included/excluded"]: JSON.stringify(data["included/excluded"]),
+      itinarery: JSON.stringify(data.itinarery),
+      included: JSON.stringify(data.included),
+      not_included: JSON.stringify(data.not_included),
+      trek_info: data.trek_info?.blocks[0]?.text.length ? JSON.stringify(data.trek_info) : null,
     }
-    console.log(dto)
+
+    const { files, ...destinationDTO } = dto;
 
     setLoading(true);
-    createDestination(objectToFormData(dto))
-      .then((res: any) => {
-        toast.success(res.message);
-        formMethods.reset();
+    createDestination(objectToFormData(destinationDTO))
+      .then((destRes: any) => {
+        // upload files
+        uploadDestinationFiles(
+          objectToFormData({
+            files,
+            destination_id: destRes.data.id
+          }))
+          .then((res: any) => {
+            toast.success(destRes.message);
+            router.push(`/superadmin/destinations`);
+          })
+          .catch(responseErrorHandler)
+          .finally(() => setLoading(false))
+
       })
-      .catch((err: any) => responseErrorHandler(err, formMethods.setError))
-      .finally(() => setLoading(false))
+      .catch((err: any) => { responseErrorHandler(err, formMethods.setError), setLoading(false) })
   }
 
   return (

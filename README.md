@@ -15,3 +15,7 @@
       /destination/store
       '/admin/destination/id/update post'
       '/admin/destination/delete/:id'
+
+
+      starting_from : "price: string"
+      
