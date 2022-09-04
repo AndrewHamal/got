@@ -175,7 +175,7 @@ label {
 
 /* wysiwyg */
 .wysiwyg-wrapper {
-    min-height: 250px;
+    min-height: 300px;
     border: 1px solid #bbc1c9;
 }
 

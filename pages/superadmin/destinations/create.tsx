@@ -48,7 +48,7 @@ function CreateHotels() {
 
   return (
     <SuperadminLayout title="Create Destinations">
-      <div className="col-lg-6">
+      <div className="col-lg-10">
         <div className="white_card card_height_100 mb_30">
           <div className="white_card_header">
             <div className="box_header m-0">

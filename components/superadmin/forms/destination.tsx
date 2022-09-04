@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { RcFile, UploadFile } from 'antd/lib/upload';
 import { PlusOutlined } from '@ant-design/icons';
 import useSWR from 'swr';
+import { useRouter } from 'next/router';
 
 const { Option } = Select;
 const Editor = dynamic(
@@ -27,10 +28,22 @@ interface IProps {
 }
 
 function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: IProps) {
+  const router = useRouter();
+  const { id } = router.query;
+
   const { control, register, formState: { errors }, handleSubmit } = formMethods;
   const { data: countries, error: countryError } = useSWR('/admin/regions');
 
-  // image upload
+  // for setting default value on edit for wysiwyg
+  const [hasRTFValue, setHasRTFValue] = useState({
+    overview: !!id,
+    itinarery: !!id,
+    included: !!id,
+    not_included: !!id,
+    trek_info: !!id
+  })
+
+  // ANTD image upload
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -44,6 +57,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
     setPreviewVisible(true);
     setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
   };
+
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -144,112 +158,156 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
         </div>
       </div>
       {/* 3rd row */}
-      <div className="form-group mb-3">
-        <label className="form-label">Overview<span className='text-danger'> *</span></label>
-        <Controller name="overview"
-          control={control}
-          rules={{
-            required: "Overview is required!",
-            validate: val => val?.blocks[0]?.text.length || "Overview is required!"
-          }}
-          render={({ field: { value = null, onChange } }) =>
-            <>
-              <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
-              </div>
-              {errors?.overview?.message &&
-                <div className="text-danger">
-                  {errors?.overview?.message + ""}
-                </div>
+      <div className="row">
+        <div className="col-md-6">
+          <div className="form-group mb-3">
+            <label className="form-label">Overview<span className='text-danger'> *</span></label>
+            <Controller name="overview"
+              control={control}
+              rules={{
+                required: "Overview is required!",
+                validate: val => val?.blocks[0]?.text.length || "Overview is required!"
+              }}
+              render={({ field: { value = null, onChange } }) =>
+                <>
+                  <div className='wysiwyg-wrapper'>
+                    {
+                      hasRTFValue.overview
+                        ? <Editor
+                          // @ts-ignore
+                          contentState={value}
+                          onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, overview: false })}
+                        />
+                        : <Editor
+                          // @ts-ignore
+                          initialContentState={value}
+                          onContentStateChange={onChange}
+                        />
+                    }
+                  </div>
+                  {errors?.overview?.message &&
+                    <div className="text-danger">
+                      {errors?.overview?.message + ""}
+                    </div>
+                  }
+                </>
               }
-            </>
-          }
-        />
+            />
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="form-group mb-3">
+            <label className="form-label">Itenaries<span className='text-danger'> *</span></label>
+            <Controller name="itinarery"
+              control={control}
+              rules={{
+                required: "Itenaries is required!",
+                validate: val => val?.blocks[0]?.text.length || "Itenaries is required!"
+              }}
+              render={({ field: { value = null, onChange } }) =>
+                <>
+                  <div className='wysiwyg-wrapper'>
+                    {
+                      hasRTFValue.itinarery
+                        ? <Editor
+                          // @ts-ignore
+                          contentState={value}
+                          onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, itinarery: false })}
+                        />
+                        : <Editor
+                          // @ts-ignore
+                          initialContentState={value}
+                          onContentStateChange={onChange}
+                        />
+                    }
+                  </div>
+                  {errors?.itinarery?.message &&
+                    <div className="text-danger">
+                      {errors?.itinarery?.message + ""}
+                    </div>
+                  }
+                </>
+              }
+            />
+          </div>
+        </div>
       </div>
       {/* 4th row */}
-      <div className="form-group mb-3">
-        <label className="form-label">Itenaries<span className='text-danger'> *</span></label>
-        <Controller name="itinarery"
-          control={control}
-          rules={{
-            required: "Itenaries is required!",
-            validate: val => val?.blocks[0]?.text.length || "Itenaries is required!"
-          }}
-          render={({ field: { value = null, onChange } }) =>
-            <>
-              <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
-              </div>
-              {errors?.itinarery?.message &&
-                <div className="text-danger">
-                  {errors?.itinarery?.message + ""}
-                </div>
+      <div className="row">
+        <div className="col-md-6">
+          <div className="form-group mb-3">
+            <label className="form-label">Included<span className='text-danger'> *</span></label>
+            <Controller name="included"
+              control={control}
+              rules={{
+                required: "Inclusions is required!",
+                validate: val => val?.blocks[0]?.text.length || "Inclusions is required!"
+              }}
+              render={({ field: { value = null, onChange } }) =>
+                <>
+                  <div className='wysiwyg-wrapper'>
+                    {
+                      hasRTFValue.included
+                        ? <Editor
+                          // @ts-ignore
+                          contentState={value}
+                          onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, included: false })}
+                        />
+                        : <Editor
+                          // @ts-ignore
+                          initialContentState={value}
+                          onContentStateChange={onChange}
+                        />
+                    }
+                  </div>
+                  {errors?.included?.message &&
+                    <div className="text-danger">
+                      {errors?.included?.message + ""}
+                    </div>
+                  }
+                </>
               }
-            </>
-          }
-        />
-      </div>
-      {/* 5th row */}
-      <div className="form-group mb-3">
-        <label className="form-label">Included<span className='text-danger'> *</span></label>
-        <Controller name="included"
-          control={control}
-          rules={{
-            required: "Inclusions is required!",
-            validate: val => val?.blocks[0]?.text.length || "Inclusions is required!"
-          }}
-          render={({ field: { value = null, onChange } }) =>
-            <>
-              <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
-              </div>
-              {errors?.included?.message &&
-                <div className="text-danger">
-                  {errors?.included?.message + ""}
-                </div>
+            />
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="form-group mb-3">
+            <label className="form-label">Excluded<span className='text-danger'> *</span></label>
+            <Controller name="not_included"
+              control={control}
+              rules={{
+                required: "Exclusions is required!",
+                validate: val => val?.blocks[0]?.text.length || "Exclusions is required!"
+              }}
+              render={({ field: { value = null, onChange } }) =>
+                <>
+                  <div className='wysiwyg-wrapper'>
+                    {
+                      hasRTFValue.not_included
+                        ? <Editor
+                          // @ts-ignore
+                          contentState={value}
+                          onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, not_included: false })}
+                        />
+                        : <Editor
+                          // @ts-ignore
+                          initialContentState={value}
+                          onContentStateChange={onChange}
+                        />
+                    }
+                  </div>
+                  {errors?.not_included?.message &&
+                    <div className="text-danger">
+                      {errors?.not_included?.message + ""}
+                    </div>
+                  }
+                </>
               }
-            </>
-          }
-        />
+            />
+          </div>
+        </div>
       </div>
-      <div className="form-group mb-3">
-        <label className="form-label">Excluded<span className='text-danger'> *</span></label>
-        <Controller name="not_included"
-          control={control}
-          rules={{
-            required: "Exclusions is required!",
-            validate: val => val?.blocks[0]?.text.length || "Exclusions is required!"
-          }}
-          render={({ field: { value = null, onChange } }) =>
-            <>
-              <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
-              </div>
-              {errors?.not_included?.message &&
-                <div className="text-danger">
-                  {errors?.not_included?.message + ""}
-                </div>
-              }
-            </>
-          }
-        />
-      </div>
+      {/* 7th row */}
       <div className="form-group mb-3">
         <label className="form-label">Additional Trek Info</label>
         <Controller name="trek_info"
@@ -257,11 +315,19 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           render={({ field: { value = null, onChange } }) =>
             <>
               <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
+                {
+                  hasRTFValue.trek_info
+                    ? <Editor
+                      // @ts-ignore
+                      contentState={value}
+                      onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, trek_info: false })}
+                    />
+                    : <Editor
+                      // @ts-ignore
+                      initialContentState={value}
+                      onContentStateChange={onChange}
+                    />
+                }
               </div>
               {errors?.trek_info?.message &&
                 <div className="text-danger">
@@ -272,7 +338,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           }
         />
       </div>
-      {/* 6th row */}
+      {/* 8th row */}
       <div className="form-group my-4">
         <label className="form-label">Images<span className='text-danger'> *</span></label>
         <Controller
@@ -315,12 +381,12 @@ function beforeUpload(file: RcFile) {
     message.error('You can only upload JPG/PNG file!');
     return Upload.LIST_IGNORE;
   }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
+  const isLt5M = file.size / 1024 / 1024 < 5;
+  if (!isLt5M) {
+    message.error('Image must smaller than 5MB!');
     return Upload.LIST_IGNORE;
   }
-  return isJpgOrPng && isLt2M;
+  return isJpgOrPng && isLt5M;
 };
 
 

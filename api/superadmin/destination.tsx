@@ -4,7 +4,7 @@ export const createDestination = async (form: any) =>
   await axiosInstance.post(`/admin/destination/store`, form)
 
 export const updateDestination = async (id: number, form: any) =>
-  await axiosInstance.patch(`/destination/${id}`, form)
+  await axiosInstance.post(`/admin/destination/${id}/update`, form)
 
 export const deleteDestination = async (id: any) =>
   await axiosInstance.post(`/admin/destination/delete/${id}`)
