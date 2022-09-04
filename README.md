@@ -9,3 +9,9 @@
 
 ## Google Embed
       <iframe src="https://maps.google.com/maps?q=10.305385,77.923029&hl=es;z=14&output=embed" width="100px" />
+
+
+<!-- destination -->
+      /destination/store
+      '/admin/destination/id/update post'
+      DELETE '/admin/destination/delete/:id'

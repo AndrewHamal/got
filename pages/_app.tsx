@@ -31,7 +31,7 @@ function App({ Component, pageProps }: AppProps) {
         },
         revalidateOnFocus: false,
         revalidateIfStale: false,
-        fetcher: (resource, init) => axiosClient(resource, init).then(res => res.data)
+        fetcher: (resource, init) => axiosClient(resource, init).then(res => res?.data || res)
       }}
     >
       <ToastContainer />
