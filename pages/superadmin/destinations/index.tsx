@@ -18,10 +18,6 @@ interface DataType {
   address: string;
 }
 
-const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-  console.log('params', pagination, filters, sorter, extra);
-};
-
 const App: React.FC = () => {
 
   const { data, mutate, error } = useSWR('/admin/destinations');
@@ -99,7 +95,6 @@ const App: React.FC = () => {
               region: dest.region?.name,
               overview: cropTitle(JSON.parse(dest.overview)?.blocks[0]?.text, 50)
             }))}
-            onChange={onChange}
             pagination={false}
           />
       }
