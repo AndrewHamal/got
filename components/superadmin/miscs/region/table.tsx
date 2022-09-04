@@ -8,6 +8,7 @@ import useSWR from 'swr';
 interface Item {
   sn: string;
   id: number;
+  country?: any;
   name: string;
 }
 
@@ -82,9 +83,10 @@ const RegionList: React.FC = () => {
     },
     {
       title: 'Country',
-      dataIndex: 'country.name',
+      dataIndex: 'country',
       width: '25%',
       editable: false,
+      render: (_: any, record: Item) => record?.country?.name
     },
     {
       title: 'Action',

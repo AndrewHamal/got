@@ -3,7 +3,7 @@ import { objectToFormData, responseErrorHandler } from '@/services/helper';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
-import { createDestination } from '@/api/superadmin/desctination';
+import { createDestination } from '@/api/superadmin/destination';
 import CreateOrUpdateDestinationForm from '@/components/superadmin/forms/destination';
 import { UploadFile } from 'antd';
 
@@ -22,14 +22,14 @@ function CreateHotels() {
     }
     console.log(dto)
 
-    // setLoading(true);
-    // createDestination(objectToFormData(dto))
-    //   .then((res: any) => {
-    //     toast.success(res.message);
-    //     formMethods.reset();
-    //   })
-    //   .catch((err: any) => responseErrorHandler(err, formMethods.setError))
-    //   .finally(() => setLoading(false))
+    setLoading(true);
+    createDestination(objectToFormData(dto))
+      .then((res: any) => {
+        toast.success(res.message);
+        formMethods.reset();
+      })
+      .catch((err: any) => responseErrorHandler(err, formMethods.setError))
+      .finally(() => setLoading(false))
   }
 
   return (

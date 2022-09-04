@@ -14,4 +14,4 @@
 <!-- destination -->
       /destination/store
       '/admin/destination/id/update post'
-      DELETE '/admin/destination/delete/:id'
+      '/admin/destination/delete/:id'
