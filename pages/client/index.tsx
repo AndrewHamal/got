@@ -58,12 +58,12 @@ function Index() {
         {/* Banner Area */}
         <section className="top_home_wrapper">
           <section id="home_one_banner">
-            <div className="container">
-              <div className="row align-items-center">
+            <div className="container mt-5">
+              <div className="row align-items-center mt-5">
                 <div className="col-lg-12">
                   <div className="banner_one_text">
                     <h1>Explore the best destinations</h1>
-                    <h3>Find awesome flights, hotel, tour, car and packages</h3>
+                    <h3 className="fw-light">Find awesome flights, hotel, tour, car and packages</h3>
                   </div>
                 </div>
               </div>
