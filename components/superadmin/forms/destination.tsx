@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { RcFile, UploadFile } from 'antd/lib/upload';
 import { PlusOutlined } from '@ant-design/icons';
 import useSWR from 'swr';
+import { useRouter } from 'next/router';
 
 const { Option } = Select;
 const Editor = dynamic(
@@ -27,8 +28,19 @@ interface IProps {
 }
 
 function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: IProps) {
+  const router = useRouter();
+  const { id } = router.query;
+
   const { control, register, formState: { errors }, handleSubmit } = formMethods;
   const { data: countries, error: countryError } = useSWR('/admin/regions');
+
+  const [hasRTFValue, setHasRTFValue] = useState({
+    overview: !!id,
+    itinarery: !!id,
+    included: !!id,
+    not_included: !!id,
+    trek_info: !!id
+  })
 
   // image upload
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -155,11 +167,19 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           render={({ field: { value = null, onChange } }) =>
             <>
               <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
+                {
+                  hasRTFValue.overview
+                    ? <Editor
+                      // @ts-ignore
+                      contentState={value}
+                      onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, overview: false })}
+                    />
+                    : <Editor
+                      // @ts-ignore
+                      initialContentState={value}
+                      onContentStateChange={onChange}
+                    />
+                }
               </div>
               {errors?.overview?.message &&
                 <div className="text-danger">
@@ -182,11 +202,19 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           render={({ field: { value = null, onChange } }) =>
             <>
               <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
+                {
+                  hasRTFValue.itinarery
+                    ? <Editor
+                      // @ts-ignore
+                      contentState={value}
+                      onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, itinarery: false })}
+                    />
+                    : <Editor
+                      // @ts-ignore
+                      initialContentState={value}
+                      onContentStateChange={onChange}
+                    />
+                }
               </div>
               {errors?.itinarery?.message &&
                 <div className="text-danger">
@@ -209,11 +237,19 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           render={({ field: { value = null, onChange } }) =>
             <>
               <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
+                {
+                  hasRTFValue.included
+                    ? <Editor
+                      // @ts-ignore
+                      contentState={value}
+                      onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, included: false })}
+                    />
+                    : <Editor
+                      // @ts-ignore
+                      initialContentState={value}
+                      onContentStateChange={onChange}
+                    />
+                }
               </div>
               {errors?.included?.message &&
                 <div className="text-danger">
@@ -235,11 +271,19 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           render={({ field: { value = null, onChange } }) =>
             <>
               <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
+                {
+                  hasRTFValue.not_included
+                    ? <Editor
+                      // @ts-ignore
+                      contentState={value}
+                      onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, not_included: false })}
+                    />
+                    : <Editor
+                      // @ts-ignore
+                      initialContentState={value}
+                      onContentStateChange={onChange}
+                    />
+                }
               </div>
               {errors?.not_included?.message &&
                 <div className="text-danger">
@@ -257,11 +301,19 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           render={({ field: { value = null, onChange } }) =>
             <>
               <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
+                {
+                  hasRTFValue.trek_info
+                    ? <Editor
+                      // @ts-ignore
+                      contentState={value}
+                      onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, trek_info: false })}
+                    />
+                    : <Editor
+                      // @ts-ignore
+                      initialContentState={value}
+                      onContentStateChange={onChange}
+                    />
+                }
               </div>
               {errors?.trek_info?.message &&
                 <div className="text-danger">

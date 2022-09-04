@@ -3,38 +3,53 @@ import { objectToFormData, responseErrorHandler } from '@/services/helper';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
-import { createDestination } from '@/api/superadmin/desctination';
 import CreateOrUpdateDestinationForm from '@/components/superadmin/forms/destination';
 import { Skeleton, UploadFile } from 'antd';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
+import { updateDestination, uploadDestinationFiles } from '@/api/superadmin/destination';
 
 function CreateHotels() {
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useSWR(`/admin/destinations/${id}`);
+  const { data } = useSWR(`/admin/destination/${id}`);
   const [loading, setLoading] = useState(false);
   const formMethods = useForm();
 
   function createDestinationHandler(data: any) {
-    console.log({ data })
     const dto = {
       ...data,
       files: data.files.map((file: UploadFile) => file.originFileObj),
       overview: JSON.stringify(data.overview),
-      itenaries: JSON.stringify(data.itenaries),
-      ["included/excluded"]: JSON.stringify(data["included/excluded"]),
+      itinarery: JSON.stringify(data.itinarery),
+      included: JSON.stringify(data.included),
+      not_included: JSON.stringify(data.not_included),
+      trek_info: data.trek_info?.blocks[0]?.text.length ? JSON.stringify(data.trek_info) : null,
     }
-    console.log(dto)
 
-    // setLoading(true);
-    // createDestination(objectToFormData(dto))
-    //   .then((res: any) => {
-    //     toast.success(res.message);
-    //     formMethods.reset();
-    //   })
-    //   .catch((err: any) => responseErrorHandler(err, formMethods.setError))
-    //   .finally(() => setLoading(false))
+    const { files, ...destinationDTO } = dto;
+
+    setLoading(true);
+    updateDestination(Number(id), objectToFormData(destinationDTO))
+      .then((destRes: any) => {
+        // upload files
+        uploadDestinationFiles(
+          objectToFormData({
+            files,
+            destination_id: destRes.data.id
+          }))
+          .then((res: any) => {
+            toast.success(destRes.message);
+            router.push(`/superadmin/destinations`);
+          })
+          .catch(responseErrorHandler)
+          .finally(() => setLoading(false))
+
+      })
+      .catch((err: any) => {
+        responseErrorHandler(err, formMethods.setError);
+        setLoading(false)
+      })
   }
 
   useEffect(() => {
@@ -42,10 +57,15 @@ function CreateHotels() {
     if (data) {
       formMethods.reset({
         name: data.name,
-        description: data.description,
-        read_time: data.read_time,
+        region_id: data.region_id,
+        no_of_days: data.no_of_days,
+        starting_from: data.starting_from,
+        overview: JSON.parse(data.overview),
+        itinarery: JSON.parse(data.itinarery),
+        included: JSON.parse(data.included),
+        not_included: JSON.parse(data.not_included),
+        trek_info: data.trek_info ? JSON.parse(data.trek_info) : null,
         files: data.files,
-        tags: data.tags
       })
     }
 
