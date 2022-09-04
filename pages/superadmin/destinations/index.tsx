@@ -11,6 +11,7 @@ import useSWR from 'swr';
 interface DataType {
   key: React.Key;
   name: string;
+  region: string;
   age: number;
   no_of_days: number;
   starting_from: number;
@@ -36,7 +37,8 @@ const App: React.FC = () => {
     {
       title: 'Region',
       dataIndex: 'region',
-      sorter: (a, b) => a.age - b.age,
+      // @ts-ignore
+      sorter: (a, b) => a.region > b.region,
       filterSearch: true,
     },
     {

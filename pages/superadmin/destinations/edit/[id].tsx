@@ -82,7 +82,7 @@ function CreateHotels() {
 
 
   return (
-    <SuperadminLayout title="Update Destinations">
+    <SuperadminLayout title="Update Destinations" breadcrumbs={[{ name: "Destinations", link: "/superadmin/destinations" }, { name: "Edit" }]}>
       <div className="col-lg-10">
         <div className="white_card card_height_100 mb_30">
           <div className="white_card_header">
