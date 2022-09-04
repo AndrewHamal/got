@@ -1,29 +1,28 @@
-import { createHotelAdmin } from '@/api/superadmin/hotel';
+import { createRegion } from '@/api/superadmin/miscs';
 import SuperadminLayout from '@/components/layout/superadmin'
-import CountryList from '@/components/superadmin/miscs/country.tsx/table';
-import axiosClient from '@/services/axios/clientfetch';
-import { isValidPassword, responseErrorHandler } from '@/services/helper';
+import RegionList from '@/components/superadmin/miscs/region/table';
+import { capitalizeInitials, responseErrorHandler } from '@/services/helper';
 import { Button, Select, Skeleton } from 'antd';
 import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 const { Option } = Select;
-const catFetcher = (url: string) => axiosClient(url).then((res: any) => res);
 
 function CreateRegions() {
   const [loading, setLoading] = useState(false);
-  const { data: categories, error: catError } = useSWR(`/hotel/get-categories`, catFetcher);
+  const { mutate } = useSWR('/admin/regions', { revalidateOnMount: false });
+  const { data: countries, error: countryError } = useSWR('/admin/country');
 
-
-  const { reset, control, register, formState: { errors }, handleSubmit, setError } = useForm()
+  const { reset, control, register, formState: { errors }, handleSubmit, setError } = useForm();
 
   function createHotelHandler(data: any) {
     setLoading(true);
-    createHotelAdmin(data)
+    createRegion({ ...data, name: capitalizeInitials(data.name) })
       .then((res: any) => {
         toast.success(res.message);
         reset();
+        mutate();
       })
       .catch((err: any) => responseErrorHandler(err, setError))
       .finally(() => setLoading(false))
@@ -62,7 +61,7 @@ function CreateRegions() {
                     <label className="form-label">Country</label>
                     <div className='custom-select'>
                       {
-                        !categories && !catError ? <Skeleton className='mt-3' active paragraph={false} />
+                        !countries && !countryError ? <Skeleton className='mt-3' active paragraph={false} />
                           :
                           <Controller
                             control={control}
@@ -80,7 +79,7 @@ function CreateRegions() {
                                   placeholder="Select Country"
                                 >
                                   {
-                                    categories.map((cat: any) => <Option key={cat.id} value={cat.id}>{cat.title}</Option>)
+                                    countries.map((cat: any) => <Option key={cat.id} value={cat.id}>{cat.name}</Option>)
                                   }
                                 </Select>
                                 {errors?.country_id?.message &&
@@ -102,7 +101,7 @@ function CreateRegions() {
         </div>
       </div>
       <div className="col-lg-6">
-        <CountryList />
+        <RegionList />
       </div>
     </SuperadminLayout>
   )

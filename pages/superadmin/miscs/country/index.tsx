@@ -1,6 +1,6 @@
-import { createHotelAdmin } from '@/api/superadmin/hotel';
+import { createCountry } from '@/api/superadmin/miscs';
 import SuperadminLayout from '@/components/layout/superadmin'
-import CountryList from '@/components/superadmin/miscs/country.tsx/table';
+import CountryList from '@/components/superadmin/miscs/country/table';
 import { capitalizeInitials, isValidPassword, responseErrorHandler } from '@/services/helper';
 import { Button } from 'antd';
 import React, { useState } from 'react'
@@ -10,12 +10,12 @@ import useSWR from 'swr';
 
 function CreateHotels() {
   const [loading, setLoading] = useState(false);
-  const { reset, getValues, register, formState: { errors }, handleSubmit, setError } = useForm()
+  const { reset, register, formState: { errors }, handleSubmit, setError } = useForm()
   const { mutate } = useSWR('/admin/country', { revalidateOnMount: false });
 
   function createHotelHandler({ name }: any) {
     setLoading(true);
-    createHotelAdmin({ name: capitalizeInitials(name) })
+    createCountry({ name: capitalizeInitials(name) })
       .then((res: any) => {
         toast.success(res.message);
         mutate();
