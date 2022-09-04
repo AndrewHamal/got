@@ -1,9 +1,12 @@
-import { Button, message, Modal, Upload } from 'antd';
+import { Button, message, Modal, Select, Skeleton, Upload } from 'antd';
 import React, { useState } from 'react'
-import { Controller, useForm, UseFormReturn } from 'react-hook-form'
+import { Controller, UseFormReturn } from 'react-hook-form'
 import dynamic from 'next/dynamic';
 import { RcFile, UploadFile } from 'antd/lib/upload';
 import { PlusOutlined } from '@ant-design/icons';
+import useSWR from 'swr';
+
+const { Option } = Select;
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod: any) => mod.Editor),
   { ssr: false }
@@ -25,6 +28,7 @@ interface IProps {
 
 function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: IProps) {
   const { control, register, formState: { errors }, handleSubmit } = formMethods;
+  const { data: countries, error: countryError } = useSWR('/admin/regions');
 
   // image upload
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -47,23 +51,62 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
     </div>
   );
 
-
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
       {/* 1st row */}
-      <div className="form-group mb-3">
-        <label className="form-label">Destination Name<span className='text-danger'> *</span></label>
-        <input
-          {...register("name", { required: "Destination Name is required!" })}
-          aria-invalid={!!errors?.name?.message}
-          className="form-control"
-          placeholder="Enter Destination Name"
-        />
-        {errors?.name?.message &&
-          <div className="text-danger">
-            {errors?.name?.message + ""}
+      <div className="row">
+        <div className="col-md-6">
+          <div className="form-group mb-3">
+            <label className="form-label">Destination Name<span className='text-danger'> *</span></label>
+            <input
+              {...register("name", { required: "Destination Name is required!" })}
+              aria-invalid={!!errors?.name?.message}
+              className="form-control"
+              placeholder="Enter Destination Name"
+            />
+            {errors?.name?.message &&
+              <div className="text-danger">
+                {errors?.name?.message + ""}
+              </div>
+            }
           </div>
-        }
+        </div>
+        <div className="col-md-6">
+          <label className="form-label">Location<span className='text-danger'> *</span></label>
+          <div className='custom-select'>
+            {
+              !countries && !countryError ? <Skeleton className='mt-3' active paragraph={false} />
+                :
+                <Controller
+                  control={control}
+                  name="region_id"
+                  rules={{ required: "Location is required!" }}
+                  render={({ field: { onChange, value } }) =>
+                    <>
+                      <Select
+                        value={value}
+                        onChange={onChange}
+                        allowClear
+                        status={errors?.region_id?.message && "error"}
+                        size='large'
+                        className="form-control"
+                        placeholder="Select Location"
+                      >
+                        {
+                          countries.map((cat: any) => <Option key={cat.id} value={cat.id}>{cat.name}</Option>)
+                        }
+                      </Select>
+                      {errors?.region_id?.message &&
+                        <div className="text-danger">
+                          {errors?.region_id?.message + ""}
+                        </div>
+                      }
+                    </>
+                  }
+                />
+            }
+          </div>
+        </div>
       </div>
       {/* 2nd row */}
       <div className='row'>
@@ -71,30 +114,30 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           <div className="form-group mb-3">
             <label className="form-label">Trip Duration (in days)<span className='text-danger'> *</span></label>
             <input
-              {...register("duration", { required: "Trip Duration is required!" })}
-              aria-invalid={!!errors?.duration?.message}
+              {...register("no_of_days", { required: "Trip Duration is required!" })}
+              aria-invalid={!!errors?.no_of_days?.message}
               className="form-control"
               placeholder="eg: 5"
             />
-            {errors?.duration?.message &&
+            {errors?.no_of_days?.message &&
               <div className="text-danger">
-                {errors?.duration?.message + ""}
+                {errors?.no_of_days?.message + ""}
               </div>
             }
           </div>
         </div>
         <div className='col-md-6'>
           <div className="form-group mb-3">
-            <label className="form-label">Cost<span className='text-danger'> *</span></label>
+            <label className="form-label">Price<span className='text-danger'> *</span></label>
             <input
-              {...register("cost", { required: "Cost is required!" })}
-              aria-invalid={!!errors?.cost?.message}
+              {...register("starting_from", { required: "Price is required!" })}
+              aria-invalid={!!errors?.starting_from?.message}
               className="form-control"
               placeholder="eg: NRs 4000"
             />
-            {errors?.cost?.message &&
+            {errors?.starting_from?.message &&
               <div className="text-danger">
-                {errors?.cost?.message + ""}
+                {errors?.starting_from?.message + ""}
               </div>
             }
           </div>
@@ -130,7 +173,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
       {/* 4th row */}
       <div className="form-group mb-3">
         <label className="form-label">Itenaries<span className='text-danger'> *</span></label>
-        <Controller name="itenaries"
+        <Controller name="itinarery"
           control={control}
           rules={{
             required: "Itenaries is required!",
@@ -145,9 +188,9 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
                   onContentStateChange={onChange}
                 />
               </div>
-              {errors?.itenaries?.message &&
+              {errors?.itinarery?.message &&
                 <div className="text-danger">
-                  {errors?.itenaries?.message + ""}
+                  {errors?.itinarery?.message + ""}
                 </div>
               }
             </>
@@ -156,12 +199,12 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
       </div>
       {/* 5th row */}
       <div className="form-group mb-3">
-        <label className="form-label">Included/Excluded<span className='text-danger'> *</span></label>
-        <Controller name="included/excluded"
+        <label className="form-label">Included<span className='text-danger'> *</span></label>
+        <Controller name="included"
           control={control}
           rules={{
-            required: "Included/Excluded is required!",
-            validate: val => val?.blocks[0]?.text.length || "Included/Excluded is required!"
+            required: "Inclusions is required!",
+            validate: val => val?.blocks[0]?.text.length || "Inclusions is required!"
           }}
           render={({ field: { value = null, onChange } }) =>
             <>
@@ -172,9 +215,57 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
                   onContentStateChange={onChange}
                 />
               </div>
-              {errors?.["included/excluded"]?.message &&
+              {errors?.included?.message &&
                 <div className="text-danger">
-                  {errors?.["included/excluded"]?.message + ""}
+                  {errors?.included?.message + ""}
+                </div>
+              }
+            </>
+          }
+        />
+      </div>
+      <div className="form-group mb-3">
+        <label className="form-label">Excluded<span className='text-danger'> *</span></label>
+        <Controller name="not_included"
+          control={control}
+          rules={{
+            required: "Exclusions is required!",
+            validate: val => val?.blocks[0]?.text.length || "Exclusions is required!"
+          }}
+          render={({ field: { value = null, onChange } }) =>
+            <>
+              <div className='wysiwyg-wrapper'>
+                <Editor
+                  // @ts-ignore
+                  initialContentState={value}
+                  onContentStateChange={onChange}
+                />
+              </div>
+              {errors?.not_included?.message &&
+                <div className="text-danger">
+                  {errors?.not_included?.message + ""}
+                </div>
+              }
+            </>
+          }
+        />
+      </div>
+      <div className="form-group mb-3">
+        <label className="form-label">Additional Trek Info</label>
+        <Controller name="trek_info"
+          control={control}
+          render={({ field: { value = null, onChange } }) =>
+            <>
+              <div className='wysiwyg-wrapper'>
+                <Editor
+                  // @ts-ignore
+                  initialContentState={value}
+                  onContentStateChange={onChange}
+                />
+              </div>
+              {errors?.trek_info?.message &&
+                <div className="text-danger">
+                  {errors?.trek_info?.message + ""}
                 </div>
               }
             </>
@@ -214,6 +305,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
       </div>
       <Button loading={loading} htmlType="submit" className="btn btn-admin-primary">Submit</Button>
     </form>
+
   )
 }
 

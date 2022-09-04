@@ -1,10 +1,9 @@
-import { updateCountry } from '@/api/superadmin/miscs';
-import { responseErrorHandler } from '@/services/helper';
-import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
-import { useRouter } from 'next/router';
+import { deleteCountry, updateCountry } from '@/api/superadmin/miscs';
+import { capitalizeInitials, responseErrorHandler } from '@/services/helper';
+import { Form, Input, Popconfirm, Skeleton, Table, Typography } from 'antd';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 
 interface Item {
   sn: string;
@@ -55,23 +54,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 };
 
 const CountryList: React.FC = () => {
-  const { data, mutate } = useSWR('/admin/countries', {
-    revalidateOnMount: false,
-    fallbackData: [
-      {
-        id: 1,
-        name: "Nepal"
-      },
-      {
-        id: 2,
-        name: "India"
-      },
-      {
-        id: 3,
-        name: "China"
-      },
-    ]
-  });
+  const { data, mutate, error } = useSWR('/admin/country');
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number | null | any>(null);
   const isEditing = (record: Item) => record.id === editingKey;
@@ -107,14 +90,21 @@ const CountryList: React.FC = () => {
             <Typography.Link onClick={() => updateCountryHandler(record.id)} style={{ marginRight: 8 }}>
               Save
             </Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>Cancel</a>
-            </Popconfirm>
+            <Typography.Link onClick={cancel}>
+              Cancel
+            </Typography.Link>
           </span>
         ) : (
-          <Typography.Link disabled={editingKey !== null} onClick={() => edit(record)}>
-            Edit
-          </Typography.Link>
+          <>
+            <Typography.Link style={{ marginRight: 8 }} disabled={editingKey !== null} onClick={() => edit(record)}>
+              Edit
+            </Typography.Link>
+            <Popconfirm title="Are you sure to delete the country?" onConfirm={() => deleteCountryHandler(record)}>
+              <Typography.Link disabled={editingKey !== null}>
+                Delete
+              </Typography.Link>
+            </Popconfirm>
+          </>
         );
       },
     },
@@ -137,8 +127,11 @@ const CountryList: React.FC = () => {
   });
 
   function updateCountryHandler(id: any) {
-    const updatedName = form.getFieldValue("name");
-    mutate(data?.map(country => {
+    const updatedName = capitalizeInitials(form.getFieldValue("name"));
+    setEditingKey(null);
+
+    // update locally
+    mutate(data?.map((country: any) => {
       if (country.id === id) {
         return ({
           ...country,
@@ -148,32 +141,47 @@ const CountryList: React.FC = () => {
         return country
       }
     }), false)
-    setEditingKey(null)
-    // updateCountry(id, name)
-    //   .then((res: any) => {
-    //     toast.success(res.message);
-    //   })
-    //   .catch(responseErrorHandler)
-    //   .finally(mutate)
+    updateCountry(id, updatedName)
+      .then((res: any) => {
+        toast.success(res.message);
+      })
+      .catch(responseErrorHandler)
+      .finally(mutate)
+
+  }
+
+  function deleteCountryHandler(record: any) {
+
+    mutate(data?.filter((country: any) => country.id !== record.id), false)
+    setEditingKey(null);
+    deleteCountry(record.id)
+      .then((res: any) => {
+        toast.success(res.message);
+      })
+      .catch(responseErrorHandler)
+      .finally(mutate)
+
   }
 
   return (
     <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        bordered
-        // @ts-ignore
-        dataSource={data?.map((country, i) => ({ ...country, sn: i + 1 }))}
-        columns={mergedColumns}
-        rowClassName="editable-row"
-        pagination={{
-          onChange: cancel,
-        }}
-      />
+      {
+        !data && !error ? <Skeleton active />
+          :
+          <Table
+            pagination={false}
+            components={{
+              body: {
+                cell: EditableCell,
+              },
+            }}
+            bordered
+            // @ts-ignore
+            dataSource={data?.map((country, i) => ({ ...country, sn: i + 1 }))}
+            columns={mergedColumns}
+            rowClassName="editable-row"
+          />
+      }
     </Form>
   );
 };

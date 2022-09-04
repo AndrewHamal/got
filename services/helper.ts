@@ -96,11 +96,11 @@ export function isValidEmail(email: string) {
 export function isValidUrl(url: string) {
   const pattern = new RegExp(
     "^(https?:\\/\\/)" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
+    "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+    "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+    "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+    "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+    "(\\#[-a-z\\d_]*)?$",
     "i"
   );
 
@@ -111,4 +111,24 @@ export function isValidPassword(password: string) {
   const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
   return re.test(password);
+}
+
+
+export function capitalizeInitials(str?: string) {
+  if (!str) return "";
+  var splitStr = str.toLowerCase().split(" ");
+  for (var i = 0; i < splitStr.length; i++) {
+    // You do not need to check if i is larger than splitStr length, as your for does that for you
+    // Assign it back to the array
+    splitStr[i] =
+      splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+  }
+  // Directly return the joined string
+  return splitStr.join(" ");
+}
+
+export function cropTitle(text: string, wordLimit = 100) {
+  if (text.length > wordLimit) {
+    return text.substring(0, wordLimit) + "...";
+  } else return text
 }

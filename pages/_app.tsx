@@ -8,7 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import "@/public/admin/css/custom.css"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { deleteCookie } from 'cookies-next';
-import { logout } from '@/api/auth';
+import { logout } from '@/api/superadmin/auth';
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -31,7 +31,7 @@ function App({ Component, pageProps }: AppProps) {
         },
         revalidateOnFocus: false,
         revalidateIfStale: false,
-        fetcher: (resource, init) => axiosClient(resource, init).then(res => res.data)
+        fetcher: (resource, init) => axiosClient(resource, init).then(res => res?.data || res)
       }}
     >
       <ToastContainer />

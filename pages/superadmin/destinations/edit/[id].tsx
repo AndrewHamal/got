@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 function CreateHotels() {
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useSWR(`/destinations/${id}`);
+  const { data } = useSWR(`/admin/destinations/${id}`);
   const [loading, setLoading] = useState(false);
   const formMethods = useForm();
 
