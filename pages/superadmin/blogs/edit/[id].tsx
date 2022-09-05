@@ -56,7 +56,7 @@ function UpdateBlog() {
     <SuperadminLayout title="Update Blog"
       breadcrumbs={[{ name: "Blogs", link: "/superadmin/blogs" }, { name: "Edit" }]}
     >
-      <div className="col-lg-6">
+      <div className="col-lg-8">
         <div className="white_card card_height_100 mb_30">
           <div className="white_card_header">
             <div className="box_header m-0">
