@@ -1,3 +1,4 @@
+import { deleteBlogCategory, updateBlogCategory } from '@/api/superadmin/blog';
 import { deleteRegion, updateRegion } from '@/api/superadmin/miscs';
 import { capitalizeInitials, responseErrorHandler } from '@/services/helper';
 import { Form, Input, Popconfirm, Skeleton, Table, Typography } from 'antd';
@@ -8,7 +9,7 @@ import useSWR from 'swr';
 interface Item {
   sn: string;
   id: number;
-  country?: any;
+  category?: any;
   name: string;
 }
 
@@ -55,7 +56,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 };
 
 const CategoryList: React.FC = () => {
-  const { data, mutate, error } = useSWR('/admin/blog/categories');
+  const { data, mutate, error } = useSWR('/admin/blog/categories/all');
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number | null | any>(null);
   const isEditing = (record: Item) => record.id === editingKey;
@@ -75,8 +76,8 @@ const CategoryList: React.FC = () => {
       dataIndex: 'sn',
     },
     {
-      title: 'Category Name',
-      dataIndex: 'name',
+      title: 'Category Title',
+      dataIndex: 'title',
       editable: true,
     },
     {
@@ -86,7 +87,7 @@ const CategoryList: React.FC = () => {
         const editable = isEditing(record);
         return editable ? (
           <span>
-            <Typography.Link onClick={() => updateRegionHandler(record.id)} style={{ marginRight: 8 }}>
+            <Typography.Link onClick={() => updateCategoryHandler(record.id)} style={{ marginRight: 8 }}>
               Save
             </Typography.Link>
             <Typography.Link onClick={cancel}>
@@ -98,7 +99,7 @@ const CategoryList: React.FC = () => {
             <Typography.Link style={{ marginRight: 8 }} disabled={editingKey !== null} onClick={() => edit(record)}>
               Edit
             </Typography.Link>
-            <Popconfirm title="Are you sure to delete the country?" onConfirm={() => deleteRegionHandler(record)}>
+            <Popconfirm title="Are you sure to delete the category?" onConfirm={() => deleteCategoryHandler(record)}>
               <Typography.Link disabled={editingKey !== null}>
                 Delete
               </Typography.Link>
@@ -125,22 +126,22 @@ const CategoryList: React.FC = () => {
     };
   });
 
-  function updateRegionHandler(id: any) {
-    const updatedName = capitalizeInitials(form.getFieldValue("name"));
+  function updateCategoryHandler(id: any) {
+    const updatedTitle = capitalizeInitials(form.getFieldValue("title"));
     setEditingKey(null);
 
     // update locally
-    mutate(data?.map((country: any) => {
-      if (country.id === id) {
+    mutate(data?.map((category: any) => {
+      if (category.id === id) {
         return ({
-          ...country,
-          name: updatedName,
+          ...category,
+          title: updatedTitle,
         })
       } else {
-        return country
+        return category
       }
     }), false)
-    updateRegion(id, updatedName)
+    updateBlogCategory(id, updatedTitle)
       .then((res: any) => {
         toast.success(res.message);
       })
@@ -149,11 +150,11 @@ const CategoryList: React.FC = () => {
 
   }
 
-  function deleteRegionHandler(record: any) {
+  function deleteCategoryHandler(record: any) {
 
-    mutate(data?.filter((country: any) => country.id !== record.id), false)
+    mutate(data?.filter((category: any) => category.id !== record.id), false)
     setEditingKey(null);
-    deleteRegion(record.id)
+    deleteBlogCategory(record.id)
       .then((res: any) => {
         toast.success(res.message);
       })
@@ -176,7 +177,7 @@ const CategoryList: React.FC = () => {
             }}
             bordered
             // @ts-ignore
-            dataSource={data?.map((country, i) => ({ ...country, sn: i + 1 }))}
+            dataSource={data?.map((category, i) => ({ ...category, sn: i + 1 }))}
             columns={mergedColumns}
             rowClassName="editable-row"
           />
