@@ -50,17 +50,17 @@ export const SuperadminSidebarMenus = [
         ]
     },
     {
-        title: "Itenary",
+        title: "Itinerary",
         parent: true,
         icon: "/admin/img/menu-icon/7.svg",
         children: [
             {
                 title: "Create",
-                link: "/superadmin/itenary/create"
+                link: "/superadmin/itinerary/create"
             },
             {
                 title: "Listing",
-                link: "/superadmin/itenary"
+                link: "/superadmin/itinerary"
             },
         ]
     },
