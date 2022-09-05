@@ -36,18 +36,22 @@ function CreateHotels() {
     updateDestination(Number(id), objectToFormData(destinationDTO))
       .then((destRes: any) => {
         // upload files
-        filesToUpload.length && uploadDestinationFiles(
-          objectToFormData({
-            files: filesToUpload,
-            destination_id: id
-          }))
-          .then((res: any) => {
-            toast.success(destRes.message);
-            router.push(`/superadmin/destinations`);
-          })
-          .catch(responseErrorHandler)
-          .finally(() => setLoading(false))
-
+        if (filesToUpload.length) {
+          uploadDestinationFiles(
+            objectToFormData({
+              files: filesToUpload,
+              destination_id: id
+            }))
+            .then((res: any) => {
+              toast.success(destRes.message);
+              router.push(`/superadmin/destinations`);
+            })
+            .catch(responseErrorHandler)
+            .finally(() => setLoading(false))
+        } else {
+          router.push(`/superadmin/destinations`);
+          setLoading(false)
+        }
       })
       .catch((err: any) => {
         responseErrorHandler(err, formMethods.setError);

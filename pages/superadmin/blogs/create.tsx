@@ -1,14 +1,15 @@
 import SuperadminLayout from '@/components/layout/superadmin'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { UploadFile } from 'antd/lib/upload';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { createBlog } from '@/api/superadmin/blog';
 import { objectToFormData, responseErrorHandler } from '@/services/helper';
 import { toast } from 'react-toastify';
 import CreateOrUpdateBlogForm from '@/components/superadmin/forms/blog';
+import { useRouter } from 'next/router';
 
 function CreateBlog() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const formMethods = useForm();
 
@@ -22,7 +23,7 @@ function CreateBlog() {
     createBlog(objectToFormData(dto))
       .then((res: any) => {
         toast.success(res.message);
-        formMethods.reset();
+        router.push(`/superadmin/blogs`);
       })
       .catch((err: any) => responseErrorHandler(err, formMethods.setError))
       .finally(() => setLoading(false))

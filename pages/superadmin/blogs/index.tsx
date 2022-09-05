@@ -1,9 +1,8 @@
 import { deleteBlog } from '@/api/superadmin/blog';
-import { deleteDestination } from '@/api/superadmin/destination';
 import SuperadminLayout from '@/components/layout/superadmin';
 import { cropTitle, responseErrorHandler } from '@/services/helper';
 import { Popconfirm, Skeleton, Table, Typography } from 'antd';
-import type { ColumnsType, TableProps } from 'antd/es/table';
+import type { ColumnsType } from 'antd/es/table';
 import Router from 'next/router';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -25,30 +24,19 @@ const App: React.FC = () => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: 'Title',
+      dataIndex: 'title',
       // @ts-ignore
       sorter: (a, b) => a.name > b.name,
       filterSearch: true,
     },
     {
       title: 'Category',
-      dataIndex: 'category',
-      // @ts-ignore
-      sorter: (a, b) => a.region > b.region,
-      filterSearch: true,
+      dataIndex: 'category'
     },
     {
       title: 'Youtube Link',
-      dataIndex: 'no_of_days',
-      sorter: (a, b) => a.no_of_days - b.no_of_days,
-      filterSearch: true,
-    },
-    {
-      title: 'Price',
-      dataIndex: 'starting_from',
-      sorter: (a, b) => a.starting_from - b.starting_from,
-      filterSearch: true,
+      dataIndex: 'youtube_link'
     },
     {
       title: 'Body',
@@ -93,7 +81,7 @@ const App: React.FC = () => {
             columns={columns}
             dataSource={data?.map((dest: any) => ({
               ...dest,
-              category_id: dest.category_id?.title,
+              category: dest.category?.title,
               body: cropTitle(JSON.parse(dest.body)?.blocks[0]?.text, 50)
             }))}
             pagination={false}

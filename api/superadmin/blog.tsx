@@ -4,7 +4,7 @@ export const createBlog = async (form: any) =>
   await axiosInstance.post(`/admin/blog/store`, form)
 
 export const updateBlog = async (id: number, form: any) =>
-  await axiosInstance.post(`/admin/blog/${id}`, form)
+  await axiosInstance.post(`/admin/blog/${id}/update`, form)
 
 export const deleteBlog = async (id: any) =>
   await axiosInstance.post(`/admin/blog/delete/${id}`)

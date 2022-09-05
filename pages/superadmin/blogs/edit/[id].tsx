@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 function UpdateBlog() {
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useSWR(`/blogs/${id}`);
+  const { data } = useSWR(id ? `/admin/blog/${id}` : null);
   const [loading, setLoading] = useState(false);
   const formMethods = useForm();
 
@@ -45,12 +45,7 @@ function UpdateBlog() {
         category_id: data.category_id,
         youtube_link: data.youtube_link,
         body: JSON.parse(data.body),
-        featured_image: data.featured_image.map((file: any) => ({
-          uid: file.id,
-          name: `image.${file.type}`,
-          url: file.full_path,
-        }
-        ))
+        featured_image: [{ uid: 1, name: `image.${data.featured_image.split('.')[1]}`, url: data.full_path }]
       })
     }
 
