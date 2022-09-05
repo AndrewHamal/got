@@ -1,15 +1,14 @@
-import { createHotelAdmin } from '@/api/superadmin/hotel';
-import SuperadminLayout from '@/components/layout/superadmin'
-import { isValidPassword, responseErrorHandler } from '@/services/helper';
-import { Button, message, Modal, Select, Upload } from 'antd';
+import { isValidUrl } from '@/services/helper';
+import { Button, message, Modal, Select, Skeleton, Upload } from 'antd';
 import React, { useState } from 'react'
-import { Controller, useForm, UseFormReturn } from 'react-hook-form'
-import { toast } from 'react-toastify';
+import { Controller, UseFormReturn } from 'react-hook-form'
 import dynamic from 'next/dynamic';
 import { RcFile, UploadFile } from 'antd/lib/upload';
 import { PlusOutlined } from '@ant-design/icons';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorProps } from 'draft-js';
+import useSWR from 'swr';
+import { useRouter } from 'next/router';
 const { Option } = Select;
 
 const Editor = dynamic<EditorProps>(
@@ -23,7 +22,6 @@ interface IProps {
   submitHandler: (data: object) => void;
 }
 
-
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -33,7 +31,15 @@ const getBase64 = (file: RcFile): Promise<string> =>
   });
 
 function CreateOrUpdateBlogForm({ loading, formMethods, submitHandler }: IProps) {
-  const { reset, control, register, formState: { errors }, handleSubmit, setError } = formMethods;
+  const router = useRouter();
+  const { id } = router.query;
+  const { control, register, formState: { errors }, handleSubmit } = formMethods;
+
+  const { data: categories, error: categoriesError } = useSWR('/admin/blog/categories/all');
+
+  // for setting default value on edit for wysiwyg
+  const [hasRTFValue, setHasRTFValue] = useState(!!id)
+
 
   // image upload
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -64,76 +70,101 @@ function CreateOrUpdateBlogForm({ loading, formMethods, submitHandler }: IProps)
           <div className="form-group mb-3">
             <label className="form-label">Title<span className='text-danger'> *</span></label>
             <input
-              {...register("name", { required: "Title is required!" })}
-              aria-invalid={!!errors?.name?.message}
+              {...register("title", { required: "Blog Title is required!" })}
+              aria-invalid={!!errors?.title?.message}
               className="form-control"
               placeholder="Enter Blog Title"
             />
-            {errors?.name?.message &&
+            {errors?.title?.message &&
               <div className="text-danger">
-                {errors?.name?.message + ""}
+                {errors?.title?.message + ""}
               </div>
             }
           </div>
         </div>
         <div className="col-md-6">
-          <div className="form-group mb-3">
-            <label className="form-label">Read Time (in minutes)<span className='text-danger'> *</span></label>
-            <input
-              {...register("read_time", { required: "Read Time is required!" })}
-              aria-invalid={!!errors?.read_time?.message}
-              className="form-control"
-              placeholder="eg: 8"
-            />
-            {errors?.read_time?.message &&
-              <div className="text-danger">
-                {errors?.read_time?.message + ""}
-              </div>
+          <label className="form-label">Category<span className='text-danger'> *</span></label>
+          <div className='custom-select'>
+            {
+              !categories && !categoriesError ? <Skeleton className='mt-3' active paragraph={false} />
+                :
+                <Controller
+                  control={control}
+                  name="category_id"
+                  rules={{ required: "Category is required!" }}
+                  render={({ field: { onChange, value } }) =>
+                    <>
+                      <Select
+                        value={value}
+                        onChange={onChange}
+                        allowClear
+                        status={errors?.category_id?.message && "error"}
+                        size='large'
+                        className="form-control"
+                        placeholder="Select Category"
+                      >
+                        {
+                          categories.map((cat: any) => <Option key={cat.id} value={cat.id}>{cat.title}</Option>)
+                        }
+                      </Select>
+                      {errors?.category_id?.message &&
+                        <div className="text-danger">
+                          {errors?.category_id?.message + ""}
+                        </div>
+                      }
+                    </>
+                  }
+                />
             }
           </div>
         </div>
       </div>
-      <div className="form-group mb-3">
-        <label className="form-label">Tags<span className='text-danger'> *</span></label>
-        <Controller name="tags"
-          control={control}
-          rules={{ required: "Atleast one tag is required!" }}
-          render={({ field: { value = [], onChange } }) =>
-            <>
-              <Select mode="tags" style={{ width: '100%' }} placeholder="Tags Mode" onChange={onChange}>
-                {value.map((tag: any) => <Option key={tag} value={tag}>{tag}</Option>)}
-
-              </Select>
-              {errors?.tags?.message &&
-                <div className="text-danger">
-                  {errors?.tags?.message + ""}
-                </div>
-              }
-            </>
-          }
-        />
-      </div>
       {/* 2nd row */}
       <div className="form-group mb-3">
-        <label className="form-label">Description<span className='text-danger'> *</span></label>
-        <Controller name="description"
+        <label className="form-label">Youtube Link</label>
+        <input
+          {...register("youtube_link", {
+            validate: url => isValidUrl(url) || "Youtube Link must be valid url"
+          })}
+          aria-invalid={!!errors?.youtube_link?.message}
+          className="form-control"
+          placeholder="eg: https://youtube.com/your-video"
+        />
+        {errors?.youtube_link?.message &&
+          <div className="text-danger">
+            {errors?.youtube_link?.message + ""}
+          </div>
+        }
+      </div>
+      {/* 3rd row */}
+      <div className="form-group mb-3">
+        <label className="form-label">Body<span className='text-danger'> *</span></label>
+        <Controller name="body"
           control={control}
           rules={{
-            required: "Description is required!",
-            validate: val => val?.blocks[0]?.text.length || "Description is required!"
+            required: "Body is required!",
+            validate: val => val?.blocks[0]?.text.length || "Body is required!"
           }}
           render={({ field: { value = null, onChange } }) =>
             <>
               <div className='wysiwyg-wrapper'>
-                <Editor
-                  // @ts-ignore
-                  initialContentState={value}
-                  onContentStateChange={onChange}
-                />
+                {
+                  hasRTFValue
+                    ? <Editor
+                      // @ts-ignore
+                      contentState={value}
+                      onContentStateChange={() => setHasRTFValue(false)}
+                    />
+                    : <Editor
+                      // @ts-ignore
+                      initialContentState={value}
+                      onContentStateChange={onChange}
+                    />
+                }
               </div>
-              {errors?.description?.message &&
+              {errors?.body?.message &&
                 <div className="text-danger">
-                  {errors?.description?.message + ""}
+                  {errors?.body?.message + ""}
                 </div>
               }
             </>
@@ -142,31 +173,31 @@ function CreateOrUpdateBlogForm({ loading, formMethods, submitHandler }: IProps)
       </div>
       {/* 6th row */}
       <div className="form-group my-4">
-        <label className="form-label">Images<span className='text-danger'> *</span></label>
+        <label className="form-label">Blog Image<span className='text-danger'> *</span></label>
         <Controller
           control={control}
-          name="files"
-          rules={{ required: "Atleast one file required!" }}
+          name="featured_image"
+          rules={{ required: "Blog Image is required!" }}
           render={({ field: { onChange, value } }) =>
             <>
               <Upload
+                multiple={false}
                 accept='image/*'
                 beforeUpload={beforeUpload}
-                maxCount={5}
                 listType="picture-card"
                 fileList={value}
                 onPreview={handlePreview}
                 onChange={({ fileList }: any) => onChange(fileList)}
               >
-                {value?.length >= 5 ? null : uploadButton}
+                {value?.length ? null : uploadButton}
               </Upload>
               <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img alt="example" style={{ width: '100%' }} src={previewImage} />
               </Modal>
-              {errors?.files?.message &&
+              {errors?.featured_image?.message &&
                 <div className="text-danger">
-                  {errors?.files?.message + ""}
+                  {errors?.featured_image?.message + ""}
                 </div>
               }
             </>

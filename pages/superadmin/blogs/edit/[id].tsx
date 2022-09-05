@@ -1,7 +1,6 @@
 import SuperadminLayout from '@/components/layout/superadmin'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { UploadFile } from 'antd/lib/upload';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { updateBlog } from '@/api/superadmin/blog';
 import { objectToFormData, responseErrorHandler } from '@/services/helper';
@@ -19,31 +18,39 @@ function UpdateBlog() {
   const formMethods = useForm();
 
   function updateBlogHandler(data: any) {
+    const filesToUpload = data.featured_image.find((file: any) => !!file)
     const dto = {
       ...data,
-      description: JSON.stringify(data.description),
-      files: data.files.map((file: UploadFile) => file.originFileObj)
+      featured_image: filesToUpload ? filesToUpload.originFileObj : null,
+      body: JSON.stringify(data.body),
     }
-    console.log({ dto })
-    // setLoading(true);
-    // updateBlog(objectToFormData(dto))
-    //   .then((res: any) => {
-    //     toast.success(res.message);
-    //     formMethods.reset();
-    //   })
-    //   .catch((err: any) => responseErrorHandler(err, formMethods.setError))
-    //   .finally(() => setLoading(false))
+
+    setLoading(true);
+    updateBlog(Number(id), objectToFormData(dto))
+      .then((destRes: any) => {
+        toast.success(destRes.message);
+        router.push(`/superadmin/blogs`);
+      })
+      .catch((err: any) => {
+        responseErrorHandler(err, formMethods.setError);
+      })
+      .finally(() => setLoading(false))
   }
 
   useEffect(() => {
 
     if (data) {
       formMethods.reset({
-        name: data.name,
-        description: data.description,
-        read_time: data.read_time,
-        files: data.files,
-        tags: data.tags
+        title: data.title,
+        category_id: data.category_id,
+        youtube_link: data.youtube_link,
+        body: JSON.parse(data.body),
+        featured_image: data.featured_image.map((file: any) => ({
+          uid: file.id,
+          name: `image.${file.type}`,
+          url: file.full_path,
+        }
+        ))
       })
     }
 
@@ -51,7 +58,9 @@ function UpdateBlog() {
   }, [data])
 
   return (
-    <SuperadminLayout title="Update Blog">
+    <SuperadminLayout title="Update Blog"
+      breadcrumbs={[{ name: "Blogs", link: "/superadmin/blogs" }, { name: "Edit" }]}
+    >
       <div className="col-lg-6">
         <div className="white_card card_height_100 mb_30">
           <div className="white_card_header">
