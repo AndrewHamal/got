@@ -11,15 +11,12 @@ import useSWR from 'swr';
 interface DataType {
   key: React.Key;
   name: string;
+  region: string;
   age: number;
   no_of_days: number;
   starting_from: number;
   address: string;
 }
-
-const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-  console.log('params', pagination, filters, sorter, extra);
-};
 
 const App: React.FC = () => {
 
@@ -36,7 +33,8 @@ const App: React.FC = () => {
     {
       title: 'Region',
       dataIndex: 'region',
-      sorter: (a, b) => a.age - b.age,
+      // @ts-ignore
+      sorter: (a, b) => a.region > b.region,
       filterSearch: true,
     },
     {
@@ -97,7 +95,6 @@ const App: React.FC = () => {
               region: dest.region?.name,
               overview: cropTitle(JSON.parse(dest.overview)?.blocks[0]?.text, 50)
             }))}
-            onChange={onChange}
             pagination={false}
           />
       }

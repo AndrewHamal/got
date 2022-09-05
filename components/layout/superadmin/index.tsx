@@ -40,21 +40,23 @@ function SuperadminLayout(props: IProps) {
                       <div className="dashboard_header_title">
                         <h3> {props.title}</h3>
                       </div>
-                      {props.breadcrumbs?.length
-                        ? props.breadcrumbs.map((bd) => {
-                          if (bd.link) {
-                            return (
-                              <Breadcrumb.Item>
-                                <Link href={bd.link}>{bd.name}</Link>
-                              </Breadcrumb.Item>
-                            );
-                          } else {
-                            return (
-                              <Breadcrumb.Item>{bd.name}</Breadcrumb.Item>
-                            );
-                          }
-                        })
-                        : null}
+                      <div className="d-flex">
+                        {props.breadcrumbs?.length
+                          ? props.breadcrumbs.map((bd) => {
+                            if (bd.link) {
+                              return (
+                                <Breadcrumb.Item>
+                                  <Link href={bd.link}>{bd.name}</Link>
+                                </Breadcrumb.Item>
+                              );
+                            } else {
+                              return (
+                                <Breadcrumb.Item><p style={{ color: "#8890b5" }}>{bd.name}</p></Breadcrumb.Item>
+                              );
+                            }
+                          })
+                          : null}
+                      </div>
                     </div>
                   </div>
                 </div>

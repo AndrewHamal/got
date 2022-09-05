@@ -12,7 +12,7 @@ import { updateDestination, uploadDestinationFiles } from '@/api/superadmin/dest
 function CreateHotels() {
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useSWR(`/admin/destination/${id}`);
+  const { data } = useSWR(id ? `/admin/destination/${id}` : null);
   const [loading, setLoading] = useState(false);
   const formMethods = useForm();
 
@@ -29,14 +29,17 @@ function CreateHotels() {
 
     const { files, ...destinationDTO } = dto;
 
+
+    const filesToUpload = files.filter((file: any) => !!file)
+
     setLoading(true);
     updateDestination(Number(id), objectToFormData(destinationDTO))
       .then((destRes: any) => {
         // upload files
-        uploadDestinationFiles(
+        filesToUpload.length && uploadDestinationFiles(
           objectToFormData({
-            files,
-            destination_id: destRes.data.id
+            files: filesToUpload,
+            destination_id: id
           }))
           .then((res: any) => {
             toast.success(destRes.message);
@@ -65,7 +68,12 @@ function CreateHotels() {
         included: JSON.parse(data.included),
         not_included: JSON.parse(data.not_included),
         trek_info: data.trek_info ? JSON.parse(data.trek_info) : null,
-        files: data.files,
+        files: data.files.map((file: any) => ({
+          uid: file.id,
+          name: `image.${file.type}`,
+          url: file.full_path,
+        }
+        ))
       })
     }
 
@@ -74,7 +82,7 @@ function CreateHotels() {
 
 
   return (
-    <SuperadminLayout title="Update Destinations">
+    <SuperadminLayout title="Update Destinations" breadcrumbs={[{ name: "Destinations", link: "/superadmin/destinations" }, { name: "Edit" }]}>
       <div className="col-lg-10">
         <div className="white_card card_height_100 mb_30">
           <div className="white_card_header">

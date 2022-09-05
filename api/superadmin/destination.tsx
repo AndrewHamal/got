@@ -12,3 +12,6 @@ export const deleteDestination = async (id: any) =>
 
 export const uploadDestinationFiles = async (files: FormData) =>
   await axiosInstance.post(`/admin/destination/files`, files)
+
+export const deleteDestinationFiles = async (fileId: FormData) =>
+  await axiosInstance.post(`/admin/destination/files/delete/${fileId}`)

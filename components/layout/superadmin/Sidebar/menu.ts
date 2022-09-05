@@ -32,6 +32,10 @@ export const SuperadminSidebarMenus = [
                 title: "Listing",
                 link: "/superadmin/blogs"
             },
+            {
+                title: "Categories",
+                link: "/superadmin/blogs/categories"
+            },
         ]
     },
     {

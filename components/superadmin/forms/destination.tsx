@@ -6,6 +6,7 @@ import { RcFile, UploadFile } from 'antd/lib/upload';
 import { PlusOutlined } from '@ant-design/icons';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
+import { deleteDestinationFiles } from '@/api/superadmin/destination';
 
 const { Option } = Select;
 const Editor = dynamic(
@@ -348,6 +349,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           render={({ field: { value, onChange } }) =>
             <>
               <Upload
+                onRemove={val => { typeof val.uid === 'number' && deleteDestinationFiles(val.uid) }}
                 beforeUpload={beforeUpload}
                 maxCount={5}
                 listType="picture-card"
