@@ -72,7 +72,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <SuperadminLayout title="Destinations">
+    <SuperadminLayout title="Blogs">
       {
         !data && !error ?
           <Skeleton active />
