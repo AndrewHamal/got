@@ -1717,7 +1717,7 @@ function Index() {
                             </a>
                           </h3>
                           <p className="mb-0">
-                            { JSON.parse(res?.body)?.blocks[0]?.text?.substring(0, 150) }...
+                            { JSON.parse(res?.body)?.blocks[0]?.text?.substring(0, 40) }...
                           </p>
                           <p>
                             <a href="news.html">{res?.date}</a>{" "}

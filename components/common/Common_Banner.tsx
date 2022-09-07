@@ -25,7 +25,8 @@ function CommonBanner({ loading, breadcrumb, title, imageUrl }: IProps): ReactEl
 
   return (
     <section id="common_banner" style={{ backgroundImage: `url(${imageUrl})` }}>
-      <div className="container">
+      <div className="overlay"></div>
+      <div className="container position-relative">
         <div className="row">
           <div className="col-lg-12">
             <div className="common_bannner_text">
