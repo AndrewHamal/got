@@ -45,17 +45,20 @@ function DestinationById() {
                         <div className="tour_details_heading_wrapper">
                           <div className="tour_details_top_heading">
                             <h2>{data.name}</h2>
-                            <h5><i className="fas fa-map-marker-alt" /> {data.region.name}</h5>
+                            <h5><i className="fas fa-map-marker-alt" /> Region- {data.region.name}</h5>
+                            <h5><i className="fas fa-clock" /> Duration- {data.no_of_days}</h5>
                           </div>
-                          <div className="toru_details_top_bottom_item">
+                          {/* <div className="toru_details_top_bottom_item">
                             <div className="tour_details_top_bottom_icon">
                               <i className="fas fa-clock" />
                             </div>
                             <div className="tour_details_top_bottom_text">
-                              <h5>Duration</h5>
-                              <p>{data.no_of_days} days</p>
+                              <div className="d-flex align-items-center">
+                                <h5>Duration</h5>
+                                <p>{data.no_of_days} days</p>
+                              </div>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                         <div className="tour_details_img_wrapper">
                           <Carousel dotPosition={'right'} effect="fade" >
