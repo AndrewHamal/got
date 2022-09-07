@@ -38,8 +38,8 @@ function CreateHotels() {
       })
       .catch((err: any) => {
         responseErrorHandler(err, formMethods.setError);
-        setLoading(false);
       })
+      .finally(() => setLoading(false))
   }
 
   useEffect(() => {

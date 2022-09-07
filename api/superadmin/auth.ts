@@ -6,12 +6,6 @@ export const superadminLogin = async (data: object) =>
 export const logout = async () =>
     await axiosInstance.post(`/logout`)
 
-export const registerUser = async (data: object) =>
-    await axiosInstance.post(`/register`, data)
-
-export const forgotPassword = async (data: object) =>
-    await axiosInstance.post(`/forgot-password`, data)
-
-export const resetPassword = async (data: object) =>
-    await axiosInstance.post(`/reset-password`, data)
+export const updateProfile = async (data: any) =>
+    await axiosInstance.post(`/admin/profile/store`, data)
 

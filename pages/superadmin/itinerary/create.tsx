@@ -3,9 +3,9 @@ import { objectToFormData, responseErrorHandler } from '@/services/helper';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
-import CreateOrUpdateDestinationForm from '@/components/superadmin/forms/itinerary';
 import { useRouter } from 'next/router';
 import { createItinerary } from '@/api/superadmin/itinerary';
+import CreateOrUpdateItenaryForm from '@/components/superadmin/forms/itinerary';
 
 function CreateHotels() {
   const router = useRouter();
@@ -27,9 +27,10 @@ function CreateHotels() {
     createItinerary(objectToFormData(destinationDTO))
       .then((destRes: any) => {
         toast.success(destRes.message);
-        router.push(`/superadmin/itinerary`);   
+        router.push(`/superadmin/itinerary`);
       })
-      .catch((err: any) => { responseErrorHandler(err, formMethods.setError), setLoading(false) })
+      .catch((err: any) => { responseErrorHandler(err, formMethods.setError) })
+      .finally(() => setLoading(false))
   }
 
   return (
@@ -44,7 +45,7 @@ function CreateHotels() {
             </div>
           </div>
           <div className="white_card_body">
-            <CreateOrUpdateDestinationForm
+            <CreateOrUpdateItenaryForm
               loading={loading}
               formMethods={formMethods}
               submitHandler={createDestinationHandler}

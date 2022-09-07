@@ -43,7 +43,7 @@ function CreateHotels() {
           .finally(() => setLoading(false))
 
       })
-      .catch((err: any) => { responseErrorHandler(err, formMethods.setError), setLoading(false) })
+      .catch((err: any) => { responseErrorHandler(err, formMethods.setError); setLoading(false) })
   }
 
   return (
