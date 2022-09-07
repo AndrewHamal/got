@@ -12,8 +12,8 @@ export const deleteCountry = async (id: any) =>
 export const createRegion = async (data: object) =>
   await axiosInstance.post(`/admin/region/store`, data)
 
-export const updateRegion = async (id: any, updatedName: any) =>
-  await axiosInstance.post(`/admin/region/${id}/update`, { name: updatedName })
+export const updateRegion = async (id: any, form: any) =>
+  await axiosInstance.post(`/admin/region/${id}/update`, form)
 
 export const deleteRegion = async (id: any) =>
   await axiosInstance.post(`/admin/region/delete/${id}`)
