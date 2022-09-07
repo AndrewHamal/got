@@ -132,3 +132,11 @@ export function cropTitle(text: string, wordLimit = 100) {
     return text.substring(0, wordLimit) + "...";
   } else return text
 }
+
+export function cropWysiwygText(content: string, wordLimit = 100) {
+  const contentFormat = JSON.parse(content);
+
+  const croppedText = cropTitle(contentFormat?.blocks[0]?.text, wordLimit);
+
+  return croppedText;
+}
