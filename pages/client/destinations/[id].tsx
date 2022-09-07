@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import CommonBanner from '@/components/common/Common_Banner';
 import ClientLayout from '@/components/layout/client/ClientLayout'
-import { Carousel, Drawer, Modal, Skeleton, Tabs } from 'antd';
+import { UpOutlined } from '@ant-design/icons';
+import { Carousel, Collapse, Drawer, Modal, Skeleton, Tabs } from 'antd';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -15,6 +16,7 @@ function DestinationById() {
   const router = useRouter();
   const { id } = router.query;
 
+  const [activeItenary, setActiveItenary] = useState<any>(1);
   const [packDrawer, setPackDrawer] = useState<any>(false);
 
   const { data, error } = useSWR(id ? `/user/destination/${id}` : null);
@@ -113,7 +115,7 @@ function DestinationById() {
                                             {it.title}
                                           </button>
                                         </h2>
-                                        <div id={"k" + it.id} className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div id={"k" + it.id} className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                           <div className="accordion-body">
                                             <Editor
                                               //@ts-ignore
