@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 // @ts-nocheck
 import ClientLayout from "@/components/layout/client/ClientLayout";
-import { Carousel } from "antd";
+import { Carousel, Skeleton } from "antd";
 import React, { useEffect } from "react";
 import useSWR from "swr";
 
@@ -54,29 +55,33 @@ function Index() {
     });
   }, []);
 
-  const { data:destinationHeader } = useSWR('user/destinations-header');
+  const { data: destinationHeader, error: destinationHeaderError } = useSWR('user/destinations-header');
+  const destLoading = !destinationHeader && !destinationHeaderError;
 
   return (
     <ClientLayout>
       <div>
-        {/* Banner Area */}
-        <Carousel dotPosition={'right'} effect="fade">
-          {
+        {destLoading ?
+          <img style={{ height: "600px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
+          :
+          // Banner Area 
+          <Carousel dotPosition={'right'} effect="fade">
+            {
               destinationHeader?.map((res: any, key: number) => (
                 // eslint-disable-next-line react/jsx-key
                 <div className="carousel" key={key}>
                   <div className="overlay"></div>
-                  <img src={res?.file_slider?.full_path} className="d-block w-100" alt={res?.name}/>
+                  <img src={res?.file_slider?.full_path ?? "/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={res?.name} />
                   <div className="carousel-caption d-none d-md-block">
-                    <h2 className="text-white font-38">{ res?.name }</h2>
-                    <p className="heading-2 text-faded">{ JSON.parse(res?.overview)?.blocks[0]?.text?.substring(0, 130) }...</p>
+                    <h2 className="text-white font-38">{res?.name}</h2>
+                    <p className="heading-2 text-faded">{JSON.parse(res?.overview)?.blocks[0]?.text?.substring(0, 130)}...</p>
 
                     <button className="btn btn-admin-primary mb-5 mt-4">Explore Trip <i className="fa fa-chevron-right"></i></button>
                   </div>
                 </div>
               ))
             }
-        </Carousel>
+          </Carousel>}
 
         {/* imagination Area */}
         <section id="go_beyond_area" className="section_padding_top">

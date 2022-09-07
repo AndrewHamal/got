@@ -26,6 +26,8 @@ export async function middleware(request: NextRequest) {
   }
 
   url.pathname = `client${url.pathname}`;
+  console.log(url)
+
   return NextResponse.rewrite(url);
 
 }
@@ -38,6 +40,7 @@ export const config = {
     '/blogs/detail',
     '/contact',
     '/register',
+    '/destinations/:path',
 
     // admin routes
     '/superadmin/login',

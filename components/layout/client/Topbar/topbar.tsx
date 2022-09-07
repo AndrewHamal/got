@@ -8,9 +8,8 @@ import { Skeleton } from "antd";
 
 const TopBar = () => {
   const router = useRouter();
-  const { data: countries, isValidating } = useSWR('user/countries');
-
-  if (!countries && isValidating) return <Skeleton />
+  const { data: countries, error, isValidating } = useSWR('user/countries');
+  const countriesLoading = !countries && !error || isValidating;
 
   return (
     <>
@@ -77,95 +76,45 @@ const TopBar = () => {
                         <i className="fas fa-angle-down" />
                       </a>
                       <ul className="dropdown-menu">
-
                         {
-                          countries?.map((res: any, key: number) => (
-                            // eslint-disable-next-line react/jsx-key
-                            <li className="nav-item" key={key}>
-                              <a href="tour-search.html" className="nav-link">
-                                {res.name}
-                              </a>
-                              <ul className="dropdown-menu">
+                          countriesLoading ? <li className="nav-item"><Skeleton active paragraph={false} /></li>
+                            :
+                            countries?.map((res: any, key: number) => (
+                              // eslint-disable-next-line react/jsx-key
+                              <li className="nav-item" key={key}>
+                                <a href="tour-search.html" className="nav-link">
+                                  {res.name}
+                                </a>
+                                <ul className="dropdown-menu">
+                                  {
+                                    res?.regions?.map((resRegion: any, key: number) => (
+                                      // eslint-disable-next-line react/jsx-key
+                                      <li className="nav-item" key={key}>
+                                        <a href="tour-search.html" className="nav-link">
+                                          {resRegion.name}
+                                        </a>
 
-                                {
-                                  res?.regions?.map((resRegion: any, key: number) => (
-                                    // eslint-disable-next-line react/jsx-key
-                                    <li className="nav-item" key={key}>
-                                      <a href="tour-search.html" className="nav-link">
-                                        {resRegion.name}
-                                      </a>
-
-                                      <ul className="dropdown-menu">
-                                        {
-                                          resRegion?.destinatoins?.map((resDes: any, key: number) => (
-                                            // eslint-disable-next-line react/jsx-key
-                                            <li className="nav-item" key={key}>
-                                              <a href="tour-search.html" className="nav-link">
-                                                {resDes.name} - <span className="text-danger">{resDes.no_of_days} days</span>
-                                              </a>
-                                            </li>
-                                          ))
-                                        }
-                                      </ul>
-                                    </li>
-                                  ))
-                                }
-                              </ul>
-                            </li>
-                          ))
+                                        <ul className="dropdown-menu">
+                                          {
+                                            resRegion?.destinatoins?.map((resDes: any, key: number) => (
+                                              // eslint-disable-next-line react/jsx-key
+                                              <li className="nav-item cursor-pointer" key={key}>
+                                                <Link href={`/destinations/${resDes.id}`} className="nav-link">
+                                                  <span>
+                                                    {resDes.name} - <span className="text-danger">{resDes.no_of_days} days</span>
+                                                  </span>
+                                                </Link>
+                                              </li>
+                                            ))
+                                          }
+                                        </ul>
+                                      </li>
+                                    ))
+                                  }
+                                </ul>
+                              </li>
+                            ))
                         }
-
-                        {/* <li className="nav-item">
-                          <a href="tour-search.html" className="nav-link">
-                            Tour
-                          </a>
-                          <ul className="dropdown-menu">
-                            <li className="nav-item">
-                              <a href="tour-search.html" className="nav-link">
-                                Tour
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a href="tour-details.html" className="nav-link">
-                                Tour Details
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a
-                                href="tour-booking-submission.html"
-                                className="nav-link"
-                              >
-                                Tour Booking
-                              </a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="nav-item">
-                          <a href="tour-details.html" className="nav-link">
-                            Tour Details
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a
-                            href="tour-booking-submission.html"
-                            className="nav-link"
-                          >
-                            Tour Booking
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a href="top-destinations.html" className="nav-link">
-                            Top Destination
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a
-                            href="top-destinations-details.html"
-                            className="nav-link"
-                          >
-                            Destination Details
-                          </a>
-                        </li> */}
                       </ul>
                     </li>
 
