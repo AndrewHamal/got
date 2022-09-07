@@ -13,11 +13,11 @@ import useSWR from 'swr';
 function CreateHotels() {
   const [loading, setLoading] = useState(false);
   const { reset, register, formState: { errors }, handleSubmit, setError } = useForm()
-  const { mutate } = useSWR('/admin/blog/categories');
+  const { mutate } = useSWR('/admin/blog/categories/all');
 
-  function createHotelHandler({ name }: any) {
+  function createHotelHandler({ title }: any) {
     setLoading(true);
-    createBlogCategory({ name: capitalizeInitials(name) })
+    createBlogCategory({ title: capitalizeInitials(title) })
       .then((res: any) => {
         toast.success(res.message);
         mutate();
@@ -41,16 +41,16 @@ function CreateHotels() {
           <div className="white_card_body">
             <form onSubmit={handleSubmit(createHotelHandler)}>
               <div className="form-group mb-3">
-                <label className="form-label">Category Name</label>
+                <label className="form-label">Category Title</label>
                 <input
-                  {...register("name", { required: "Category Name is required!" })}
-                  aria-invalid={!!errors?.name?.message}
+                  {...register("title", { required: "Category Title is required!" })}
+                  aria-invalid={!!errors?.title?.message}
                   className="form-control"
-                  placeholder="Category Name"
+                  placeholder="Category Title"
                 />
-                {errors?.name?.message &&
+                {errors?.title?.message &&
                   <div className="text-danger">
-                    {errors?.name?.message + ""}
+                    {errors?.title?.message + ""}
                   </div>
                 }
               </div>

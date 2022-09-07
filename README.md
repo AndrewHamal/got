@@ -15,3 +15,6 @@
       /destination/store
       '/admin/destination/id/update post'
       '/admin/destination/delete/:id'
+
+
+listing /blog/categories
