@@ -147,7 +147,7 @@ textarea[aria-invalid="true"] {
 
 #theme_search_form {
   position: absolute;
-  top: calc(50% - 120.5px);
+  top: calc(78% - 120.5px);
   width: 100%;
   margin: 0px;
 }
@@ -184,4 +184,16 @@ textarea[aria-invalid="true"] {
   top: 0px;
   left: 0px;
   backdrop-filter: blur(2px) brightness(60%);
+}
+
+.theme_two_box_img img{
+  height: 150px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.tab_destinations_img img {
+  height: 90px;
+  object-fit: cover;
+  object-position: top;
 }
