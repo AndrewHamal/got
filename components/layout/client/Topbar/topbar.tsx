@@ -10,28 +10,28 @@ const TopBar = () => {
   const router = useRouter();
   const { data: countries, isValidating } = useSWR('user/countries');
 
-  if(!countries && isValidating) return <Skeleton/>
+  if (!countries && isValidating) return <Skeleton />
 
   return (
     <>
       <header className="main_header_arae">
         <div className="topbar-area">
-            <div className="container-fluid">
-                <div className="row align-items-center">
-                    <div className="col-lg-6 col-md-6">
-                        <ul className="topbar-list">
-                            <li>
-                              <a href="#!"><i className="fab fa-instagram"></i></a>
-                              <a href="#!"><i className="fab fa-facebook"></i></a>
-                              <a href="#!"><i className="fab fa-twitter-square"></i></a>
-                              <a href="#!"><i className="fab fa-linkedin"></i></a>
-                            </li>
-                            <li><a href="#!"><span>+977 9860425223</span></a></li>
-                            <li><a href="#!"><span>contact@godoftrek.com</span></a></li>
-                        </ul>
-                    </div>
-                </div>
+          <div className="container-fluid">
+            <div className="row align-items-center">
+              <div className="col-lg-6 col-md-6">
+                <ul className="topbar-list">
+                  <li>
+                    <a href="#!"><i className="fab fa-instagram"></i></a>
+                    <a href="#!"><i className="fab fa-facebook"></i></a>
+                    <a href="#!"><i className="fab fa-twitter-square"></i></a>
+                    <a href="#!"><i className="fab fa-linkedin"></i></a>
+                  </li>
+                  <li><a href="#!"><span>+977 9860425223</span></a></li>
+                  <li><a href="#!"><span>contact@godoftrek.com</span></a></li>
+                </ul>
+              </div>
             </div>
+          </div>
         </div>
 
         {/* Navbar Bar */}
@@ -51,7 +51,7 @@ const TopBar = () => {
             <div className="container-fluid">
               <nav className="navbar navbar-expand-md navbar-light">
                 <a className="navbar-brand" href="index.html">
-                  <img src={LogoImage.src} alt="logo" width={"110"}/>
+                  <img src={LogoImage.src} alt="logo" width={"110"} />
                 </a>
                 <div
                   className="collapse navbar-collapse mean-menu"
@@ -96,18 +96,18 @@ const TopBar = () => {
                                       </a>
 
                                       <ul className="dropdown-menu">
-                                          { 
-                                            resRegion?.destinatoins?.map((resDes: any, key: number) => (
-                                              // eslint-disable-next-line react/jsx-key
-                                              <li className="nav-item" key={key}>
-                                                <a href="tour-search.html" className="nav-link">
-                                                  {resDes.name} - <span className="text-danger">{resDes.no_of_days} days</span>
-                                                </a>
+                                        {
+                                          resRegion?.destinatoins?.map((resDes: any, key: number) => (
+                                            // eslint-disable-next-line react/jsx-key
+                                            <li className="nav-item" key={key}>
+                                              <a href="tour-search.html" className="nav-link">
+                                                {resDes.name} - <span className="text-danger">{resDes.no_of_days} days</span>
+                                              </a>
                                             </li>
-                                            ))
-                                          }
+                                          ))
+                                        }
                                       </ul>
-                                  </li>
+                                    </li>
                                   ))
                                 }
                               </ul>
@@ -199,7 +199,7 @@ const TopBar = () => {
                         Blogs
                       </Link>
                     </li>
-                   
+
                     <li className="nav-item">
                       <Link href="/blogs" className="nav-link">
                         Offers
@@ -216,37 +216,37 @@ const TopBar = () => {
             </div>
 
             <div className="others-option-for-responsive d-block my-auto ml-auto">
-            <div className="container-fluid">
-              {/* <div className="dot-menu">
+              <div className="container-fluid">
+                {/* <div className="dot-menu">
                 <div className="inner">
                   <div className="circle circle-one" />
                   <div className="circle circle-two" />
                   <div className="circle circle-three" />
                 </div>
               </div> */}
-              <div className="container">
-                <div className="option-inner">
-                  <div className="others-options d-flex align-items-center">
-                    <div className="option-item">
-                      <a href="#" className="search-box">
-                        <i className="fas fa-search" />
-                      </a>
-                    </div>
-                    <div className="option-item">
-                      <a href="contact.html" className="btn  btn_navber">
-                        Get free quote
-                      </a>
+                <div className="container">
+                  <div className="option-inner">
+                    <div className="others-options d-flex align-items-center">
+                      <div className="option-item">
+                        <a href="#" className="search-box">
+                          <i className="fas fa-search" />
+                        </a>
+                      </div>
+                      <div className="option-item">
+                        <a href="contact.html" className="btn  btn_navber">
+                          Get free quote
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          </div>
-  
+
         </div>
       </header>
-      
+
       {/* search */}
       <div className="search-overlay">
         <div className="d-table">
