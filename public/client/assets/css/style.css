@@ -287,7 +287,7 @@ section {
 }
 
 /* --Button Area start-- */
-.btn-check:focus + .btn,
+.btn-check:focus+.btn,
 .btn:focus {
   outline: none;
   box-shadow: none;
@@ -574,21 +574,12 @@ section {
   justify-content: space-between;
 }
 
-.traveller-calulate-persons
-  .passengers
-  .passengers-types
-  .passengers-type
-  .text {
+.traveller-calulate-persons .passengers .passengers-types .passengers-type .text {
   align-items: center;
   display: flex;
 }
 
-.traveller-calulate-persons
-  .passengers
-  .passengers-types
-  .passengers-type
-  .text
-  .count {
+.traveller-calulate-persons .passengers .passengers-types .passengers-type .text .count {
   margin-right: 20px;
   width: 24px;
   display: inline-block;
@@ -596,23 +587,12 @@ section {
   font-weight: 600;
 }
 
-.traveller-calulate-persons
-  .passengers
-  .passengers-types
-  .passengers-type
-  .text
-  .type-label
-  span {
+.traveller-calulate-persons .passengers .passengers-types .passengers-type .text .type-label span {
   font-size: 12px;
   color: #4c4c4c;
 }
 
-.traveller-calulate-persons
-  .passengers
-  .passengers-types
-  .passengers-type
-  .button-set
-  button {
+.traveller-calulate-persons .passengers .passengers-types .passengers-type .button-set button {
   font-size: 12px;
   color: #4c4c4c;
   border: 1px solid #d8d8d8;
@@ -722,6 +702,7 @@ section {
 }
 
 @media (max-width: 1399px) {
+
   #theme_search_form .container,
   #theme_search_form .container-lg,
   #theme_search_form .container-md,
@@ -1044,7 +1025,7 @@ section {
 }
 
 /* --Promotional Tours Area-- */
-.dot_style .owl-nav.disabled + .owl-dots {
+.dot_style .owl-nav.disabled+.owl-dots {
   margin-top: 0px;
 }
 
@@ -1319,7 +1300,8 @@ section {
 =========================*/
 /* --Common Banner-- */
 #common_banner {
-  background-image: url("../img/banner/common-banner.png");
+  height: "400px";
+  objectFit: "cover";
   padding: 200px 0 130px 0;
   background-repeat: no-repeat;
   background-size: cover;
@@ -4228,11 +4210,11 @@ textarea {
   margin-left: auto;
 }
 
-.carousel img{
+.carousel img {
   height: 600px;
   width: 100vw;
   object-fit: cover;
-  border-radius: 0!important;
+  border-radius: 0 !important;
   object-position: top;
 }
 
@@ -4250,16 +4232,16 @@ textarea {
 }
 
 .slick-slide {
-  border: 0!important;
+  border: 0 !important;
 }
 
 .ant-carousel-vertical .slick-dots-right {
-  right: 25px!important;
+  right: 25px !important;
   left: auto;
 }
 
 .carousel-section * {
-  border-radius: 0!important;
+  border-radius: 0 !important;
 }
 
 .carousel-section {
@@ -4270,8 +4252,9 @@ textarea {
   font-size: 18px;
 }
 
-.carousel-control-next, .carousel-control-prev {
-  width: 7%!important;
+.carousel-control-next,
+.carousel-control-prev {
+  width: 7% !important;
 }
 
 .carousel-caption {

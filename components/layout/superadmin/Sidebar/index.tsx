@@ -41,10 +41,10 @@ function SuperadminSidebar({ sidebarBoolean }: any) {
     <nav className={`sidebar ${sidebarBoolean && "mini_sidebar"}`}>
       <div className="logo d-flex justify-content-between">
         <a className="large_logo" href="index-2.html">
-          <img src="/admin/img/logo.png" alt="" />
+          <img src="/client/assets/img/logoN.png" alt="" />
         </a>
         <a className="small_logo" href="index-2.html">
-          <img src="/admin/img/mini_logo.png" alt="" />
+          <img src="/client/assets/img/logoN.png" alt="" />
         </a>
         <div className="sidebar_close_icon d-lg-none">
           <i className="ti-close" />

@@ -1,13 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 // @ts-nocheck
 import ClientLayout from "@/components/layout/client/ClientLayout";
-import { Carousel, Skeleton } from "antd";
+import { Carousel, Empty, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
+import Moment from "react-moment";
+import Link from "next/link";
 
 function Index() {
 
-  const { data:destinationHeader } = useSWR('user/destinations-header');
+  const { data: destinationHeader, error: destinationHeaderError } = useSWR('user/destinations-header');
+  const destLoading = !destinationHeader && !destinationHeaderError;
   const { data:countries } = useSWR('user/countries');
+  const { data:blogs } = useSWR('user/blogs');
   const [selectedCountry, setSelectedCountry] = useState();
 
   useEffect(() => {
@@ -59,31 +64,35 @@ function Index() {
     });
 
 
-    if(countries)
-      setSelectedCountry(countries[0])
-  }, [countries]);
+    if(destinationHeader)
+      setSelectedCountry(destinationHeader[0].region?.country_id);
+
+  }, [destinationHeader]);
 
   return (
     <ClientLayout>
       <div>
-        {/* Banner Area */}
-        <Carousel dotPosition={'right'} effect="fade">
-          {
+        {destLoading ?
+          <img style={{ height: "600px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
+          :
+          // Banner Area 
+          <Carousel dotPosition={'right'} effect="fade">
+            {
               destinationHeader?.map((res: any, key: number) => (
                 // eslint-disable-next-line react/jsx-key
                 <div className="carousel" key={key}>
                   <div className="overlay"></div>
-                  <img src={res?.file_slider?.full_path} className="d-block w-100" alt={res?.name}/>
+                  <img src={res?.file_slider?.full_path ?? "/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={res?.name} />
                   <div className="carousel-caption d-none d-md-block">
-                    <h2 className="text-white font-38">{ res?.name }</h2>
-                    <p className="heading-2 text-faded">{ JSON.parse(res?.overview)?.blocks[0]?.text?.substring(0, 130) }...</p>
+                    <h2 className="text-white font-38">{res?.name}</h2>
+                    <p className="heading-2 text-faded">{JSON.parse(res?.overview)?.blocks[0]?.text?.substring(0, 130)}...</p>
 
                     <button className="btn btn-admin-primary mb-5 mt-4">Explore Trip <i className="fa fa-chevron-right"></i></button>
                   </div>
                 </div>
               ))
             }
-        </Carousel>
+          </Carousel>}
 
         <section id="theme_search_form">
           <div className="container">
@@ -868,13 +877,14 @@ function Index() {
         </section>
 
         {/* Top destinations */}
+
         <section id="top_destinations" className="section_padding_top">
           <div className="container">
             {/* Section Heading */}
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div className="section_heading_center">
-                  <h2>Top destinations</h2>
+                  <h2>Top regions</h2>
                 </div>
               </div>
             </div>
@@ -1028,6 +1038,7 @@ function Index() {
             </div>
           </div>
         </section>
+
         {/* Explore our hot deals */}
         <section id="explore_area" className="section_padding_top">
           <div className="container">
@@ -1252,9 +1263,12 @@ function Index() {
                     aria-labelledby="nav-nepal-tab"
                   >
                     <div className="row">
-                      {console.log(selectedCountry)}
                       {
-                        destinationHeader?.map((res: any, key: number) => (
+                        !destinationHeader ? <Skeleton active/> :
+
+                        destinationHeader?.filter(res => res?.region?.country_id === selectedCountry).length > 0 ?
+                        destinationHeader?.filter(res => res?.region?.country_id === selectedCountry)
+                        .map((res: any, key: number) => (
                           // eslint-disable-next-line react/jsx-key
                           <div className="col-lg-4 col-md-6 col-sm-12 col-12" key={key}>
                             <div className="tab_destinations_boxed">
@@ -1269,7 +1283,7 @@ function Index() {
                               <div className="tab_destinations_conntent">
                                 <h3>
                                   <a href="top-destinations.html">
-                                    { res?.name }
+                                    { res?.name.substring(0, 20) }...
                                   </a>
                                 </h3>
                                 <p>
@@ -1278,7 +1292,7 @@ function Index() {
                               </div>
                             </div>
                           </div>
-                        ))
+                        )) : <Empty description={"No data Found!"}/> 
                       }
     
                     </div>
@@ -1679,147 +1693,69 @@ function Index() {
                 </div>
               </div>
             </div>
+
             <div className="row">
               <div className="col-lg-6">
                 <div className="home_news_left_wrapper">
-                  <div className="home_news_item">
-                    <div className="home_news_img">
-                      <a href="news-details.html">
-                        <img
-                          src="client/assets/img/news/small1.png"
-                          alt="img"
-                        />
-                      </a>
-                    </div>
-                    <div className="home_news_content">
-                      <h3>
-                        <a href="news-details.html">
-                          Revolutionising the travel industry, one partnership
-                          at a time
-                        </a>
-                      </h3>
-                      <p>
-                        <a href="news.html">26 Oct 2021</a>{" "}
-                        <span>
-                          {" "}
-                          <i className="fas fa-circle" />
-                          5min read
-                        </span>{" "}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="home_news_item">
-                    <div className="home_news_img">
-                      <a href="news-details.html">
-                        <img
-                          src="client/assets/img/news/small2.png"
-                          alt="img"
-                        />
-                      </a>
-                    </div>
-                    <div className="home_news_content">
-                      <h3>
-                        <a href="news-details.html">
-                          t is a long established fact that a reader will be
-                          distracted.
-                        </a>
-                      </h3>
-                      <p>
-                        <a href="news.html">26 Oct 2021</a>{" "}
-                        <span>
-                          {" "}
-                          <i className="fas fa-circle" />
-                          5min read
-                        </span>{" "}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="home_news_item">
-                    <div className="home_news_img">
-                      <a href="news-details.html">
-                        <img
-                          src="client/assets/img/news/small3.png"
-                          alt="img"
-                        />
-                      </a>
-                    </div>
-                    <div className="home_news_content">
-                      <h3>
-                        <a href="#!">
-                          There are many variations of passages of sum available
-                        </a>
-                      </h3>
-                      <p>
-                        <a href="news.html">26 Oct 2021</a>{" "}
-                        <span>
-                          {" "}
-                          <i className="fas fa-circle" />
-                          5min read
-                        </span>{" "}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="home_news_item">
-                    <div className="home_news_img">
-                      <a href="news-details.html">
-                        <img
-                          src="client/assets/img/news/small4.png"
-                          alt="img"
-                        />
-                      </a>
-                    </div>
-                    <div className="home_news_content">
-                      <h3>
-                        <a href="news-details.html">
-                          Contrary to popular belief, Lorem Ipsum is not simply.
-                        </a>
-                      </h3>
-                      <p>
-                        <a href="news.html">26 Oct 2021</a>{" "}
-                        <span>
-                          {" "}
-                          <i className="fas fa-circle" />
-                          5min read
-                        </span>{" "}
-                      </p>
-                    </div>
-                  </div>
+                  {
+                    !blogs ? <Skeleton/> :
+                    blogs?.map((res: any, key:number) => (
+                      // eslint-disable-next-line react/jsx-key
+                      <div className="home_news_item" key={key}>
+                        <div className="home_news_img">
+                          <a href="news-details.html">
+                            <img
+                              src={res?.full_path}
+                              alt="img"
+                            />
+                          </a>
+                        </div>
+                        <div className="home_news_content">
+                          <h3 className="mb-0">
+                            <a className="text-capitalize" href="news-details.html">
+                              {res?.title}
+                            </a>
+                          </h3>
+                          <p className="mb-0">
+                            { JSON.parse(res?.body)?.blocks[0]?.text?.substring(0, 150) }...
+                          </p>
+                          <p>
+                            <a href="news.html">{res?.date}</a>{" "}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  }
+           
                   <div className="home_news_item">
                     <div className="seeall_link">
-                      <a href="news.html">
-                        See all article <i className="fas fa-arrow-right" />
-                      </a>
+                      <Link href="/blogs">
+                        <a>See all Blogs <i className="fas fa-arrow-right" /></a>
+                      </Link>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="col-lg-6">
-                <div className="home_news_big">
+                {
+                  !blogs ? <Skeleton/> : <div className="home_news_big">
                   <div className="news_home_bigest img_hover">
                     <a href="news-details.html">
-                      <img src="client/assets/img/news/new-big.png" alt="img" />
+                      <img src={blogs[0]?.full_path} alt="img" />
                     </a>
                   </div>
                   <h3>
-                    <a href="news-details.html">
-                      There are many variations of passages available but
+                    <a href="news-details.html" className="text-capitalize">
+                      {blogs[0]?.title}
                     </a>{" "}
                   </h3>
-                  <p>
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of. The point of using
-                    Lorem Ipsum is that it has a more
-                  </p>
-                  <p>
-                    It is a long established fact that a reader will be
-                    distracted by the readable long established fact that a
-                    reader will be distracted content of a page when looking at
-                    its layout.
-                  </p>
+                  { JSON.parse(blogs[0]?.body)?.blocks[0]?.text?.substring(0, 100) }...
                   <a href="news-details.html">
                     Read full article <i className="fas fa-arrow-right" />
                   </a>
                 </div>
+                }
+      
               </div>
             </div>
           </div>

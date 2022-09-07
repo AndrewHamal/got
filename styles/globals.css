@@ -6,6 +6,10 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+.ant-empty-description {
+  font-family: 'Inter'!important;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -194,6 +198,13 @@ textarea[aria-invalid="true"] {
 
 .tab_destinations_img img {
   height: 90px;
+  width: 140px;
   object-fit: cover;
+  object-position: top;
+}
+
+.home_news_img img{
+  object-fit: cover;
+  height: 100%;
   object-position: top;
 }
