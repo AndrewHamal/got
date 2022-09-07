@@ -48,28 +48,12 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
     <form onSubmit={handleSubmit(submitHandler)}>
       {/* 1st row */}
       <div className="row">
-        <div className="col-md-6">
-          <div className="form-group mb-3">
-            <label className="form-label">Day(eg: 1)<span className='text-danger'> *</span></label>
-            <input
-              {...register("day", { required: "Day is required!" })}
-              aria-invalid={!!errors?.name?.message}
-              className="form-control"
-              placeholder="Enter Day"
-            />
-            {errors?.name?.message &&
-              <div className="text-danger">
-                {errors?.name?.message + ""}
-              </div>
-            }
-          </div>
-        </div>
 
         <div className="col-md-6">
           <div className="form-group mb-3">
             <label className="form-label">Title<span className='text-danger'> *</span></label>
             <input
-              {...register("title", { required: "Title is required!" })}
+              {...register("name", { required: "Title is required!" })}
               aria-invalid={!!errors?.name?.message}
               className="form-control"
               placeholder="Enter Title"
@@ -82,6 +66,59 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           </div>
         </div>
 
+        <div className="col-md-6">
+          <div className="form-group mb-3">
+            <label className="form-label">Price<span className='text-danger'> *</span></label>
+            <input
+              {...register("price", { required: "Price is required!" })}
+              aria-invalid={!!errors?.name?.message}
+              className="form-control"
+              placeholder="Enter Price"
+            />
+            {errors?.name?.message &&
+              <div className="text-danger">
+                {errors?.name?.message + ""}
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-md-6">
+            <div className="form-group mb-3">
+              <label className="form-label">Valid From<span className='text-danger'> *</span></label>
+              <input
+                {...register("valid_from", { required: "Valid From is required!" })}
+                aria-invalid={!!errors?.name?.message}
+                className="form-control"
+                placeholder="Enter Valid From"
+              />
+              {errors?.name?.message &&
+                <div className="text-danger">
+                  {errors?.name?.message + ""}
+                </div>
+              }
+            </div>
+        </div>
+        <div className="col-md-6">
+          <div className="form-group mb-3">
+            <label className="form-label">Valid Till<span className='text-danger'> *</span></label>
+
+            <input
+              {...register("valid_till", { required: "Valid Till is required!" })}
+              aria-invalid={!!errors?.name?.message}
+              className="form-control"
+              placeholder="Enter Valid Till"
+            />
+
+            {errors?.name?.message &&
+              <div className="text-danger">
+                {errors?.name?.message + ""}
+              </div>
+            }
+          </div>
+        </div>
       </div>
       {/* 2nd row */}
       <div className='row'>
@@ -127,12 +164,12 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
       <div className="row mt-3">
         <div className="col-md-12">
           <div className="form-group mb-3">
-            <label className="form-label">Content<span className='text-danger'> *</span></label>
-            <Controller name="content"
+            <label className="form-label">Details<span className='text-danger'> *</span></label>
+            <Controller name="details"
               control={control}
               rules={{
-                required: "Content is required!",
-                validate: val => val?.blocks[0]?.text.length || "Content is required!"
+                required: "Detail is required!",
+                validate: val => val?.blocks[0]?.text.length || "Detail is required!"
               }}
               render={({ field: { value = null, onChange } }) =>
                 <>

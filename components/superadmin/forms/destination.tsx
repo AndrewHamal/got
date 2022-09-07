@@ -87,7 +87,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           </div>
         </div>
         <div className="col-md-6">
-          <label className="form-label">Location<span className='text-danger'> *</span></label>
+          <label className="form-label">Region<span className='text-danger'> *</span></label>
           <div className='custom-select'>
             {
               !countries && !countryError ? <Skeleton className='mt-3' active paragraph={false} />
@@ -143,7 +143,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
         </div>
         <div className='col-md-6'>
           <div className="form-group mb-3">
-            <label className="form-label">Price<span className='text-danger'> *</span></label>
+            <label className="form-label">Starting Price<span className='text-danger'> *</span></label>
             <input
               {...register("starting_from", { required: "Price is required!" })}
               aria-invalid={!!errors?.starting_from?.message}
@@ -160,7 +160,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
       </div>
       {/* 3rd row */}
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-12">
           <div className="form-group mb-3">
             <label className="form-label">Overview<span className='text-danger'> *</span></label>
             <Controller name="overview"
@@ -196,7 +196,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
             />
           </div>
         </div>
-        <div className="col-md-6">
+        {/* <div className="col-md-6">
           <div className="form-group mb-3">
             <label className="form-label">Itenaries<span className='text-danger'> *</span></label>
             <Controller name="itinarery"
@@ -231,7 +231,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
               }
             />
           </div>
-        </div>
+        </div> */}
       </div>
       {/* 4th row */}
       <div className="row">

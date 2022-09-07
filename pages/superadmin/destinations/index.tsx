@@ -4,7 +4,7 @@ import { cropTitle, responseErrorHandler } from '@/services/helper';
 import { Popconfirm, Skeleton, Table, Typography } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import Router from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 
@@ -71,6 +71,10 @@ const App: React.FC = () => {
       )
     }
   ];
+
+  useEffect(() => {
+    mutate();
+  }, [mutate])
 
   function deleteDestinationHandler(id: number) {
     mutate(data?.filter((dest: any) => dest.id !== id), false)

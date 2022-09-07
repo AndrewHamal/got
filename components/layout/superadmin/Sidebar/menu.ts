@@ -2,12 +2,12 @@ export const SuperadminSidebarMenus = [
     {
         title: "Dashboard",
         link: "/superadmin",
-        icon: "/admin/img/menu-icon/7.svg"
+        icon: "fas fa-tachometer-alt"
     },
     {
         title: "Miscs",
         parent: true,
-        icon: "/admin/img/menu-icon/7.svg",
+        icon: "fas fa-ellipsis-v",
         children: [
             {
                 title: "Country",
@@ -20,9 +20,69 @@ export const SuperadminSidebarMenus = [
         ]
     },
     {
+        title: "Destinations",
+        parent: true,
+        icon: "fas fa-map-pin",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/destinations/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/destinations"
+            },
+        ]
+    },
+    {
+        title: "Itinerary",
+        parent: true,
+        icon: "fas fa-road",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/itinerary/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/itinerary"
+            },
+        ]
+    },
+    {
+        title: "Packages",
+        parent: true,
+        icon: "fas fa-box-open",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/packages/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/packages"
+            },
+        ]
+    },
+    {
+        title: "FAQ",
+        parent: true,
+        icon: "fas fa-toggle-on",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/faq/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/faq"
+            },
+        ]
+    },
+    {
         title: "Blogs",
         parent: true,
-        icon: "/admin/img/menu-icon/7.svg",
+        icon: "fas fa-blog",
         children: [
             {
                 title: "Create",
@@ -39,54 +99,9 @@ export const SuperadminSidebarMenus = [
         ]
     },
     {
-        title: "Destinations",
+        title: "Profile",
         parent: true,
-        icon: "/admin/img/menu-icon/7.svg",
-        children: [
-            {
-                title: "Create",
-                link: "/superadmin/destinations/create"
-            },
-            {
-                title: "Listing",
-                link: "/superadmin/destinations"
-            },
-        ]
-    },
-    {
-        title: "Itinerary",
-        parent: true,
-        icon: "/admin/img/menu-icon/7.svg",
-        children: [
-            {
-                title: "Create",
-                link: "/superadmin/itinerary/create"
-            },
-            {
-                title: "Listing",
-                link: "/superadmin/itinerary"
-            },
-        ]
-    },
-    {
-        title: "Packages",
-        parent: true,
-        icon: "/admin/img/menu-icon/7.svg",
-        children: [
-            {
-                title: "Create",
-                link: "/superadmin/packages/create"
-            },
-            {
-                title: "Listing",
-                link: "/superadmin/packages"
-            },
-        ]
-    },
-    {
-        title: "FAQ",
-        parent: true,
-        icon: "/admin/img/menu-icon/7.svg",
+        icon: "fa fa-user-cog",
         children: [
             {
                 title: "Create",
@@ -97,39 +112,5 @@ export const SuperadminSidebarMenus = [
                 link: "/superadmin/faq"
             },
         ]
-    },
-    {
-        title: "Superadmins",
-        parent: true,
-        icon: "/admin/img/menu-icon/7.svg",
-        children: [
-            {
-                title: "Create",
-                link: "/superadmin/superadmin/create"
-            },
-            {
-                title: "Listing",
-                link: "/superadmin/superadmin"
-            },
-        ]
-    },
-    {
-        title: "Hotel Management",
-        parent: true,
-        icon: "/admin/img/menu-icon/7.svg",
-        children: [
-            {
-                title: "Create Admin",
-                link: "/superadmin/hotels/create"
-            },
-            {
-                title: "Listing",
-                link: "/superadmin/hotels"
-            },
-            {
-                title: "Pending Approval",
-                link: "/superadmin/hotels/approval"
-            },
-        ]
-    },
+    }
 ]

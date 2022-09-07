@@ -25,25 +25,6 @@ const TopBar = () => {
                             <li><a href="#!"><span>contact@godoftrek.com</span></a></li>
                         </ul>
                     </div>
-                    <div className="col-lg-6 col-md-6">
-                        <ul className="topbar-others-options">
-                            {/* <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Sign up</a></li> */}
-                            {/* <li>
-                                <div className="dropdown language-option">
-                                    <button className="dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <span className="lang-name"></span>
-                                    </button>
-                                    <div className="dropdown-menu language-dropdown-menu">
-                                        <a className="dropdown-item" href="#">USD</a>
-                                        <a className="dropdown-item" href="#">BD</a>
-                                        <a className="dropdown-item" href="#">URO</a>
-                                    </div>
-                                </div>
-                            </li> */}
-                        </ul>i
-                    </div>
                 </div>
             </div>
         </div>

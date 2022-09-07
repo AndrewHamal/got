@@ -1,4 +1,3 @@
-import { deleteDestination } from '@/api/superadmin/destination';
 import { deleteItinerary } from '@/api/superadmin/itinerary';
 import SuperadminLayout from '@/components/layout/superadmin';
 import { cropTitle, responseErrorHandler } from '@/services/helper';
@@ -24,7 +23,7 @@ const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter,
 
 const App: React.FC = () => {
 
-  const { data, mutate, error, isValidating } = useSWR('/admin/itinareries');
+  const { data, mutate, error, isValidating } = useSWR('/admin/packages');
 
   useEffect(() => {
     mutate();
@@ -32,27 +31,40 @@ const App: React.FC = () => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Day',
-      dataIndex: 'day',
+      title: 'Title',
+      dataIndex: 'name',
       // @ts-ignore
       sorter: (a, b) => a.name > b.name,
       filterSearch: true,
     },
     {
-      title: 'Title',
-      dataIndex: 'title',
+      title: 'Price',
+      dataIndex: 'price',
+      // @ts-ignore
+      sorter: (a, b) => a.name > b.name,
+      filterSearch: true,
+    },
+    {
+      title: 'Valid From',
+      dataIndex: 'valid_from',
       sorter: (a, b) => a.age - b.age,
+      filterSearch: true,
+    },
+    {
+      title: 'Valid Till',
+      dataIndex: 'valid_till',
+      sorter: (a, b) => a.age - b.age,
+      filterSearch: true,
+    },
+    {
+      title: 'Details',
+      dataIndex: 'details',
+      sorter: (a, b) => a.no_of_days - b.no_of_days,
       filterSearch: true,
     },
     {
       title: 'Destination',
       dataIndex: 'destination',
-      sorter: (a, b) => a.age - b.age,
-      filterSearch: true,
-    },
-    {
-      title: 'Content',
-      dataIndex: 'content',
       sorter: (a, b) => a.no_of_days - b.no_of_days,
       filterSearch: true,
     },
@@ -62,7 +74,7 @@ const App: React.FC = () => {
       width: '20%',
       render: id => (
         <>
-          <Typography.Link style={{ marginRight: 8 }} onClick={() => Router.push(`/superadmin/itinerary/edit/${id}`)}>
+          <Typography.Link style={{ marginRight: 8 }} onClick={() => Router.push(`/superadmin/packages/edit/${id}`)}>
             Edit
           </Typography.Link>
           <Popconfirm title="Are you sure to delete this destination?" onConfirm={() => deleteItineraryHandler(id)}>
@@ -86,7 +98,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <SuperadminLayout title="Itinerary">
+    <SuperadminLayout title="Packages">
       {
         !data && !error && isValidating ?
           <Skeleton active />
@@ -95,7 +107,8 @@ const App: React.FC = () => {
             columns={columns}
             dataSource={data?.map((dest: any) => ({
               ...dest,
-              content: cropTitle(JSON.parse(dest.content)?.blocks[0]?.text, 100) + '...',
+              price: `$${dest.price}`,
+              details: cropTitle(JSON.parse(dest.details)?.blocks[0]?.text, 2000) + '...',
               destination: <Typography.Link style={{ marginRight: 8 }} onClick={() => Router.push(`/superadmin/destinations/${dest.destination.id}`)}>
                 <i className='fa fa-link'></i> {dest.destination.name.toUpperCase()}
               </Typography.Link>

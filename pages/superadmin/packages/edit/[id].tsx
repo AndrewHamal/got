@@ -3,36 +3,38 @@ import { objectToFormData, responseErrorHandler } from '@/services/helper';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
-import CreateOrUpdateDestinationForm from '@/components/superadmin/forms/itinerary';
+import CreateOrUpdateDestinationForm from '@/components/superadmin/forms/package';
 import { Skeleton, UploadFile } from 'antd';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { updateItinerary } from '@/api/superadmin/itinerary';
+import { updatePackage } from '@/api/superadmin/package';
 
 function CreateHotels() {
   const router = useRouter();
   const { id } = router.query;
-  const { data, mutate } = useSWR(`/admin/itinarery/${id}`);
+  const { data, mutate } = useSWR(`/admin/package/${id}`);
   const [loading, setLoading] = useState(false);
   const formMethods = useForm();
 
   function createDestinationHandler(data: any) {
     const dto = {
       ...data,
-      day: data.day,
-      title: data.title,
-      content: JSON.stringify(data.content),
+      name: data.name,
+      price: data.price,
+      valid_from: data.valid_from,
+      valid_till: data.valid_till,
+      details: JSON.stringify(data.details),
       destination_id: data.destination_id,
     }
 
     const { files, ...destinationDTO } = dto;
 
     setLoading(true);
-    updateItinerary(Number(id), objectToFormData(destinationDTO))
+    updatePackage(Number(id), objectToFormData(destinationDTO))
       .then((destRes: any) => {
         // upload files
         toast.success(destRes.message);
-        router.push(`/superadmin/itinerary`);
+        router.push(`/superadmin/packages`);
       })
       .catch((err: any) => {
         responseErrorHandler(err, formMethods.setError);
@@ -46,9 +48,11 @@ function CreateHotels() {
 
     if (data) {
       formMethods.reset({
-        day: data.day,
-        title: data.title,
-        content: JSON.parse(data.content),
+        name: data.name,
+        price: data.price,
+        valid_from: data.valid_from,
+        valid_till: data.valid_till,
+        details: JSON.parse(data.details),
         destination_id: data.destination_id,
       })
     }
@@ -59,13 +63,13 @@ function CreateHotels() {
 
 
   return (
-    <SuperadminLayout title="Update Itinerary">
+    <SuperadminLayout title="Update Package">
       <div className="col-lg-10">
         <div className="white_card card_height_100 mb_30">
           <div className="white_card_header">
             <div className="box_header m-0">
               <div className="main-title">
-                <h3 className="m-0">Update Itinerary Form</h3>
+                <h3 className="m-0">Update Package Form</h3>
               </div>
             </div>
           </div>
