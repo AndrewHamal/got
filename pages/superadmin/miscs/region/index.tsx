@@ -1,13 +1,24 @@
 import { createRegion } from '@/api/superadmin/miscs';
 import SuperadminLayout from '@/components/layout/superadmin'
 import RegionList from '@/components/superadmin/miscs/region/table';
-import { capitalizeInitials, responseErrorHandler } from '@/services/helper';
-import { Button, Select, Skeleton } from 'antd';
+import { capitalizeInitials, objectToFormData, responseErrorHandler } from '@/services/helper';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, message, Modal, Select, Skeleton, Upload } from 'antd';
+import { RcFile, UploadFile } from 'antd/lib/upload';
 import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 const { Option } = Select;
+
+
+const getBase64 = (file: RcFile): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = error => reject(error);
+  });
 
 function CreateRegions() {
   const [loading, setLoading] = useState(false);
@@ -16,9 +27,37 @@ function CreateRegions() {
 
   const { reset, control, register, formState: { errors }, handleSubmit, setError } = useForm();
 
+  // image upload
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+  const handleCancel = () => setPreviewVisible(false);
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj as RcFile);
+    }
+
+    setPreviewImage(file.url || (file.preview as string));
+    setPreviewVisible(true);
+    setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
+  };
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+
   function createHotelHandler(data: any) {
+
+    const dto = {
+      ...data,
+      name: capitalizeInitials(data.name),
+      image: data.image[0].originFileObj
+    }
+
     setLoading(true);
-    createRegion({ ...data, name: capitalizeInitials(data.name) })
+    createRegion(objectToFormData(dto))
       .then((res: any) => {
         toast.success(res.message);
         reset();
@@ -44,7 +83,7 @@ function CreateRegions() {
               <div className="form-group mb-3">
                 <div className="row">
                   <div className="col">
-                    <label className="form-label">Region Name</label>
+                    <label className="form-label">Region Name<span className='text-danger'> *</span></label>
                     <input
                       {...register("name", { required: "Region Name is required!" })}
                       aria-invalid={!!errors?.name?.message}
@@ -58,7 +97,7 @@ function CreateRegions() {
                     }
                   </div>
                   <div className="col">
-                    <label className="form-label">Country</label>
+                    <label className="form-label">Country<span className='text-danger'> *</span></label>
                     <div className='custom-select'>
                       {
                         !countries && !countryError ? <Skeleton className='mt-3' active paragraph={false} />
@@ -94,6 +133,38 @@ function CreateRegions() {
                     </div>
                   </div>
                 </div>
+                <div className="form-group my-4">
+                  <label className="form-label">Image<span className='text-danger'> *</span></label>
+                  <Controller
+                    control={control}
+                    name="image"
+                    rules={{ required: "Image is required!" }}
+                    render={({ field: { onChange, value } }) =>
+                      <>
+                        <Upload
+                          multiple={false}
+                          accept='image/*'
+                          beforeUpload={beforeUpload}
+                          listType="picture-card"
+                          fileList={value}
+                          onPreview={handlePreview}
+                          onChange={({ fileList }: any) => onChange(fileList)}
+                        >
+                          {value?.length ? null : uploadButton}
+                        </Upload>
+                        <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                        </Modal>
+                        {errors?.image?.message &&
+                          <div className="text-danger">
+                            {errors?.image?.message + ""}
+                          </div>
+                        }
+                      </>
+                    }
+                  />
+                </div>
               </div>
               <Button loading={loading} htmlType="submit" className="btn btn-admin-primary">Submit</Button>
             </form>
@@ -105,6 +176,21 @@ function CreateRegions() {
       </div>
     </SuperadminLayout>
   )
+
+  function beforeUpload(file: RcFile) {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('You can only upload JPG/PNG file!');
+      return Upload.LIST_IGNORE;
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('Image must smaller than 2MB!');
+      return Upload.LIST_IGNORE;
+    }
+    return isJpgOrPng && isLt2M;
+  };
+
 }
 
 export default CreateRegions

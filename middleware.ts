@@ -40,6 +40,8 @@ export const config = {
     '/contact',
     '/register',
     '/destinations/:path',
+    '/blogs',
+    '/blogs/:path',
 
     // admin routes
     '/superadmin/login',
