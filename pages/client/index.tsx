@@ -1,6 +1,8 @@
 // @ts-nocheck
 import ClientLayout from "@/components/layout/client/ClientLayout";
+import { Carousel } from "antd";
 import React, { useEffect } from "react";
+import useSWR from "swr";
 
 function Index() {
   useEffect(() => {
@@ -52,24 +54,29 @@ function Index() {
     });
   }, []);
 
+  const { data:destinationHeader } = useSWR('user/destinations-header');
+
   return (
     <ClientLayout>
       <div>
         {/* Banner Area */}
-        <section className="top_home_wrapper">
-          <section id="home_one_banner">
-            <div className="container mt-5">
-              <div className="row align-items-center mt-5">
-                <div className="col-lg-12">
-                  <div className="banner_one_text">
-                    <h1>Explore the best destinations</h1>
-                    <h3 className="fw-light">Find awesome flights, hotel, tour, car and packages</h3>
+        <Carousel dotPosition={'right'} effect="fade">
+          {
+              destinationHeader?.map((res: any, key: number) => (
+                // eslint-disable-next-line react/jsx-key
+                <div className="carousel" key={key}>
+                  <div className="overlay"></div>
+                  <img src={res?.file_slider?.full_path} className="d-block w-100" alt={res?.name}/>
+                  <div className="carousel-caption d-none d-md-block">
+                    <h2 className="text-white font-38">{ res?.name }</h2>
+                    <p className="heading-2 text-faded">{ JSON.parse(res?.overview)?.blocks[0]?.text?.substring(0, 130) }...</p>
+
+                    <button className="btn btn-admin-primary mb-5 mt-4">Explore Trip <i className="fa fa-chevron-right"></i></button>
                   </div>
                 </div>
-              </div>
-            </div>
-          </section>
-        </section>
+              ))
+            }
+        </Carousel>
 
         {/* imagination Area */}
         <section id="go_beyond_area" className="section_padding_top">
@@ -131,6 +138,7 @@ function Index() {
             </div>
           </div>
         </section>
+
         {/* Top destinations */}
         <section id="top_destinations" className="section_padding_top">
           <div className="container">

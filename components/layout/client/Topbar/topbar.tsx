@@ -3,9 +3,14 @@ import React from "react";
 import LogoImage from "@/public/client/assets/img/logoN.png";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import useSWR from "swr";
+import { Skeleton } from "antd";
 
 const TopBar = () => {
   const router = useRouter();
+  const { data: countries, isValidating } = useSWR('user/countries');
+
+  if(!countries && isValidating) return <Skeleton/>
 
   return (
     <>
@@ -72,10 +77,68 @@ const TopBar = () => {
                         <i className="fas fa-angle-down" />
                       </a>
                       <ul className="dropdown-menu">
-                        <li className="nav-item">
+
+                        {
+                          countries?.map((res: any, key: number) => (
+                            // eslint-disable-next-line react/jsx-key
+                            <li className="nav-item" key={key}>
+                              <a href="tour-search.html" className="nav-link">
+                                {res.name}
+                              </a>
+                              <ul className="dropdown-menu">
+
+                                {
+                                  res?.regions?.map((resRegion: any, key: number) => (
+                                    // eslint-disable-next-line react/jsx-key
+                                    <li className="nav-item" key={key}>
+                                      <a href="tour-search.html" className="nav-link">
+                                        {resRegion.name}
+                                      </a>
+
+                                      <ul className="dropdown-menu">
+                                          { 
+                                            resRegion?.destinatoins?.map((resDes: any, key: number) => (
+                                              // eslint-disable-next-line react/jsx-key
+                                              <li className="nav-item" key={key}>
+                                                <a href="tour-search.html" className="nav-link">
+                                                  {resDes.name} - <span className="text-danger">{resDes.no_of_days} days</span>
+                                                </a>
+                                            </li>
+                                            ))
+                                          }
+                                      </ul>
+                                  </li>
+                                  ))
+                                }
+                              </ul>
+                            </li>
+                          ))
+                        }
+
+                        {/* <li className="nav-item">
                           <a href="tour-search.html" className="nav-link">
                             Tour
                           </a>
+                          <ul className="dropdown-menu">
+                            <li className="nav-item">
+                              <a href="tour-search.html" className="nav-link">
+                                Tour
+                              </a>
+                            </li>
+                            <li className="nav-item">
+                              <a href="tour-details.html" className="nav-link">
+                                Tour Details
+                              </a>
+                            </li>
+                            <li className="nav-item">
+                              <a
+                                href="tour-booking-submission.html"
+                                className="nav-link"
+                              >
+                                Tour Booking
+                              </a>
+                            </li>
+                          </ul>
                         </li>
                         <li className="nav-item">
                           <a href="tour-details.html" className="nav-link">
@@ -102,7 +165,7 @@ const TopBar = () => {
                           >
                             Destination Details
                           </a>
-                        </li>
+                        </li> */}
                       </ul>
                     </li>
 

@@ -4227,3 +4227,58 @@ textarea {
 .ml-auto {
   margin-left: auto;
 }
+
+.carousel img{
+  height: 600px;
+  width: 100vw;
+  object-fit: cover;
+  border-radius: 0!important;
+  object-position: top;
+}
+
+.overlay {
+  background: linear-gradient(100deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.55) 25%);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.text-faded {
+  color: #a6b1df;
+}
+
+.slick-slide {
+  border: 0!important;
+}
+
+.ant-carousel-vertical .slick-dots-right {
+  right: 25px!important;
+  left: auto;
+}
+
+.carousel-section * {
+  border-radius: 0!important;
+}
+
+.carousel-section {
+  overflow: hidden;
+}
+
+.heading-2 {
+  font-size: 18px;
+}
+
+.carousel-control-next, .carousel-control-prev {
+  width: 7%!important;
+}
+
+.carousel-caption {
+  top: 38%!important;
+  position: absolute;
+}
+
+.font-38 {
+  font-size: 38px;
+}
