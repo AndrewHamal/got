@@ -11,11 +11,14 @@ const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod: any) => mod.Editor),
   { ssr: false }
 );
+import Moment from 'react-moment';
+import { cropTitle } from '@/services/helper';
 
 function DestinationById() {
   const router = useRouter();
   const { id } = router.query;
 
+  const { data: blogs } = useSWR(`/user/blogs`);
   const { data, error } = useSWR(id ? `/user/blog/${id}` : null);
 
   const loading = !data && !error;
@@ -45,7 +48,7 @@ function DestinationById() {
                         <div className="tour_details_heading_wrapper">
                           <div className="tour_details_top_heading">
                             <h2>{data.title}</h2>
-                            <p>{data.updated_at}</p>
+                            <p><Moment fromNow>{data.updated_at}</Moment></p>
                           </div>
                         </div>
                         <div className="tour_details_img_wrapper">
@@ -68,49 +71,25 @@ function DestinationById() {
                         </div>
                       </div>
                     </div>
+                    {/* Other Blogs */}
                     <div className="col-lg-4">
-                      <div className="tour_details_right_sidebar_wrapper">
-                        <div className="tour_detail_right_sidebar">
-                          <div className="tour_details_right_boxed">
-                            <div className="tour_details_right_box_heading">
-                              <h3>Other Blogs</h3>
-                            </div>
-                            <div className="valid_date_area">
-                              <div className="valid_date_area_one">
-                                <h5>Valid from</h5>
-                                <p>01 Feb 2022</p>
-                              </div>
-                              <div className="valid_date_area_one">
-                                <h5>Valid till</h5>
-                                <p>15 Feb 2022</p>
-                              </div>
-                            </div>
-                            <div className="tour_package_details_bar_list">
-                              <h5>Package details</h5>
-                              <ul>
-                                <li><i className="fas fa-circle" />Buffet breakfast as per the Itinerary</li>
-                                <li><i className="fas fa-circle" />Visit eight villages showcasing Polynesian
-                                  culture
-                                </li>
-                                <li><i className="fas fa-circle" />Complimentary Camel safari, Bonfire,</li>
-                                <li><i className="fas fa-circle" />All toll tax, parking, fuel, and driver
-                                  allowances
-                                </li>
-                                <li><i className="fas fa-circle" />Comfortable and hygienic vehicle</li>
-                              </ul>
-                            </div>
-                            <div className="tour_package_details_bar_price">
-                              <h5>Price</h5>
-                              <div className="tour_package_bar_price">
-                                <h6><del>$ 35,500</del></h6>
-                                <h3>$ 30,500 <sub>/Per serson</sub> </h3>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="tour_select_offer_bar_bottom">
-                            <button className="btn btn_theme btn_md w-100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Select
-                              offer</button>
-                          </div>
+                      <div className="news_details_rightbar">
+                        <div className="news_details_right_item">
+                          <h3>Other Blogs</h3>
+                          {
+                            !blogs ? <Skeleton active />
+                              :
+                              blogs?.data.map((blog: any) =>
+                                <div className="recent_news_item" key={blog.id}>
+                                  <div className="recent_news_img">
+                                    <img src={blog.full_path} alt="img" className='w-100' />
+                                  </div>
+                                  <div className="recent_news_text">
+                                    <h5><Link href={`/blogs/${blog.id}`}>{cropTitle(blog.title, 20)}</Link></h5>
+                                    <p><Link href={`/blogs/${blog.id}`}><Moment fromNow>{blog.updated_at}</Moment></Link></p>
+                                  </div>
+                                </div>
+                              )}
                         </div>
                       </div>
                     </div>

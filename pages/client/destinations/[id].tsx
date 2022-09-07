@@ -231,7 +231,7 @@ function DestinationById() {
                                     setPackDrawer(pack);
                                   }}
                                 >
-                                  Contact
+                                  Book Now
                                 </button>
                               </div>
                             </div>
