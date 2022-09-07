@@ -2,6 +2,7 @@ import useUser from '@/services/hooks/useUser'
 import React from 'react'
 import { deleteCookie } from 'cookies-next';
 import { TOKEN_KEY, USER_TYPE_KEY } from '@/services/constants';
+import Link from 'next/link';
 
 function SuperadminTopbar() {
 
@@ -128,11 +129,11 @@ function SuperadminTopbar() {
                                 <img src="/admin/img/client_img.png" alt="#" />
                                 <div className="profile_info_iner">
                                     <div className="profile_author_name">
-                                        <p>Neurologist </p>
+                                        <p>Admin </p>
                                         <h5>Dr. Robar Smith</h5>
                                     </div>
                                     <div className="profile_info_details">
-                                        <a href="#">My Profile </a>
+                                        <Link href="/superadmin/profile">My Profile </Link>
                                         <a href="#">Settings</a>
                                         <div onClick={logoutHandler}>
                                             <a href="#">Log Out </a>

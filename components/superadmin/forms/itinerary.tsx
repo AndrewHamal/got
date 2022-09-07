@@ -28,7 +28,7 @@ interface IProps {
   submitHandler: (data: object) => void;
 }
 
-function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: IProps) {
+function CreateOrUpdateItenaryForm({ submitHandler, formMethods, loading }: IProps) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -162,11 +162,11 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           </div>
         </div>
       </div>
-  
+
       <Button loading={loading} htmlType="submit" className="btn btn-admin-primary">Submit</Button>
     </form>
 
   )
 }
 
-export default CreateOrUpdateDestinationForm
+export default CreateOrUpdateItenaryForm
