@@ -26,7 +26,6 @@ export async function middleware(request: NextRequest) {
   }
 
   url.pathname = `client${url.pathname}`;
-  console.log(url)
 
   return NextResponse.rewrite(url);
 
