@@ -1,11 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import CommonBanner from '@/components/common/Common_Banner';
 import ClientLayout from '@/components/layout/client/ClientLayout'
-import { Carousel, Skeleton, Tabs } from 'antd';
+import { Carousel, Drawer, Modal, Skeleton, Tabs } from 'antd';
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState } from 'react'
 import useSWR from 'swr';
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod: any) => mod.Editor),
@@ -16,13 +15,19 @@ function DestinationById() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data, error } = useSWR(id ? `/user/destination/${id}` : null);
+  const [packDrawer, setPackDrawer] = useState<any>(false);
 
+  const { data, error } = useSWR(id ? `/user/destination/${id}` : null);
   const loading = !data && !error;
 
   return (
     <ClientLayout>
       <div>
+        <Drawer style={{ top: '90px' }} title={packDrawer?.name} placement="right" onClose={() => setPackDrawer(null)} open={packDrawer} visible={!!packDrawer}>
+          <p>{packDrawer?.name}</p>
+          <p>{packDrawer?.name}</p>
+          <p>{packDrawer?.name}</p>
+        </Drawer>
         <CommonBanner
           loading={loading}
           breadcrumb={[
@@ -32,6 +37,7 @@ function DestinationById() {
           imageUrl={data?.files[0]?.full_path}
           title={data?.name}
         />
+
         {
           loading ? <div className="p-5"><Skeleton active /></div>
             :
@@ -175,132 +181,60 @@ function DestinationById() {
                     </div>
                     <div className="col-lg-4">
                       <div className="tour_details_right_sidebar_wrapper">
-                        <div className="tour_detail_right_sidebar">
-                          <div className="tour_details_right_boxed">
-                            <div className="tour_details_right_box_heading">
-                              <h3>Standard package</h3>
-                            </div>
-                            <div className="valid_date_area">
-                              <div className="valid_date_area_one">
-                                <h5>Valid from</h5>
-                                <p>01 Feb 2022</p>
+                        {
+                          data.packages.map((pack: any) =>
+                            <div className="tour_detail_right_sidebar" key={pack.id}>
+                              <div className="tour_details_right_boxed">
+                                <div className="tour_details_right_box_heading">
+                                  <h3>{pack.name}</h3>
+                                </div>
+                                <div className="valid_date_area">
+                                  {
+                                    pack.valid_from ?
+                                      <div className="valid_date_area_one">
+                                        <h5>Valid from</h5>
+                                        <p>{pack.valid_from}</p>
+                                      </div>
+                                      : null
+                                  }
+                                  {
+                                    pack.valid_till ?
+                                      <div className="valid_date_area_one">
+                                        <h5>Valid Till</h5>
+                                        <p>{pack.valid_till}</p>
+                                      </div>
+                                      : null
+                                  }
+                                </div>
+                                <div className="tour_package_details_bar_list">
+                                  <h5>Package details</h5>
+                                  <Editor
+                                    //@ts-ignore
+                                    toolbarHidden
+                                    contentState={JSON.parse(pack.details)}
+                                    readOnly
+                                  />
+                                </div>
+                                <div className="tour_package_details_bar_price">
+                                  <h5>Price</h5>
+                                  <div className="tour_package_bar_price">
+                                    <h3>${pack.price} <sub>/Per person</sub> </h3>
+                                  </div>
+                                </div>
                               </div>
-                              <div className="valid_date_area_one">
-                                <h5>Valid till</h5>
-                                <p>15 Feb 2022</p>
-                              </div>
-                            </div>
-                            <div className="tour_package_details_bar_list">
-                              <h5>Package details</h5>
-                              <ul>
-                                <li><i className="fas fa-circle" />Buffet breakfast as per the Itinerary</li>
-                                <li><i className="fas fa-circle" />Visit eight villages showcasing Polynesian
-                                  culture
-                                </li>
-                                <li><i className="fas fa-circle" />Complimentary Camel safari, Bonfire,</li>
-                                <li><i className="fas fa-circle" />All toll tax, parking, fuel, and driver
-                                  allowances
-                                </li>
-                                <li><i className="fas fa-circle" />Comfortable and hygienic vehicle</li>
-                              </ul>
-                            </div>
-                            <div className="tour_package_details_bar_price">
-                              <h5>Price</h5>
-                              <div className="tour_package_bar_price">
-                                <h6><del>$ 35,500</del></h6>
-                                <h3>$ 30,500 <sub>/Per serson</sub> </h3>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="tour_select_offer_bar_bottom">
-                            <button className="btn btn_theme btn_md w-100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Select
-                              offer</button>
-                          </div>
-                        </div>
-                        <div className="tour_detail_right_sidebar">
-                          <div className="tour_details_right_boxed">
-                            <div className="tour_details_right_box_heading">
-                              <h3>Deluxe package</h3>
-                            </div>
-                            <div className="valid_date_area">
-                              <div className="valid_date_area_one">
-                                <h5>Valid from</h5>
-                                <p>01 Feb 2022</p>
-                              </div>
-                              <div className="valid_date_area_one">
-                                <h5>Valid till</h5>
-                                <p>15 Feb 2022</p>
+                              <div className="tour_select_offer_bar_bottom">
+                                <button className="btn btn_theme btn_md w-100"
+                                  onClick={e => {
+                                    e.preventDefault();
+                                    setPackDrawer(pack);
+                                  }}
+                                >
+                                  Contact
+                                </button>
                               </div>
                             </div>
-                            <div className="tour_package_details_bar_list">
-                              <h5>Package details</h5>
-                              <ul>
-                                <li><i className="fas fa-circle" />Buffet breakfast as per the Itinerary</li>
-                                <li><i className="fas fa-circle" />Visit eight villages showcasing Polynesian
-                                  culture
-                                </li>
-                                <li><i className="fas fa-circle" />Complimentary Camel safari, Bonfire,</li>
-                                <li><i className="fas fa-circle" />All toll tax, parking, fuel, and driver
-                                  allowances
-                                </li>
-                                <li><i className="fas fa-circle" />Comfortable and hygienic vehicle</li>
-                              </ul>
-                            </div>
-                            <div className="tour_package_details_bar_price">
-                              <h5>Price</h5>
-                              <div className="tour_package_bar_price">
-                                <h6><del>$ 35,500</del></h6>
-                                <h3>$ 30,500 <sub>/Per serson</sub> </h3>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="tour_select_offer_bar_bottom">
-                            <button className="btn btn_theme btn_md w-100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Select
-                              offer</button>
-                          </div>
-                        </div>
-                        <div className="tour_detail_right_sidebar">
-                          <div className="tour_details_right_boxed">
-                            <div className="tour_details_right_box_heading">
-                              <h3>Super deluxe package</h3>
-                            </div>
-                            <div className="valid_date_area">
-                              <div className="valid_date_area_one">
-                                <h5>Valid from</h5>
-                                <p>01 Feb 2022</p>
-                              </div>
-                              <div className="valid_date_area_one">
-                                <h5>Valid till</h5>
-                                <p>15 Feb 2022</p>
-                              </div>
-                            </div>
-                            <div className="tour_package_details_bar_list">
-                              <h5>Package details</h5>
-                              <ul>
-                                <li><i className="fas fa-circle" />Buffet breakfast as per the Itinerary</li>
-                                <li><i className="fas fa-circle" />Visit eight villages showcasing Polynesian
-                                  culture
-                                </li>
-                                <li><i className="fas fa-circle" />Complimentary Camel safari, Bonfire,</li>
-                                <li><i className="fas fa-circle" />All toll tax, parking, fuel, and driver
-                                  allowances
-                                </li>
-                                <li><i className="fas fa-circle" />Comfortable and hygienic vehicle</li>
-                              </ul>
-                            </div>
-                            <div className="tour_package_details_bar_price">
-                              <h5>Price</h5>
-                              <div className="tour_package_bar_price">
-                                <h6><del>$ 35,500</del></h6>
-                                <h3>$ 30,500 <sub>/Per serson</sub> </h3>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="tour_select_offer_bar_bottom">
-                            <button className="btn btn_theme btn_md w-100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Select
-                              offer</button>
-                          </div>
-                        </div>
+                          )
+                        }
                         <div className="tour_detail_right_sidebar">
                           <div className="tour_details_right_boxed">
                             <div className="tour_details_right_box_heading">
@@ -383,9 +317,9 @@ function DestinationById() {
                         <div className="all_review_text">
                           <img src="assets/img/review/review1.png" alt="img" />
                           <h4>Manresh Chandra</h4>
-                          <p>" Loved the overall tour for all 6 days covering jaipur jodhpur and jaisalmer. worth ur
+                          <p>{` Loved the overall tour for all 6 days covering jaipur jodhpur and jaisalmer. worth ur
                             money for sure. thanks. Driver was very good and polite and safe driving for all 6 days.
-                            on time pickup and drop overall. Thanks for it. "</p>
+                            on time pickup and drop overall. Thanks for it. `}</p>
                         </div>
                         <div className="all_review_small_img">
                           <div className="all_review_small_img_item">
@@ -429,9 +363,9 @@ function DestinationById() {
                         <div className="all_review_text">
                           <img src="assets/img/review/review2.png" alt="img" />
                           <h4>Michel falak</h4>
-                          <p>" Loved the overall tour for all 6 days covering jaipur jodhpur and jaisalmer. worth ur
+                          <p>{` Loved the overall tour for all 6 days covering jaipur jodhpur and jaisalmer. worth ur
                             money for sure. thanks. Driver was very good and polite and safe driving for all 6 days.
-                            on time pickup and drop overall. Thanks for it. "</p>
+                            on time pickup and drop overall. Thanks for it. `}</p>
                         </div>
                       </div>
                     </div>
@@ -455,9 +389,9 @@ function DestinationById() {
                         <div className="all_review_text">
                           <img src="assets/img/review/review3.png" alt="img" />
                           <h4>Chester dals</h4>
-                          <p>" Loved the overall tour for all 6 days covering jaipur jodhpur and jaisalmer. worth ur
+                          <p>{` Loved the overall tour for all 6 days covering jaipur jodhpur and jaisalmer. worth ur
                             money for sure. thanks. Driver was very good and polite and safe driving for all 6 days.
-                            on time pickup and drop overall. Thanks for it. "</p>
+                            on time pickup and drop overall. Thanks for it. `}</p>
                         </div>
                         <div className="all_review_small_img">
                           <div className="all_review_small_img_item">
@@ -495,9 +429,9 @@ function DestinationById() {
                         <div className="all_review_text">
                           <img src="assets/img/review/review4.png" alt="img" />
                           <h4>Casper mike</h4>
-                          <p>" Loved the overall tour for all 6 days covering jaipur jodhpur and jaisalmer. worth ur
+                          <p>{` Loved the overall tour for all 6 days covering jaipur jodhpur and jaisalmer. worth ur
                             money for sure. thanks. Driver was very good and polite and safe driving for all 6 days.
-                            on time pickup and drop overall. Thanks for it. "</p>
+                            on time pickup and drop overall. Thanks for it. `}</p>
                         </div>
                         <div className="all_review_small_img">
                           <div className="all_review_small_img_item">
@@ -532,9 +466,9 @@ function DestinationById() {
                         <div className="all_review_text">
                           <img src="assets/img/review/review5.png" alt="img" />
                           <h4>Jason bruno</h4>
-                          <p>" Loved the overall tour for all 6 days covering jaipur jodhpur and jaisalmer. worth ur
+                          <p>{` Loved the overall tour for all 6 days covering jaipur jodhpur and jaisalmer. worth ur
                             money for sure. thanks. Driver was very good and polite and safe driving for all 6 days.
-                            on time pickup and drop overall. Thanks for it. "</p>
+                            on time pickup and drop overall. Thanks for it. `}</p>
                         </div>
                       </div>
                     </div>

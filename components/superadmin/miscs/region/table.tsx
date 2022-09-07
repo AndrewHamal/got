@@ -1,7 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import { deleteRegion, updateRegion } from '@/api/superadmin/miscs';
-import { capitalizeInitials, responseErrorHandler } from '@/services/helper';
-import { Form, Input, Popconfirm, Skeleton, Table, Typography } from 'antd';
-import React, { useState } from 'react';
+import { capitalizeInitials, objectToFormData, responseErrorHandler } from '@/services/helper';
+import { PlusOutlined } from '@ant-design/icons';
+import { Form, Input, message, Modal, Popconfirm, Skeleton, Table, Typography, Upload } from 'antd';
+import { RcFile, UploadFile } from 'antd/lib/upload';
+import React, { ReactElement, useRef, useState } from 'react';
+import { Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 
@@ -9,6 +13,7 @@ interface Item {
   sn: string;
   id: number;
   country?: any;
+  full_path: string;
   name: string;
 }
 
@@ -54,11 +59,23 @@ const EditableCell: React.FC<EditableCellProps> = ({
   );
 };
 
+const getBase64 = (file: RcFile): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = error => reject(error);
+  });
+
 const RegionList: React.FC = () => {
   const { data, mutate, error } = useSWR('/admin/regions');
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number | null | any>(null);
   const isEditing = (record: Item) => record.id === editingKey;
+
+  // image upload
+  const [uploadImageId, setUploadImageId] = useState<number | null | any>(null);
+  const imageUploadRef = useRef<any>();
 
   const edit = (record: Partial<Item>) => {
     form.setFieldsValue(record);
@@ -73,7 +90,6 @@ const RegionList: React.FC = () => {
     {
       title: 'S.N',
       dataIndex: 'sn',
-      width: '25%'
     },
     {
       title: 'Region Name',
@@ -84,9 +100,29 @@ const RegionList: React.FC = () => {
     {
       title: 'Country',
       dataIndex: 'country',
-      width: '25%',
       editable: false,
       render: (_: any, record: Item) => record?.country?.name
+    },
+    {
+      title: 'Image',
+      dataIndex: 'image',
+      width: '40%',
+      editable: true,
+      render: (_: any, record: Item) => (
+        <>
+          <img
+            onClick={() => {
+              setUploadImageId(record.id);
+              imageUploadRef?.current?.click();
+            }}
+            className='cursor-pointer'
+            style={{ height: "100px", width: "100%", objectFit: "cover" }}
+            src={record.full_path ?? "/client/assets/img/imageplaceholder.jpg"}
+            alt={"placeholder"}
+          />
+
+        </>
+      )
     },
     {
       title: 'Action',
@@ -122,6 +158,7 @@ const RegionList: React.FC = () => {
     if (!col.editable) {
       return col;
     }
+
     return {
       ...col,
       onCell: (record: Item) => ({
@@ -129,33 +166,56 @@ const RegionList: React.FC = () => {
         inputType: 'text',
         dataIndex: col.dataIndex,
         title: col.title,
-        editing: isEditing(record),
+        editing: col.dataIndex === "name" ? isEditing(record) : null,
       }),
     };
   });
 
+  function uploadImageHandler(file: any) {
+    if (file) {
+      // update locally
+      mutate(data?.map((region: any) => {
+        if (region.id === uploadImageId) {
+          return ({
+            ...region,
+            full_path: URL.createObjectURL(file),
+          })
+        } else {
+          return region
+        }
+      }), false)
+      updateRegion(uploadImageId, objectToFormData({ image: file }))
+        .then((res: any) => {
+          toast.success(res.message);
+        })
+        .catch(responseErrorHandler)
+        .finally(mutate)
+    }
+
+  }
+
   function updateRegionHandler(id: any) {
     const updatedName = capitalizeInitials(form.getFieldValue("name"));
+
     setEditingKey(null);
 
     // update locally
-    mutate(data?.map((country: any) => {
-      if (country.id === id) {
+    mutate(data?.map((region: any) => {
+      if (region.id === id) {
         return ({
-          ...country,
+          ...region,
           name: updatedName,
         })
       } else {
-        return country
+        return region
       }
     }), false)
-    updateRegion(id, updatedName)
+    updateRegion(id, { name: updatedName })
       .then((res: any) => {
         toast.success(res.message);
       })
       .catch(responseErrorHandler)
       .finally(mutate)
-
   }
 
   function deleteRegionHandler(record: any) {
@@ -172,26 +232,56 @@ const RegionList: React.FC = () => {
   }
 
   return (
-    <Form form={form} component={false}>
-      {
-        !data && !error ? <Skeleton active />
-          :
-          <Table
-            pagination={false}
-            components={{
-              body: {
-                cell: EditableCell,
-              },
-            }}
-            bordered
-            // @ts-ignore
-            dataSource={data?.map((country, i) => ({ ...country, sn: i + 1 }))}
-            columns={mergedColumns}
-            rowClassName="editable-row"
-          />
-      }
-    </Form>
+    <>
+      <Form form={form} component={false}>
+        {
+          !data && !error ? <Skeleton active />
+            :
+            <Table
+              pagination={false}
+              components={{
+                body: {
+                  cell: EditableCell,
+                },
+              }}
+              bordered
+              // @ts-ignore
+              dataSource={data?.map((country, i) => ({
+                ...country,
+                sn: i + 1
+              }))}
+              columns={mergedColumns}
+              rowClassName="editable-row"
+            />
+        }
+
+      </Form>
+      <input
+        accept='image/*'
+        type={"file"}
+        style={{ visibility: "hidden" }}
+        ref={imageUploadRef}
+        //  @ts-ignore  
+        onChange={e => uploadImageHandler(e?.target?.files[0])}
+      />
+    </>
   );
 };
+
+
+function beforeUpload(file: RcFile) {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  if (!isJpgOrPng) {
+    message.error('You can only upload JPG/PNG file!');
+    return Upload.LIST_IGNORE;
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+    return Upload.LIST_IGNORE;
+  }
+  return isJpgOrPng && isLt2M;
+};
+
 
 export default RegionList;
