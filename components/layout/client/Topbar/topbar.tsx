@@ -139,7 +139,7 @@ const TopBar = () => {
                       </div>
                     </li>
 
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                       <a href="#" className="nav-link">
                         Experience
                         <i className="fas fa-angle-down" />
@@ -162,7 +162,7 @@ const TopBar = () => {
                           </a>
                         </li>
                       </ul>
-                    </li>
+                    </li> */}
 
                     <li className="nav-item">
                       <Link href="/blogs" className="nav-link">
@@ -172,7 +172,19 @@ const TopBar = () => {
 
                     <li className="nav-item">
                       <Link href="/blogs" className="nav-link">
-                        Offers
+                        Packages
+                      </Link>
+                    </li>
+
+                    <li className="nav-item">
+                      <Link href="/our_team" className="nav-link">
+                        Our Team
+                      </Link>
+                    </li>
+
+                    <li className="nav-item">
+                      <Link href="/videos" className="nav-link">
+                        Videos
                       </Link>
                     </li>
                     <li className="nav-item">

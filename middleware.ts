@@ -42,6 +42,8 @@ export const config = {
     '/destinations/:path',
     '/blogs',
     '/blogs/:path',
+    '/our_team',
+    '/videos',
 
     // admin routes
     '/superadmin/login',

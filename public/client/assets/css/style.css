@@ -2625,6 +2625,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .news_item_img img {
+  object-fit: cover;
+  height: 270px;
   width: 100%;
 }
 
