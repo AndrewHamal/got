@@ -13,7 +13,9 @@ function Index() {
   const destLoading = !destinationHeader && !destinationHeaderError;
   const { data:countries } = useSWR('user/countries');
   const { data:blogs } = useSWR('user/blogs');
+  const { data:regions } = useSWR('user/region-chunk');
   const [selectedCountry, setSelectedCountry] = useState();
+  let chunked = []
 
   useEffect(() => {
     $(".promotional_tour_slider").owlCarousel({
@@ -73,26 +75,26 @@ function Index() {
     <ClientLayout>
       <div>
         {destLoading ?
-          <img style={{ height: "600px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
-          :
-          // Banner Area 
-          <Carousel dotPosition={'right'} effect="fade">
-            {
-              destinationHeader?.map((res: any, key: number) => (
-                // eslint-disable-next-line react/jsx-key
-                <div className="carousel" key={key}>
-                  <div className="overlay"></div>
-                  <img src={res?.file_slider?.full_path ?? "/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={res?.name} />
-                  <div className="carousel-caption d-none d-md-block">
-                    <h2 className="text-white font-38">{res?.name}</h2>
-                    <p className="heading-2 text-faded">{JSON.parse(res?.overview)?.blocks[0]?.text?.substring(0, 130)}...</p>
+        <img style={{ height: "600px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
+        :
+        // Banner Area 
+        <Carousel dotPosition={'right'} effect="fade">
+          {
+            destinationHeader?.map((res: any, key: number) => (
+              // eslint-disable-next-line react/jsx-key
+              <div className="carousel" key={key}>
+                <div className="overlay"></div>
+                <img src={res?.file_slider?.full_path ?? "/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={res?.name} />
+                <div className="carousel-caption d-none d-md-block">
+                  <h2 className="text-white font-38">{res?.name}</h2>
+                  <p className="heading-2 text-faded">{JSON.parse(res?.overview)?.blocks[0]?.text?.substring(0, 130)}...</p>
 
-                    <button className="btn btn-admin-primary mb-5 mt-4">Explore Trip <i className="fa fa-chevron-right"></i></button>
-                  </div>
+                  <button className="btn btn-admin-primary mb-5 mt-4">Explore Trip <i className="fa fa-chevron-right"></i></button>
                 </div>
-              ))
-            }
-          </Carousel>}
+              </div>
+            ))
+          }
+        </Carousel>}
 
         <section id="theme_search_form">
           <div className="container">
@@ -889,6 +891,7 @@ function Index() {
               </div>
             </div>
             <div className="row">
+ 
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
                 <div className="destinations_content_box img_animation">
                   <img
@@ -914,126 +917,36 @@ function Index() {
                 </div>
               </div>
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
-                <div className="row">
-                  <div className="col-lg-4 col-md-4 col-sm-12 col-12">
-                    <div className="destinations_content_box img_animation">
-                      <a href="top-destinations.html">
-                        <img
-                          src="client/assets/img/destination/destination1.png"
-                          alt="img"
-                        />
-                      </a>
-                      <div className="destinations_content_inner">
-                        <h3>
-                          <a href="top-destinations.html">China</a>
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="destinations_content_box img_animation">
-                      <a href="top-destinations.html">
-                        <img
-                          src="client/assets/img/destination/destination2.png"
-                          alt="img"
-                        />
-                      </a>
-                      <div className="destinations_content_inner">
-                        <h3>
-                          <a href="top-destinations.html">Darjeeling</a>
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="destinations_content_box img_animation">
-                      <a href="top-destinations.html">
-                        <img
-                          src="client/assets/img/destination/destination3.png"
-                          alt="img"
-                        />
-                      </a>
-                      <div className="destinations_content_inner">
-                        <h3>
-                          <a href="top-destinations.html">Malaysia</a>
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-12 col-12">
-                    <div className="destinations_content_box img_animation">
-                      <a href="top-destinations.html">
-                        <img
-                          src="client/assets/img/destination/destination4.png"
-                          alt="img"
-                        />
-                      </a>
-                      <div className="destinations_content_inner">
-                        <h3>
-                          <a href="top-destinations.html">Gangtok</a>
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="destinations_content_box img_animation">
-                      <a href="top-destinations.html">
-                        <img
-                          src="client/assets/img/destination/destination5.png"
-                          alt="img"
-                        />
-                      </a>
-                      <div className="destinations_content_inner">
-                        <h3>
-                          <a href="top-destinations.html">Thailand</a>
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="destinations_content_box img_animation">
-                      <a href="top-destinations.html">
-                        <img
-                          src="client/assets/img/destination/destination6.png"
-                          alt="img"
-                        />
-                      </a>
-                      <div className="destinations_content_inner">
-                        <h3>
-                          <a href="top-destinations.html">Australia</a>
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-12 col-12">
-                    <div className="destinations_content_box img_animation">
-                      <a href="top-destinations.html">
-                        <img
-                          src="client/assets/img/destination/destination7.png"
-                          alt="img"
-                        />
-                      </a>
-                      <div className="destinations_content_inner">
-                        <h3>
-                          <a href="top-destinations.html">London</a>
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="destinations_content_box img_animation">
-                      <a href="top-destinations.html">
-                        <img
-                          src="client/assets/img/destination/destination8.png"
-                          alt="img"
-                        />
-                      </a>
-                      <div className="destinations_content_inner">
-                        <h3>
-                          <a href="top-destinations.html">USA</a>
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="destinations_content_box">
-                      <a
-                        href="top-destinations.html"
-                        className="btn btn_theme btn_md w-100"
-                      >
-                        View all
-                      </a>
-                    </div>
-                  </div>
-                </div>
+              <div className="row">
+                {
+                  regions?.map((res: any, key: number) => (
+                    // eslint-disable-next-line react/jsx-key
+                    <div className="col-lg-4 col-md-4 col-sm-12 col-12" key={key}>
+                      {
+                        console.log('dsds',res)
+                      }
+                      {
+                        Array.from(res)?.map((resData: any, key: number) => (
+                          // eslint-disable-next-line react/jsx-key
+                          <div className="destinations_content_box img_animation" key={key}>
+                            <a href="top-destinations.html">
+                              <img
+                                src="client/assets/img/destination/destination1.png"
+                                alt="img"
+                              />
+                            </a>
+                            <div className="destinations_content_inner">
+                              <h3>
+                                <a href="top-destinations.html">{resData.name}</a>
+                              </h3>
+                            </div>
+                          </div>
+                        ))
+                      }
+                   </div>
+                  ))
+                }
+              </div>
               </div>
             </div>
           </div>

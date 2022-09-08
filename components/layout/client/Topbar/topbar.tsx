@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LogoImage from "@/public/client/assets/img/logoN.png";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -9,7 +9,17 @@ import { Skeleton } from "antd";
 const TopBar = () => {
   const router = useRouter();
   const { data: countries, error, isValidating } = useSWR('user/countries');
+  const { data: menu } = useSWR('user/menu');
   const countriesLoading = !countries && !error || isValidating;
+  
+  const [selectedCountry, setSelectedCountry] = useState();
+
+  useEffect(() => {
+    if(menu)
+    {
+      setSelectedCountry(menu[0].country_id)
+    }
+  }, [menu])
 
   return (
     <>
@@ -58,6 +68,7 @@ const TopBar = () => {
                 >
 
                   <ul className="navbar-nav gap-3">
+
                     <li className="nav-item">
                       <a
                         onClick={(e) => {
@@ -70,52 +81,62 @@ const TopBar = () => {
                         Home
                       </a>
                     </li>
-                    <li className="nav-item">
-                      <a href="#" className="nav-link">
+
+                    <li className="nav-item dropdown has-megamenu">
+                      <a className="nav-link" href="#" data-bs-toggle="dropdown">
+                        {" "}
                         Destination
+
                         <i className="fas fa-angle-down" />
                       </a>
-                      <ul className="dropdown-menu">
-                        {
-                          countriesLoading ? <li className="nav-item"><Skeleton active paragraph={false} /></li>
-                            :
-                            countries?.map((res: any, key: number) => (
-                              // eslint-disable-next-line react/jsx-key
-                              <li className="nav-item" key={key}>
-                                <a href="tour-search.html" className="nav-link">
-                                  {res.name}
-                                </a>
-                                <ul className="dropdown-menu">
-                                  {
-                                    res?.regions?.map((resRegion: any, key: number) => (
-                                      // eslint-disable-next-line react/jsx-key
-                                      <li className="nav-item" key={key}>
-                                        <a href="tour-search.html" className="nav-link">
-                                          {resRegion.name}
-                                        </a>
+                      <div className="dropdown-menu megamenu p-4" role="menu">
+                        <div className="d-flex gap-5">
+                          <div className="">
+                            <h5 className="mt-0">Countries</h5>
+                            {
+                              countries?.map((res:any, key: number) => (
+                                // eslint-disable-next-line react/jsx-key
+                                <div key={key} className={`my-3 ${ selectedCountry === res.id ? 'bg-danger' : 'bg-dark ' } p-2 rounded pointer-cursor w-fit`} onClick={() => setSelectedCountry(res?.id)}> 
+                                  <a className="fw-600 px-2">  <i className="fa fa-chevron-circle-right mr-3"></i> { res.name }</a> 
+                                </div>
+                              ))
+                            }
+                 
+                          </div>
+                          <div className="">
+                            <div className="row g-3">
+                              { !menu ? <Skeleton active paragraph={false} /> :
+                                menu?.filter((res: any) => res.country_id === selectedCountry).length ?
+                                menu?.filter((res: any) => res.country_id === selectedCountry)?.map((res: any, key: number) => (
+                                  // eslint-disable-next-line react/jsx-key
+                                  <div className="col-lg-2 col-6" key={key}>
+                                    <div className="col-megamenu">
 
-                                        <ul className="dropdown-menu">
-                                          {
-                                            resRegion?.destinatoins?.map((resDes: any, key: number) => (
-                                              // eslint-disable-next-line react/jsx-key
-                                              <li className="nav-item cursor-pointer" key={key}>
-                                                <Link href={`/destinations/${resDes.id}`} className="nav-link">
-                                                  <span>
-                                                    {resDes.name} - <span className="text-danger">{resDes.no_of_days} days</span>
-                                                  </span>
-                                                </Link>
-                                              </li>
-                                            ))
-                                          }
-                                        </ul>
-                                      </li>
-                                    ))
-                                  }
-                                </ul>
-                              </li>
-                            ))
-                        }
-                      </ul>
+                                      <h6 className="title text">{ res.name }</h6>
+
+                                      <img src={res.full_path} alt="" className="nav-image" />
+                                      <ul className="list-unstyled mt-2">
+                                        { res?.destinatoins?.length ?
+                                          res?.destinatoins?.map((resDes:any, key: number) => (
+                                            // eslint-disable-next-line react/jsx-key
+                                            <li key={key} className="d-flex px-0 gap-2">
+                                              <i className="fa fa-chevron-right my-auto mr-2 fa-sm"></i> <a href="#" className="lh-1">{ resDes.name }</a>
+                                            </li>
+                                          )) : <li className="px-0">
+                                            <a href="#"><i className="fa fa-exclamation-circle mb-1"></i> No Data </a>
+                                          </li>
+                                        }
+                                    
+                                      </ul>
+                                    </div>{" "}
+                                    {/* col-megamenu.// */}
+                                  </div>
+                                )) : <li> <i className="fa fa-exclamation-circle"></i> No Data</li> 
+                              }
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </li>
 
                     <li className="nav-item">
