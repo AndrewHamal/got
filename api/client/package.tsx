@@ -1,4 +1,3 @@
-import axiosClient from "@/services/axios/clientfetch"
-import axios from "axios"
+import axiosUser from "@/services/axios/axiosUser"
 
-export const bookPackage = async (data: FormData) => await axiosClient.post('/user/booking', data)
+export const bookPackage = async (data: FormData) => await axiosUser.post('/user/booking', data)
