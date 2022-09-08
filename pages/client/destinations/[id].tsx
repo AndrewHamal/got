@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import useSWR from 'swr';
+import BookPackageDrawer from './Drawer';
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod: any) => mod.Editor),
   { ssr: false }
@@ -25,11 +26,10 @@ function DestinationById() {
   return (
     <ClientLayout>
       <div>
-        <Drawer style={{ top: '90px' }} title={packDrawer?.name} placement="right" onClose={() => setPackDrawer(null)} open={packDrawer} visible={!!packDrawer}>
-          <p>{packDrawer?.name}</p>
-          <p>{packDrawer?.name}</p>
-          <p>{packDrawer?.name}</p>
-        </Drawer>
+        <BookPackageDrawer
+          packDrawer={packDrawer}
+          closeDrawer={() => setPackDrawer(null)}
+        />
         <CommonBanner
           loading={loading}
           breadcrumb={[

@@ -155,11 +155,17 @@ const TopBar = () => {
                       </Link>
                     </li>
 
-                    {/* <li className="nav-item">
-                      <Link href="/blogs" className="nav-link">
-                        Offers
+                    <li className="nav-item">
+                      <Link href="/our_team" className="nav-link">
+                        Our Team
                       </Link>
-                    </li> */}
+                    </li>
+
+                    <li className="nav-item">
+                      <Link href="/videos" className="nav-link">
+                        Videos
+                      </Link>
+                    </li>
                     <li className="nav-item">
                       <Link href="/contact" className="nav-link">
                         Contact
