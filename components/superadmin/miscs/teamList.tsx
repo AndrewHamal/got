@@ -59,7 +59,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 };
 
 const TeamList: React.FC = () => {
-  const { data, mutate, error } = useSWR('/admin/teams', {
+  const { data, mutate, error } = useSWR('/admin/team', {
     fallbackData: [
       {
         id: 1,
