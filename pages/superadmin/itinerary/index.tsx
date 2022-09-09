@@ -28,7 +28,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     mutate();
-  },[mutate])
+  }, [mutate])
 
   const columns: ColumnsType<DataType> = [
     {
@@ -65,7 +65,7 @@ const App: React.FC = () => {
           <Typography.Link style={{ marginRight: 8 }} onClick={() => Router.push(`/superadmin/itinerary/edit/${id}`)}>
             Edit
           </Typography.Link>
-          <Popconfirm title="Are you sure to delete this destination?" onConfirm={() => deleteItineraryHandler(id)}>
+          <Popconfirm title="Are you sure to delete this Itinerary?" onConfirm={() => deleteItineraryHandler(id)}>
             <Typography.Link>
               Delete
             </Typography.Link>
@@ -78,11 +78,11 @@ const App: React.FC = () => {
   function deleteItineraryHandler(id: number) {
     mutate(data?.filter((dest: any) => dest.id !== id), false)
     deleteItinerary(id)
-    .then((res: any) => {
-      toast.success(res.message);
-    })
-    .catch(responseErrorHandler)
-    .finally(mutate)
+      .then((res: any) => {
+        toast.success(res.message);
+      })
+      .catch(responseErrorHandler)
+      .finally(mutate)
   }
 
   return (

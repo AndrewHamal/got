@@ -17,3 +17,12 @@ export const updateRegion = async (id: any, form: any) =>
 
 export const deleteRegion = async (id: any) =>
   await axiosInstance.post(`/admin/region/delete/${id}`)
+
+export const createTeammember = async (data: object) =>
+  await axiosInstance.post(`/admin/team/store`, data)
+
+export const updateTeammember = async (id: any, data: object) =>
+  await axiosInstance.post(`/admin/team/${id}/update`, data)
+
+export const deleteTeammember = async (id: any) =>
+  await axiosInstance.post(`/admin/team/delete/${id}`)

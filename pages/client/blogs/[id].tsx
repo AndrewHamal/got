@@ -23,6 +23,8 @@ function DestinationById() {
 
   const loading = !data && !error;
 
+  console.log({ data })
+
   return (
     <ClientLayout>
       <div>
@@ -79,10 +81,10 @@ function DestinationById() {
                           {
                             !blogs ? <Skeleton active />
                               :
-                              blogs?.data.map((blog: any) =>
+                              blogs?.map((blog: any) =>
                                 <div className="recent_news_item" key={blog.id}>
                                   <div className="recent_news_img">
-                                    <img src={blog.full_path} alt="img" className='w-100' />
+                                    <img src={blog.full_path} alt="img" className='w-100' style={{ height: "65px" }} />
                                   </div>
                                   <div className="recent_news_text">
                                     <h5><Link href={`/blogs/${blog.id}`}>{cropTitle(blog.title, 20)}</Link></h5>
@@ -133,7 +135,7 @@ function DestinationById() {
         }
       </div >
 
-    </ClientLayout >
+    </ClientLayout>
   )
 }
 
