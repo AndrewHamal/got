@@ -22,7 +22,23 @@ function SuperadminTopbar() {
                         <div className="sidebar_icon d-lg-none">
                             <i className="ti-menu" />
                         </div>
-                        <div className="line_icon open_miniSide d-none d-lg-block">
+                        <div className="cursor-pointer line_icon open_miniSide d-none d-lg-block" onClick={() => {
+                            const sidebar = document.getElementsByClassName('sidebar');
+                            const main = document.getElementsByClassName('main_content');
+                            // sidebar
+                            if (sidebar[0].classList.contains("mini_sidebar")) {
+                                sidebar[0].classList.remove("mini_sidebar")
+                            } else {
+                                sidebar[0].classList.add("mini_sidebar")
+                            }
+                            // content
+                            if (main[0].classList.contains("full_main_content")) {
+                                main[0].classList.remove("full_main_content")
+                            } else {
+                                main[0].classList.add("full_main_content")
+                            }
+
+                        }}>
                             <img src="/admin/img/line_img.png" alt="" />
                         </div>
 

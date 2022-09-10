@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 // @ts-nocheck
 import Link from "next/link";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { SuperadminSidebarMenus } from "./menu";
 
@@ -40,14 +40,13 @@ function SuperadminSidebar({ sidebarBoolean }: any) {
   return (
     <nav className={`sidebar ${sidebarBoolean && "mini_sidebar"}`}>
       <div className="logo d-flex justify-content-between">
-        <a className="large_logo" href="index-2.html">
-          <img src="/client/assets/img/logoN.png" alt="" />
-        </a>
-        <a className="small_logo" href="index-2.html">
-          <img src="/client/assets/img/logoN.png" alt="" />
-        </a>
-        <div className="sidebar_close_icon d-lg-none">
-          <i className="ti-close" />
+        <div className="cursor-pointer">
+          <Link className="large_logo" href="/">
+            <img src="/client/assets/img/logoN.png" alt="" />
+          </Link>
+          <div className="sidebar_close_icon d-lg-none">
+            <i className="ti-close" />
+          </div>
         </div>
       </div>
 
@@ -80,24 +79,19 @@ function SuperadminSidebar({ sidebarBoolean }: any) {
               </li>
             );
           } else {
+
+
             return (
-              <Link href={menu.link + ""}>
-                <li
-                  key={menu.title}
-                  className={`${isActive(menu.link) ? "cactive" : ""
-                    } sidebar_parent_link cursor-pointer`}
-                >
-                  <>
-                    <div className="nav_icon_small">
-                      {/* <img src={menu.icon} alt={menu.title} /> */}
-                      <i className={menu.icon} alt={menu.title}></i>
-                    </div>
-                    <div className="nav_title">
-                      <span>{menu.title}</span>
-                    </div>
-                  </>
-                </li>
-              </Link>
+              <li className>
+                <a onClick={() => Router.push(menu.link)} aria-expanded="false">
+                  <div className="nav_icon_small">
+                    <i className={menu.icon} alt={menu.title}></i>
+                  </div>
+                  <div className="nav_title">
+                    <span>Navs</span>
+                  </div>
+                </a>
+              </li>
             );
           }
         })}

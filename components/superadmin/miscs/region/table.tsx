@@ -1,11 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { deleteRegion, updateRegion } from '@/api/superadmin/miscs';
 import { capitalizeInitials, objectToFormData, responseErrorHandler } from '@/services/helper';
-import { PlusOutlined } from '@ant-design/icons';
-import { Form, Input, message, Modal, Popconfirm, Skeleton, Table, Typography, Upload } from 'antd';
-import { RcFile, UploadFile } from 'antd/lib/upload';
-import React, { ReactElement, useRef, useState } from 'react';
-import { Controller } from 'react-hook-form';
+import { Form, Input, message, Popconfirm, Skeleton, Table, Typography, Upload } from 'antd';
+import { RcFile } from 'antd/lib/upload';
+import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 
@@ -58,14 +56,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
     </td>
   );
 };
-
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = error => reject(error);
-  });
 
 const RegionList: React.FC = () => {
   const { data, mutate, error } = useSWR('/admin/regions');
@@ -143,7 +133,7 @@ const RegionList: React.FC = () => {
             <Typography.Link style={{ marginRight: 8 }} disabled={editingKey !== null} onClick={() => edit(record)}>
               Edit
             </Typography.Link>
-            <Popconfirm title="Are you sure to delete the country?" onConfirm={() => deleteRegionHandler(record)}>
+            <Popconfirm title="Are you sure to delete the region?" onConfirm={() => deleteRegionHandler(record)}>
               <Typography.Link disabled={editingKey !== null}>
                 Delete
               </Typography.Link>

@@ -112,5 +112,20 @@ export const SuperadminSidebarMenus = [
                 link: "/superadmin/faq"
             },
         ]
-    }
+    },
+    {
+        title: "CMS",
+        parent: true,
+        icon: "fas fa-ellipsis-v",
+        children: [
+            {
+                title: "Videos",
+                link: "/superadmin/miscs/videos"
+            },
+            {
+                title: "Team",
+                link: "/superadmin/miscs/team"
+            }
+        ]
+    },
 ]
