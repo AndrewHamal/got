@@ -47,7 +47,7 @@ function DestinationById() {
                       <div className="tour_details_leftside_wrapper">
                         <div className="tour_details_heading_wrapper">
                           <div className="tour_details_top_heading">
-                            <h2>{data.title}</h2>
+                            <h2 className='text-capitalize'>{data.title}</h2>
                             <p><Moment fromNow>{data.updated_at}</Moment></p>
                           </div>
                         </div>
@@ -79,7 +79,7 @@ function DestinationById() {
                           {
                             !blogs ? <Skeleton active />
                               :
-                              blogs?.data.map((blog: any) =>
+                              blogs?.data?.map((blog: any) =>
                                 <div className="recent_news_item" key={blog.id}>
                                   <div className="recent_news_img">
                                     <img src={blog.full_path} alt="img" className='w-100' />

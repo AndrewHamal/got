@@ -127,7 +127,7 @@ function DestinationById() {
                                                   readOnly
                                                 />
                                               </div>
-                                              <div className='col-md-8'>
+                                              <div className='col-md-8 mt-3'>
                                                 <YoutubeFrame
                                                   width="90%"
                                                   height="250px"
@@ -149,7 +149,7 @@ function DestinationById() {
                         {/* included excluded */}
                         <div className="tour_details_boxed">
                           <Tabs type='card'>
-                            <Tabs.TabPane tab={<h3 className="heading_theme">Included</h3>} key="item-1">
+                            <Tabs.TabPane tab={<h4 className="">Included</h4>} key="item-1">
                               <Editor
                                 //@ts-ignore
                                 toolbarHidden
@@ -157,7 +157,7 @@ function DestinationById() {
                                 readOnly
                               />
                             </Tabs.TabPane>
-                            <Tabs.TabPane tab={<h3 className="heading_theme">Excluded</h3>} key="item-2">
+                            <Tabs.TabPane tab={<h4 className="">Excluded</h4>} key="item-2">
                               <Editor
                                 //@ts-ignore
                                 toolbarHidden

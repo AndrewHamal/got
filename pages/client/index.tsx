@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import Moment from "react-moment";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 function Index() {
 
@@ -15,7 +16,8 @@ function Index() {
   const { data:blogs } = useSWR('user/blogs');
   const { data:regions } = useSWR('user/region-chunk');
   const [selectedCountry, setSelectedCountry] = useState();
-  let chunked = []
+  let router = useRouter();
+
 
   useEffect(() => {
     $(".promotional_tour_slider").owlCarousel({
@@ -65,11 +67,41 @@ function Index() {
       },
     });
 
-
     if(destinationHeader)
       setSelectedCountry(destinationHeader[0].region?.country_id);
 
-  }, [destinationHeader]);
+  }, [destinationHeader, regions]);
+
+  function regionInside(res)
+  {
+    let content = [];
+    for(let resp in res){
+      content.push(<div className="destinations_content_box img_animation" key={resp}>
+        <a href="top-destinations.html">
+          <div className="overlay"></div>
+          <img
+            src={res[resp].full_path}
+            alt="img"
+          />
+        </a>
+        <div className="destinations_content_inner">
+          <h3>
+            <a href="top-destinations.html">{res[resp].name}</a>
+          </h3>
+        </div>
+      </div>)
+    }
+    return content;
+  }
+
+  function region()
+  {
+    return regions?.map((res, key) => (
+      <div className="col-lg-6 col-md-6 col-sm-12 col-12" key={key}>
+        {regionInside(res)}
+      </div>
+    ));
+  }
 
   return (
     <ClientLayout>
@@ -78,7 +110,7 @@ function Index() {
         <img style={{ height: "600px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
         :
         // Banner Area 
-        <Carousel dotPosition={'right'} effect="fade">
+        <Carousel dotPosition={'right'} effect="scrollx" autoplay>
           {
             destinationHeader?.map((res: any, key: number) => (
               // eslint-disable-next-line react/jsx-key
@@ -918,13 +950,11 @@ function Index() {
               </div>
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
               <div className="row">
-                {
+                { !regions ? <Skeleton active/>  : region() }
+                {/* {
                   regions?.map((res: any, key: number) => (
                     // eslint-disable-next-line react/jsx-key
                     <div className="col-lg-4 col-md-4 col-sm-12 col-12" key={key}>
-                      {
-                        console.log('dsds',res)
-                      }
                       {
                         Array.from(res)?.map((resData: any, key: number) => (
                           // eslint-disable-next-line react/jsx-key
@@ -945,7 +975,7 @@ function Index() {
                       }
                    </div>
                   ))
-                }
+                } */}
               </div>
               </div>
             </div>
@@ -977,7 +1007,7 @@ function Index() {
                         destinationHeader?.map((res: any, key: number) => (
                           
                           // eslint-disable-next-line react/jsx-key
-                          <div className="col-lg-3 col-md-6 col-sm-6 col-12" key={key}>
+                          <div className="col-lg-3 col-md-6 col-sm-6 col-12" key={key} onClick={() => router.push(`destinations/${res.id}`)}>
                             <div className="theme_common_box_two img_hover">
                               <div className="theme_two_box_img">
                                 <a href="hotel-details.html">
@@ -992,19 +1022,18 @@ function Index() {
                                 </p>
                               </div>
                               <div className="theme_two_box_content">
-                                <h4>
+                                <h4 className="mb-0">
                                   <a href="hotel-details.html">
                                     { res?.name }
                                   </a>
                                 </h4>
-                                <p>
-                                  <span className="review_rating">
-                                    4.8/5 Excellent
-                                  </span>{" "}
-                                  <span className="review_count">
-                                    (1214 reviewes)
-                                  </span>
-                                </p>
+                                <div className="mb-3 mt-1">
+                                  <small>
+                                    <span className="review_rating bg-danger p-1 rounded text-white">
+                                      { res.no_of_days } days Trek
+                                    </span>{" "}
+                                  </small>
+                                </div>
                                 <h3>
                                   ${res?.starting_from}.00 <span>Price starts from</span>
                                 </h3>
@@ -1091,7 +1120,7 @@ function Index() {
                 {
                     destinationHeader?.slice(0,5)?.map((res: any, key: number) => (
                       // eslint-disable-next-line react/jsx-key
-                      <div className="theme_common_box_two img_hover w-100" key={key}>
+                      <div className="theme_common_box_two img_hover w-100" key={key} onClick={() => router.push(`destinations/${res.id}`)}>
                         <div className="theme_two_box_img">
                           <a href="hotel-details.html">
                             <img
@@ -1108,9 +1137,13 @@ function Index() {
                           <h4>
                             <a href="hotel-details.html">{ res?.name } </a>
                           </h4>
-                          <p className="mb-0">
-                            <span className="review_rating">4.8/5 Excellent</span>{" "}
-                          </p>
+                          <div className="mb-3 mt-1">
+                            <small>
+                              <span className="review_rating bg-danger p-1 rounded text-white">
+                                { res.no_of_days } days Trek
+                              </span>{" "}
+                            </small>
+                          </div>
                           <h3>
                             ${res?.starting_from}.00 <span>Price starts from</span>
                           </h3>
@@ -1183,7 +1216,7 @@ function Index() {
                         destinationHeader?.filter(res => res?.region?.country_id === selectedCountry)
                         .map((res: any, key: number) => (
                           // eslint-disable-next-line react/jsx-key
-                          <div className="col-lg-4 col-md-6 col-sm-12 col-12" key={key}>
+                          <div className="col-lg-4 col-md-6 col-sm-12 col-12" key={key} onClick={() => router.push(`destinations/${resDes.id}`)}>
                             <div className="tab_destinations_boxed">
                               <div className="tab_destinations_img">
                                 <a href="top-destinations.html">
@@ -1614,9 +1647,9 @@ function Index() {
                     !blogs ? <Skeleton/> :
                     blogs?.map((res: any, key:number) => (
                       // eslint-disable-next-line react/jsx-key
-                      <div className="home_news_item" key={key}>
+                      <div className="home_news_item" key={key} onClick={() => router.push(`blogs/${res.id}`)}>
                         <div className="home_news_img">
-                          <a href="news-details.html">
+                          <a onClick={() => router.push(`blogs/${res.id}`)}>
                             <img
                               src={res?.full_path}
                               alt="img"
@@ -1625,7 +1658,7 @@ function Index() {
                         </div>
                         <div className="home_news_content">
                           <h3 className="mb-0">
-                            <a className="text-capitalize" href="news-details.html">
+                            <a className="text-capitalize" onClick={() => router.push(`blogs/${res.id}`)}>
                               {res?.title}
                             </a>
                           </h3>
@@ -1633,7 +1666,7 @@ function Index() {
                             { JSON.parse(res?.body)?.blocks[0]?.text?.substring(0, 40) }...
                           </p>
                           <p>
-                            <a href="news.html">{res?.date}</a>{" "}
+                            <a onClick={() => router.push(`blogs/${res.id}`)}>{res?.date}</a>{" "}
                           </p>
                         </div>
                       </div>
@@ -1653,17 +1686,17 @@ function Index() {
                 {
                   !blogs ? <Skeleton/> : <div className="home_news_big">
                   <div className="news_home_bigest img_hover">
-                    <a href="news-details.html">
+                    <a onClick={() => router.push(`blogs/${blogs[0].id}`)}>
                       <img src={blogs[0]?.full_path} alt="img" />
                     </a>
                   </div>
                   <h3>
-                    <a href="news-details.html" className="text-capitalize">
+                    <a onClick={() => router.push(`blogs/${blogs[0].id}`)} className="text-capitalize">
                       {blogs[0]?.title}
                     </a>{" "}
                   </h3>
                   { JSON.parse(blogs[0]?.body)?.blocks[0]?.text?.substring(0, 100) }...
-                  <a href="news-details.html">
+                  <a className="seeall_link mt-2" onClick={() => router.push(`blogs/${blogs[0].id}`)}>
                     Read full article <i className="fas fa-arrow-right" />
                   </a>
                 </div>

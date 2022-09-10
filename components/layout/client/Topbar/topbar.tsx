@@ -112,14 +112,14 @@ const TopBar = () => {
                                   <div className="col-lg-2 col-6" key={key}>
                                     <div className="col-megamenu">
 
-                                      <h6 className="title text">{ res.name }</h6>
+                                      <a onClick={() => router.push(`/listing?region=${res.id}`)} className={"top-menu"}> <h6 className="title text">{ res.name }</h6> </a>
 
                                       <img src={res.full_path} alt="" className="nav-image" />
                                       <ul className="list-unstyled mt-2">
                                         { res?.destinatoins?.length ?
                                           res?.destinatoins?.map((resDes:any, key: number) => (
                                             // eslint-disable-next-line react/jsx-key
-                                            <li key={key} className="d-flex px-0 gap-2">
+                                            <li key={key} className="d-flex px-0 gap-2" onClick={() => router.push(`/destinations/${resDes.id}`)}>
                                               <i className="fa fa-chevron-right my-auto mr-2 fa-sm"></i> <a href="#" className="lh-1">{ resDes.name }</a>
                                             </li>
                                           )) : <li className="px-0">

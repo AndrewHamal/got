@@ -208,3 +208,19 @@ textarea[aria-invalid="true"] {
   height: 100%;
   object-position: top;
 }
+
+.destinations_content_box img{
+  min-height: 150px;
+}
+
+.destinations_content_box .overlay {
+  z-index: 9;
+}
+
+.destinations_content_inner h3 a:hover {
+  color: #ffffff!important;
+}
+
+a.top-menu h6.title.text:hover {
+  color: red!important;
+}
