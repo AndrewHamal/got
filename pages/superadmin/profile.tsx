@@ -17,7 +17,6 @@ function Profile() {
   const formMethods = useForm();
 
   function updateProfileHandler(data: any) {
-    console.log(data)
 
     setLoading(true);
     updateProfile(data)

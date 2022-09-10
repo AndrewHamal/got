@@ -25,8 +25,6 @@ function DestinationById() {
 
   const loading = !data && !error;
 
-  console.log({ data })
-
   return (
     <ClientLayout>
       <div>
