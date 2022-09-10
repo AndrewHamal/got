@@ -91,7 +91,7 @@ function BookPackageDrawer({ packDrawer, closeDrawer }: any) {
               <input
                 {...register("full_name", { required: "Name is required!" })}
                 className="form-control"
-                placeholder="Enter Name Here"
+                placeholder="Enter Name"
               />
               {errors?.full_name?.message &&
                 <div className="text-danger">
@@ -107,7 +107,7 @@ function BookPackageDrawer({ packDrawer, closeDrawer }: any) {
               <input
                 {...register("phone", { required: "Phone number is required!" })}
                 className="form-control"
-                placeholder="Enter Phone Here"
+                placeholder="Enter Phone"
               />
               {errors?.phone?.message &&
                 <div className="text-danger">
@@ -126,7 +126,7 @@ function BookPackageDrawer({ packDrawer, closeDrawer }: any) {
               validate: val => isValidEmail(val) || "Email must be valid!"
             })}
             className="form-control"
-            placeholder="Enter Email Here"
+            placeholder="Enter Email"
           />
           {errors?.email?.message &&
             <div className="text-danger">
@@ -142,7 +142,7 @@ function BookPackageDrawer({ packDrawer, closeDrawer }: any) {
               <input
                 {...register("address", { required: "Address is required!" })}
                 className="form-control"
-                placeholder="Enter Address Here"
+                placeholder="Enter Address"
               />
               {errors?.address?.message &&
                 <div className="text-danger">
@@ -158,7 +158,7 @@ function BookPackageDrawer({ packDrawer, closeDrawer }: any) {
               <input
                 {...register("country", { required: "Country is required!" })}
                 className="form-control"
-                placeholder="Enter Country Here"
+                placeholder="Enter Country"
               />
               {errors?.country?.message &&
                 <div className="text-danger">
@@ -170,13 +170,13 @@ function BookPackageDrawer({ packDrawer, closeDrawer }: any) {
         </div>
         <div className='row'>
           {/* arrival */}
-          <div className='col-md-4'>
+          <div className='col-md-6'>
             <div className="form-group mb-3">
               <label className="form-label">Arrival Date<span className='text-danger'> *</span></label>
               <input
                 {...register("arrival_date", { required: "Arrival is required!" })}
                 className="form-control"
-                placeholder="Enter Arrival Date Here"
+                placeholder="Enter Arrival Date"
               />
               {errors?.arrival_date?.message &&
                 <div className="text-danger">
@@ -186,13 +186,13 @@ function BookPackageDrawer({ packDrawer, closeDrawer }: any) {
             </div>
           </div>
           {/* departure */}
-          <div className='col-md-4'>
+          <div className='col-md-6'>
             <div className="form-group mb-3">
               <label className="form-label">Departure Date<span className='text-danger'> *</span></label>
               <input
                 {...register("departure_date", { required: "Departure is required!" })}
                 className="form-control"
-                placeholder="Enter Departure Date Here"
+                placeholder="Enter Departure Date"
               />
               {errors?.departure_date?.message &&
                 <div className="text-danger">
@@ -201,21 +201,21 @@ function BookPackageDrawer({ packDrawer, closeDrawer }: any) {
               }
             </div>
           </div>
-          {/* number_of_guests */}
-          <div className='col-md-4'>
-            <div className="form-group mb-3">
-              <label className="form-label">No. of Guests<span className='text-danger'> *</span></label>
-              <input
-                {...register("number_of_guests", { required: "Guests is required!" })}
-                className="form-control"
-                placeholder="Enter Departure Date Here"
-              />
-              {errors?.number_of_guests?.message &&
-                <div className="text-danger">
-                  {errors?.number_of_guests?.message + ""}
-                </div>
-              }
-            </div>
+        </div>
+        {/* number_of_guests */}
+        <div className='col-md-6'>
+          <div className="form-group mb-3">
+            <label className="form-label">No. of Guests<span className='text-danger'> *</span></label>
+            <input
+              {...register("number_of_guests", { required: "Guests is required!" })}
+              className="form-control"
+              placeholder="Enter No. of Guests"
+            />
+            {errors?.number_of_guests?.message &&
+              <div className="text-danger">
+                {errors?.number_of_guests?.message + ""}
+              </div>
+            }
           </div>
         </div>
         <div className='row'>

@@ -148,7 +148,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
               {...register("starting_from", { required: "Price is required!" })}
               aria-invalid={!!errors?.starting_from?.message}
               className="form-control"
-              placeholder="eg: NRs 4000"
+              placeholder="eg: 4000"
             />
             {errors?.starting_from?.message &&
               <div className="text-danger">
