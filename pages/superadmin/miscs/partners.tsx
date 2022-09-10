@@ -1,7 +1,7 @@
-import { createRegion, createTeammember } from '@/api/superadmin/miscs';
+import { createPartner } from '@/api/superadmin/miscs';
 import SuperadminLayout from '@/components/layout/superadmin'
 import RegionList from '@/components/superadmin/miscs/region/table';
-import TeamList from '@/components/superadmin/miscs/teamList';
+import PartnerList from '@/components/superadmin/miscs/partnerList';
 import { capitalizeInitials, cropTitle, objectToFormData, responseErrorHandler } from '@/services/helper';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Modal, Select, Skeleton, Upload } from 'antd';
@@ -20,9 +20,9 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = error => reject(error);
   });
 
-function CreateTeams() {
+function CreatePartners() {
   const [loading, setLoading] = useState(false);
-  const { mutate } = useSWR('/admin/team', { revalidateOnMount: false });
+  const { mutate } = useSWR('/admin/partner', { revalidateOnMount: false });
 
   const { reset, control, register, formState: { errors }, handleSubmit, setError } = useForm();
 
@@ -47,7 +47,7 @@ function CreateTeams() {
     </div>
   );
 
-  function createHotelHandler(data: any) {
+  function createPartnerHandler(data: any) {
 
     const dto = {
       ...data,
@@ -56,7 +56,7 @@ function CreateTeams() {
     }
 
     setLoading(true);
-    createTeammember(objectToFormData(dto))
+    createPartner(objectToFormData(dto))
       .then((res: any) => {
         toast.success(res.message);
         reset();
@@ -67,18 +67,18 @@ function CreateTeams() {
   }
 
   return (
-    <SuperadminLayout title="Create Team Member">
+    <SuperadminLayout title="Create Partners">
       <div className="col-lg-6">
         <div className="white_card mb_30">
           <div className="white_card_header">
             <div className="box_header m-0">
               <div className="main-title">
-                <h3 className="m-0">Create Team Member Form</h3>
+                <h3 className="m-0">Create Partners Form</h3>
               </div>
             </div>
           </div>
           <div className="white_card_body">
-            <form onSubmit={handleSubmit(createHotelHandler)}>
+            <form onSubmit={handleSubmit(createPartnerHandler)}>
               <div className="form-group mb-3">
                 <div className="row">
                   <div className="col">
@@ -150,7 +150,7 @@ function CreateTeams() {
         </div>
       </div >
       <div className="col-lg-6">
-        <TeamList />
+        <PartnerList />
       </div>
     </SuperadminLayout >
   )
@@ -171,4 +171,4 @@ function CreateTeams() {
 
 }
 
-export default CreateTeams
+export default CreatePartners

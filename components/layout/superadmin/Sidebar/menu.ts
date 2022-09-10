@@ -125,7 +125,11 @@ export const SuperadminSidebarMenus = [
             {
                 title: "Team",
                 link: "/superadmin/miscs/team"
-            }
+            },
+            {
+                title: "Partners",
+                link: "/superadmin/miscs/partners"
+            },
         ]
     },
 ]
