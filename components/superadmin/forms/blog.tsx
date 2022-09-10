@@ -121,14 +121,14 @@ function CreateOrUpdateBlogForm({ loading, formMethods, submitHandler }: IProps)
       </div>
       {/* 2nd row */}
       <div className="form-group mb-3">
-        <label className="form-label">Youtube Link</label>
+        <label className="form-label">Youtube Video Id</label>
         <input
           {...register("youtube_link", {
-            validate: url => url ? (isValidUrl(url) || "Youtube Link must be valid url") : undefined
+            validate: url => url ? (isValidUrl(url) || "Youtube Video Id must be valid url") : undefined
           })}
           aria-invalid={!!errors?.youtube_link?.message}
           className="form-control"
-          placeholder="eg: https://youtube.com/your-video"
+          placeholder="eg: etAIpkdhU9Q"
         />
         {errors?.youtube_link?.message &&
           <div className="text-danger">
