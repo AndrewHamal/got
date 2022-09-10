@@ -5,9 +5,9 @@ export const SuperadminSidebarMenus = [
         icon: "fas fa-tachometer-alt"
     },
     {
-        title: "Miscs",
+        title: "Location",
         parent: true,
-        icon: "fas fa-ellipsis-v",
+        icon: "fas fa-globe",
         children: [
             {
                 title: "Country",
@@ -65,18 +65,18 @@ export const SuperadminSidebarMenus = [
         ]
     },
     {
-        title: "FAQ",
+        title: "Contacts",
         parent: true,
-        icon: "fas fa-toggle-on",
+        icon: "fas fa-envelope",
         children: [
             {
-                title: "Create",
-                link: "/superadmin/faq/create"
+                title: "Booking",
+                link: "/superadmin/contact/package-booking"
             },
             {
-                title: "Listing",
-                link: "/superadmin/faq"
-            },
+                title: "Contact Us",
+                link: "/superadmin/contact/contact"
+            }
         ]
     },
     {
@@ -99,24 +99,9 @@ export const SuperadminSidebarMenus = [
         ]
     },
     {
-        title: "Profile",
-        parent: true,
-        icon: "fa fa-user-cog",
-        children: [
-            {
-                title: "Create",
-                link: "/superadmin/faq/create"
-            },
-            {
-                title: "Listing",
-                link: "/superadmin/faq"
-            },
-        ]
-    },
-    {
         title: "CMS",
         parent: true,
-        icon: "fas fa-ellipsis-v",
+        icon: "fas fa-bars",
         children: [
             {
                 title: "Videos",
@@ -133,18 +118,18 @@ export const SuperadminSidebarMenus = [
         ]
     },
     {
-        title: "Contacts",
+        title: "FAQ",
         parent: true,
-        icon: "fas fa-ellipsis-v",
+        icon: "fas fa-question",
         children: [
             {
-                title: "Booking",
-                link: "/superadmin/contact/package-booking"
+                title: "Create",
+                link: "/superadmin/faq/create"
             },
             {
-                title: "Contact Us",
-                link: "/superadmin/contact/contact"
-            }
+                title: "Listing",
+                link: "/superadmin/faq"
+            },
         ]
-    },
+    }
 ]
