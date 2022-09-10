@@ -118,7 +118,7 @@ function CreateRegions() {
                                   placeholder="Select Country"
                                 >
                                   {
-                                    countries.map((cat: any) => <Option key={cat.id} value={cat.id}>{cat.name}</Option>)
+                                    countries?.map((cat: any) => <Option key={cat.id} value={cat.id}>{cat.name}</Option>)
                                   }
                                 </Select>
                                 {errors?.country_id?.message &&

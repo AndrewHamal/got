@@ -6,6 +6,10 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+.ant-empty-description {
+  font-family: 'Inter'!important;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -147,7 +151,7 @@ textarea[aria-invalid="true"] {
 
 #theme_search_form {
   position: absolute;
-  top: calc(50% - 120.5px);
+  top: calc(78% - 120.5px);
   width: 100%;
   margin: 0px;
 }
@@ -184,4 +188,39 @@ textarea[aria-invalid="true"] {
   top: 0px;
   left: 0px;
   backdrop-filter: blur(2px) brightness(60%);
+}
+
+.theme_two_box_img img{
+  height: 150px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.tab_destinations_img img {
+  height: 90px;
+  width: 140px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.home_news_img img{
+  object-fit: cover;
+  height: 100%;
+  object-position: top;
+}
+
+.destinations_content_box img{
+  min-height: 150px;
+}
+
+.destinations_content_box .overlay {
+  z-index: 9;
+}
+
+.destinations_content_inner h3 a:hover {
+  color: #ffffff!important;
+}
+
+a.top-menu h6.title.text:hover {
+  color: red!important;
 }

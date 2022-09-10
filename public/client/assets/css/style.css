@@ -470,7 +470,7 @@ section {
 
 .flight_Search_boxed {
   background: #8b3eea17;
-  padding: 10px 10px 10px 20px;
+  padding: 10px 10px 10px 10px;
   border-radius: 10px;
   position: relative;
 }
@@ -4260,10 +4260,24 @@ textarea {
 }
 
 .carousel-caption {
-  top: 38% !important;
+  top: 36%!important;
   position: absolute;
 }
 
 .font-38 {
   font-size: 38px;
 }
+
+.final_count {
+  color: #000;
+  font-size: 16px!important;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.flight_Search_boxed i {
+  color: #2DA2DB!important;
+  font-size: 28px!important;
+}
+

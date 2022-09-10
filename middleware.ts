@@ -36,6 +36,7 @@ export const config = {
     // public routes
     '/',
     '/blogs',
+    '/listing',
     '/blogs/detail',
     '/contact',
     '/register',

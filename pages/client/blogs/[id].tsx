@@ -49,7 +49,7 @@ function DestinationById() {
                       <div className="tour_details_leftside_wrapper">
                         <div className="tour_details_heading_wrapper">
                           <div className="tour_details_top_heading">
-                            <h2>{data.title}</h2>
+                            <h2 className='text-capitalize'>{data.title}</h2>
                             <p><Moment fromNow>{data.updated_at}</Moment></p>
                           </div>
                         </div>
