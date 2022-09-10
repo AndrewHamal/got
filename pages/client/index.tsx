@@ -7,14 +7,15 @@ import useSWR from "swr";
 import Moment from "react-moment";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import axiosUser from "@/services/axios/axiosUser";
 
 function Index() {
 
   const { data: destinationHeader, error: destinationHeaderError } = useSWR('user/destinations-header');
   const destLoading = !destinationHeader && !destinationHeaderError;
-  const { data:countries } = useSWR('user/countries');
-  const { data:blogs } = useSWR('user/blogs');
-  const { data:regions } = useSWR('user/region-chunk');
+  const { data: countries } = useSWR('user/countries');
+  const { data: blogs } = useSWR('user/blogs', (resource, init) => axiosUser(resource, init).then(res => res.data.data));
+  const { data: regions } = useSWR('user/region-chunk');
   const [selectedCountry, setSelectedCountry] = useState();
   let router = useRouter();
 
@@ -67,15 +68,14 @@ function Index() {
       },
     });
 
-    if(destinationHeader)
+    if (destinationHeader)
       setSelectedCountry(destinationHeader[0].region?.country_id);
 
   }, [destinationHeader, regions]);
 
-  function regionInside(res)
-  {
+  function regionInside(res) {
     let content = [];
-    for(let resp in res){
+    for (let resp in res) {
       content.push(<div className="destinations_content_box img_animation" key={resp}>
         <a href="top-destinations.html">
           <div className="overlay"></div>
@@ -94,8 +94,7 @@ function Index() {
     return content;
   }
 
-  function region()
-  {
+  function region() {
     return regions?.map((res, key) => (
       <div className="col-lg-6 col-md-6 col-sm-12 col-12" key={key}>
         {regionInside(res)}
@@ -107,26 +106,26 @@ function Index() {
     <ClientLayout>
       <div>
         {destLoading ?
-        <img style={{ height: "600px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
-        :
-        // Banner Area 
-        <Carousel dotPosition={'right'} effect="scrollx" autoplay>
-          {
-            destinationHeader?.map((res: any, key: number) => (
-              // eslint-disable-next-line react/jsx-key
-              <div className="carousel" key={key}>
-                <div className="overlay"></div>
-                <img src={res?.file_slider?.full_path ?? "/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={res?.name} />
-                <div className="carousel-caption d-none d-md-block">
-                  <h2 className="text-white font-38">{res?.name}</h2>
-                  <p className="heading-2 text-faded">{JSON.parse(res?.overview)?.blocks[0]?.text?.substring(0, 130)}...</p>
+          <img style={{ height: "600px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
+          :
+          // Banner Area 
+          <Carousel dotPosition={'right'} effect="scrollx" autoplay>
+            {
+              destinationHeader?.map((res: any, key: number) => (
+                // eslint-disable-next-line react/jsx-key
+                <div className="carousel" key={key}>
+                  <div className="overlay"></div>
+                  <img src={res?.file_slider?.full_path ?? "/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={res?.name} />
+                  <div className="carousel-caption d-none d-md-block">
+                    <h2 className="text-white font-38">{res?.name}</h2>
+                    <p className="heading-2 text-faded">{JSON.parse(res?.overview)?.blocks[0]?.text?.substring(0, 130)}...</p>
 
-                  <button className="btn btn-admin-primary mb-5 mt-4">Explore Trip <i className="fa fa-chevron-right"></i></button>
+                    <button className="btn btn-admin-primary mb-5 mt-4">Explore Trip <i className="fa fa-chevron-right"></i></button>
+                  </div>
                 </div>
-              </div>
-            ))
-          }
-        </Carousel>}
+              ))
+            }
+          </Carousel>}
 
         <section id="theme_search_form">
           <div className="container">
@@ -153,7 +152,7 @@ function Index() {
                                 <form action="#!">
                                   <div className="row">
                                     <div className="col-lg-2  col-md-6 col-sm-12 col-12">
-                                      <div className="flight_Search_boxed dropdown_passenger_area text-center">    
+                                      <div className="flight_Search_boxed dropdown_passenger_area text-center">
                                         <div className="dropdown">
                                           <i className="fas fa-certificate font-38 mb-2 mt-1"></i>
                                           <p className="final_count"> Nepal Government certified</p>
@@ -162,7 +161,7 @@ function Index() {
                                     </div>
 
                                     <div className="col-lg-2  col-md-6 col-sm-12 col-12">
-                                      <div className="flight_Search_boxed dropdown_passenger_area">    
+                                      <div className="flight_Search_boxed dropdown_passenger_area">
                                         <div className="dropdown text-center">
                                           <i className="fas fa-clock font-38 mb-2 mt-1"></i>
                                           <p className="final_count"> Respect guest time value</p>
@@ -171,7 +170,7 @@ function Index() {
                                     </div>
 
                                     <div className="col-lg-2  col-md-6 col-sm-12 col-12">
-                                      <div className="flight_Search_boxed dropdown_passenger_area">    
+                                      <div className="flight_Search_boxed dropdown_passenger_area">
                                         <div className="dropdown text-center">
                                           <i className="fas fa-network-wired font-38 mb-2 mt-1"></i>
                                           <p className="final_count"> Voluntary community work</p>
@@ -180,7 +179,7 @@ function Index() {
                                     </div>
 
                                     <div className="col-lg-2  col-md-6 col-sm-12 col-12">
-                                      <div className="flight_Search_boxed dropdown_passenger_area">    
+                                      <div className="flight_Search_boxed dropdown_passenger_area">
                                         <div className="dropdown text-center">
                                           <i className="fa fa-users font-38 mb-2 mt-1"></i>
                                           <p className="final_count">Responsible <br /> tourism</p>
@@ -189,7 +188,7 @@ function Index() {
                                     </div>
 
                                     <div className="col-lg-2  col-md-6 col-sm-12 col-12">
-                                      <div className="flight_Search_boxed dropdown_passenger_area">    
+                                      <div className="flight_Search_boxed dropdown_passenger_area">
                                         <div className="dropdown text-center">
                                           <i className="fas fa-building font-38 mb-2 mt-1"></i>
                                           <p className="final_count">Professional Team building</p>
@@ -198,7 +197,7 @@ function Index() {
                                     </div>
 
                                     <div className="col-lg-2  col-md-6 col-sm-12 col-12">
-                                      <div className="flight_Search_boxed dropdown_passenger_area">    
+                                      <div className="flight_Search_boxed dropdown_passenger_area">
                                         <div className="dropdown text-center">
                                           <i className="fa fa-globe font-38 mb-2 mt-1"></i>
                                           <p className="final_count">Multi Country Program</p>
@@ -923,7 +922,7 @@ function Index() {
               </div>
             </div>
             <div className="row">
- 
+
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
                 <div className="destinations_content_box img_animation">
                   <img
@@ -949,9 +948,9 @@ function Index() {
                 </div>
               </div>
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
-              <div className="row">
-                { !regions ? <Skeleton active/>  : region() }
-                {/* {
+                <div className="row">
+                  {!regions ? <Skeleton active /> : region()}
+                  {/* {
                   regions?.map((res: any, key: number) => (
                     // eslint-disable-next-line react/jsx-key
                     <div className="col-lg-4 col-md-4 col-sm-12 col-12" key={key}>
@@ -976,7 +975,7 @@ function Index() {
                    </div>
                   ))
                 } */}
-              </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1003,34 +1002,34 @@ function Index() {
                     aria-labelledby="nav-hotels-tab"
                   >
                     <div className="row">
-                      { !destinationHeader ? <Skeleton/> :
+                      {!destinationHeader ? <Skeleton /> :
                         destinationHeader?.map((res: any, key: number) => (
-                          
+
                           // eslint-disable-next-line react/jsx-key
                           <div className="col-lg-3 col-md-6 col-sm-6 col-12" key={key} onClick={() => router.push(`destinations/${res.id}`)}>
                             <div className="theme_common_box_two img_hover">
                               <div className="theme_two_box_img">
                                 <a href="hotel-details.html">
                                   <img
-                                    src={ res?.file_slider?.full_path }
+                                    src={res?.file_slider?.full_path}
                                     alt="img"
                                   />
                                 </a>
                                 <p>
                                   <i className="fas fa-map-marker-alt" />
-                                  { res?.name }
+                                  {res?.name}
                                 </p>
                               </div>
                               <div className="theme_two_box_content">
                                 <h4 className="mb-0">
                                   <a href="hotel-details.html">
-                                    { res?.name }
+                                    {res?.name}
                                   </a>
                                 </h4>
                                 <div className="mb-3 mt-1">
                                   <small>
                                     <span className="review_rating bg-danger p-1 rounded text-white">
-                                      { res.no_of_days } days Trek
+                                      {res.no_of_days} days Trek
                                     </span>{" "}
                                   </small>
                                 </div>
@@ -1116,31 +1115,31 @@ function Index() {
             </div>
             <div className="row">
               <div className="col-lg-12">
-                <div className="promotional_tour_slider owl-theme owl-carousel dot_style d-flex gap-3">   
-                {
-                    destinationHeader?.slice(0,5)?.map((res: any, key: number) => (
+                <div className="promotional_tour_slider owl-theme owl-carousel dot_style d-flex gap-3">
+                  {
+                    destinationHeader?.slice(0, 5)?.map((res: any, key: number) => (
                       // eslint-disable-next-line react/jsx-key
                       <div className="theme_common_box_two img_hover w-100" key={key} onClick={() => router.push(`destinations/${res.id}`)}>
                         <div className="theme_two_box_img">
                           <a href="hotel-details.html">
                             <img
-                              src={ res?.file_slider?.full_path }
+                              src={res?.file_slider?.full_path}
                               alt="img"
                             />
                           </a>
                           <p>
                             <i className="fas fa-map-marker-alt" />
-                            { res?.name }
+                            {res?.name}
                           </p>
                         </div>
                         <div className="theme_two_box_content">
                           <h4>
-                            <a href="hotel-details.html">{ res?.name } </a>
+                            <a href="hotel-details.html">{res?.name} </a>
                           </h4>
                           <div className="mb-3 mt-1">
                             <small>
                               <span className="review_rating bg-danger p-1 rounded text-white">
-                                { res.no_of_days } days Trek
+                                {res.no_of_days} days Trek
                               </span>{" "}
                             </small>
                           </div>
@@ -1150,7 +1149,7 @@ function Index() {
                         </div>
                       </div>
                     ))
-                  }             
+                  }
                 </div>
               </div>
             </div>
@@ -1189,11 +1188,11 @@ function Index() {
                               setSelectedCountry(res?.id);
                             }}
                           >
-                            { res?.name }
+                            {res?.name}
                           </button>
                         ))
                       }
-                
+
                     </div>
                   </nav>
                 </div>
@@ -1210,37 +1209,37 @@ function Index() {
                   >
                     <div className="row">
                       {
-                        !destinationHeader ? <Skeleton active/> :
+                        !destinationHeader ? <Skeleton active /> :
 
-                        destinationHeader?.filter(res => res?.region?.country_id === selectedCountry).length > 0 ?
-                        destinationHeader?.filter(res => res?.region?.country_id === selectedCountry)
-                        .map((res: any, key: number) => (
-                          // eslint-disable-next-line react/jsx-key
-                          <div className="col-lg-4 col-md-6 col-sm-12 col-12" key={key} onClick={() => router.push(`destinations/${resDes.id}`)}>
-                            <div className="tab_destinations_boxed">
-                              <div className="tab_destinations_img">
-                                <a href="top-destinations.html">
-                                  <img
-                                    src={res?.file_slider?.full_path}
-                                    alt="img"
-                                  />
-                                </a>
-                              </div>
-                              <div className="tab_destinations_conntent">
-                                <h3>
-                                  <a href="top-destinations.html">
-                                    { res?.name.substring(0, 20) }...
-                                  </a>
-                                </h3>
-                                <p>
-                                  Price starts at <span>${res?.starting_from}.00</span>
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        )) : <Empty description={"No data Found!"}/> 
+                          destinationHeader?.filter(res => res?.region?.country_id === selectedCountry).length > 0 ?
+                            destinationHeader?.filter(res => res?.region?.country_id === selectedCountry)
+                              .map((res: any, key: number) => (
+                                // eslint-disable-next-line react/jsx-key
+                                <div className="col-lg-4 col-md-6 col-sm-12 col-12" key={key} onClick={() => router.push(`destinations/${resDes.id}`)}>
+                                  <div className="tab_destinations_boxed">
+                                    <div className="tab_destinations_img">
+                                      <a href="top-destinations.html">
+                                        <img
+                                          src={res?.file_slider?.full_path}
+                                          alt="img"
+                                        />
+                                      </a>
+                                    </div>
+                                    <div className="tab_destinations_conntent">
+                                      <h3>
+                                        <a href="top-destinations.html">
+                                          {res?.name.substring(0, 20)}...
+                                        </a>
+                                      </h3>
+                                      <p>
+                                        Price starts at <span>${res?.starting_from}.00</span>
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              )) : <Empty description={"No data Found!"} />
                       }
-    
+
                     </div>
                   </div>
                   <div
@@ -1644,35 +1643,35 @@ function Index() {
               <div className="col-lg-6">
                 <div className="home_news_left_wrapper">
                   {
-                    !blogs ? <Skeleton/> :
-                    blogs?.map((res: any, key:number) => (
-                      // eslint-disable-next-line react/jsx-key
-                      <div className="home_news_item" key={key} onClick={() => router.push(`blogs/${res.id}`)}>
-                        <div className="home_news_img">
-                          <a onClick={() => router.push(`blogs/${res.id}`)}>
-                            <img
-                              src={res?.full_path}
-                              alt="img"
-                            />
-                          </a>
-                        </div>
-                        <div className="home_news_content">
-                          <h3 className="mb-0">
-                            <a className="text-capitalize" onClick={() => router.push(`blogs/${res.id}`)}>
-                              {res?.title}
+                    !blogs ? <Skeleton /> :
+                      blogs?.map((res: any, key: number) => (
+                        // eslint-disable-next-line react/jsx-key
+                        <div className="home_news_item" key={key} onClick={() => router.push(`blogs/${res.id}`)}>
+                          <div className="home_news_img">
+                            <a onClick={() => router.push(`blogs/${res.id}`)}>
+                              <img
+                                src={res?.full_path}
+                                alt="img"
+                              />
                             </a>
-                          </h3>
-                          <p className="mb-0">
-                            { JSON.parse(res?.body)?.blocks[0]?.text?.substring(0, 40) }...
-                          </p>
-                          <p>
-                            <a onClick={() => router.push(`blogs/${res.id}`)}>{res?.date}</a>{" "}
-                          </p>
+                          </div>
+                          <div className="home_news_content">
+                            <h3 className="mb-0">
+                              <a className="text-capitalize" onClick={() => router.push(`blogs/${res.id}`)}>
+                                {res?.title}
+                              </a>
+                            </h3>
+                            <p className="mb-0">
+                              {JSON.parse(res?.body)?.blocks[0]?.text?.substring(0, 40)}...
+                            </p>
+                            <p>
+                              <a onClick={() => router.push(`blogs/${res.id}`)}>{res?.date}</a>{" "}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    ))
+                      ))
                   }
-           
+
                   <div className="home_news_item">
                     <div className="seeall_link">
                       <Link href="/blogs">
@@ -1684,24 +1683,24 @@ function Index() {
               </div>
               <div className="col-lg-6">
                 {
-                  !blogs ? <Skeleton/> : <div className="home_news_big">
-                  <div className="news_home_bigest img_hover">
-                    <a onClick={() => router.push(`blogs/${blogs[0].id}`)}>
-                      <img src={blogs[0]?.full_path} alt="img" />
+                  !blogs ? <Skeleton /> : <div className="home_news_big">
+                    <div className="news_home_bigest img_hover">
+                      <a onClick={() => router.push(`blogs/${blogs[0].id}`)}>
+                        <img src={blogs[0]?.full_path} alt="img" />
+                      </a>
+                    </div>
+                    <h3>
+                      <a onClick={() => router.push(`blogs/${blogs[0].id}`)} className="text-capitalize">
+                        {blogs[0]?.title}
+                      </a>{" "}
+                    </h3>
+                    {JSON.parse(blogs[0]?.body)?.blocks[0]?.text?.substring(0, 100)}...
+                    <a className="seeall_link mt-2" onClick={() => router.push(`blogs/${blogs[0].id}`)}>
+                      Read full article <i className="fas fa-arrow-right" />
                     </a>
                   </div>
-                  <h3>
-                    <a onClick={() => router.push(`blogs/${blogs[0].id}`)} className="text-capitalize">
-                      {blogs[0]?.title}
-                    </a>{" "}
-                  </h3>
-                  { JSON.parse(blogs[0]?.body)?.blocks[0]?.text?.substring(0, 100) }...
-                  <a className="seeall_link mt-2" onClick={() => router.push(`blogs/${blogs[0].id}`)}>
-                    Read full article <i className="fas fa-arrow-right" />
-                  </a>
-                </div>
                 }
-      
+
               </div>
             </div>
           </div>

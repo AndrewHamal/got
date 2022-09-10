@@ -202,17 +202,17 @@ function ListingById() {
                   { !destinationHeader ? <Skeleton/> : destinationHeader?.length ? destinationHeader?.map((res: any, key: number) => (
                     // eslint-disable-next-line react/jsx-key
                     <div className="col-lg-12 col-md-12 col-sm-12 col-12" key={key}>
-                    <div className="top_destinations_box img_hover">
+                    <div className="top_destinations_box img_hover pointer-cursor" onClick={() => router.push(`destinations/${res.id}`)}>
                       <div className="heart_destinations bg-danger px-1 rounded">
                         { res.no_of_days } days
                       </div>
-                      <a href="top-destinations-details.html">
+                      <a>
                         <img src={res.files[0].full_path} alt="img" style={{ height: '400px' }} />
                       </a>
                       <div className="overlay"></div>
                       <div className="top_destinations_box_content">
-                        <h4>
-                          <a href="top-destinations-details.html">{ res.name }</a>
+                        <h4 className="text-white">
+                          <a onClick={() => router.push(`destinations/${res.id}`)}>{ res.name }</a>
                         </h4>
                         <p>
                           { JSON.parse(res.overview).blocks[0].text.substring(0, 200) }...
