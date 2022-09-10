@@ -2,8 +2,7 @@
 import CommonBanner from '@/components/common/Common_Banner';
 import YoutubeFrame from '@/components/common/YoutubeFrame';
 import ClientLayout from '@/components/layout/client/ClientLayout'
-import { UpOutlined } from '@ant-design/icons';
-import { Carousel, Collapse, Drawer, Modal, Skeleton, Tabs } from 'antd';
+import { Carousel, Skeleton, Tabs } from 'antd';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -18,7 +17,6 @@ function DestinationById() {
   const router = useRouter();
   const { id } = router.query;
 
-  const [activeItenary, setActiveItenary] = useState<any>(1);
   const [packDrawer, setPackDrawer] = useState<any>(false);
 
   const { data, error } = useSWR(id ? `/user/destination/${id}` : null);
