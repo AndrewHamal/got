@@ -16,18 +16,19 @@ function ListingById() {
 
     function checkRegion(e: any)
     {
-      let id = e.target.value;
-      if(region)
-        id = region + ',' + id;
-      else
-        id = id;
+      console.log(region)
+      // let id = e.target.value;
+      // if(region)
+      //   id = region + ',' + id;
+      // else
+      //   id = id;
 
-      router.push({
-        pathname: '/listing',
-        query: {region: id}
-      })
+      // router.push({
+      //   pathname: '/listing',
+      //   query: {region: id}
+      // })
 
-      setRegions(id);
+      // setRegions(id);
     }
 
     return (
