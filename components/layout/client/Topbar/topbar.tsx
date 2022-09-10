@@ -11,12 +11,11 @@ const TopBar = () => {
   const { data: countries, error, isValidating } = useSWR('user/countries');
   const { data: menu } = useSWR('user/menu');
   const countriesLoading = !countries && !error || isValidating;
-  
+
   const [selectedCountry, setSelectedCountry] = useState();
 
   useEffect(() => {
-    if(menu)
-    {
+    if (menu) {
       setSelectedCountry(menu[0].country_id)
     }
   }, [menu])
@@ -59,9 +58,11 @@ const TopBar = () => {
           <div className="main-navbar d-flex w-100">
             <div className="container-fluid">
               <nav className="navbar navbar-expand-md navbar-light">
-                <a className="navbar-brand" href="index.html">
-                  <img src={LogoImage.src} alt="logo" width={"110"} />
-                </a>
+                <div className="cursor-pointer">
+                  <Link className="navbar-brand" href='/'>
+                    <img src={LogoImage.src} alt="logo" width={"110"} />
+                  </Link>
+                </div>
                 <div
                   className="collapse navbar-collapse mean-menu"
                   id="navbarSupportedContent"
@@ -94,44 +95,44 @@ const TopBar = () => {
                           <div className="">
                             <h5 className="mt-0">Countries</h5>
                             {
-                              countries?.map((res:any, key: number) => (
+                              countries?.map((res: any, key: number) => (
                                 // eslint-disable-next-line react/jsx-key
-                                <div key={key} className={`my-3 ${ selectedCountry === res.id ? 'bg-danger' : 'bg-dark ' } p-2 rounded pointer-cursor w-fit`} onClick={() => setSelectedCountry(res?.id)}> 
-                                  <a className="fw-600 px-2">  <i className="fa fa-chevron-circle-right mr-3"></i> { res.name }</a> 
+                                <div key={key} className={`my-3 ${selectedCountry === res.id ? 'bg-danger' : 'bg-dark '} p-2 rounded pointer-cursor w-fit`} onClick={() => setSelectedCountry(res?.id)}>
+                                  <a className="fw-600 px-2">  <i className="fa fa-chevron-circle-right mr-3"></i> {res.name}</a>
                                 </div>
                               ))
                             }
-                 
+
                           </div>
                           <div className="">
                             <div className="row g-3">
-                              { !menu ? <Skeleton active paragraph={false} /> :
+                              {!menu ? <Skeleton active paragraph={false} /> :
                                 menu?.filter((res: any) => res.country_id === selectedCountry).length ?
-                                menu?.filter((res: any) => res.country_id === selectedCountry)?.map((res: any, key: number) => (
-                                  // eslint-disable-next-line react/jsx-key
-                                  <div className="col-lg-2 col-6" key={key}>
-                                    <div className="col-megamenu">
+                                  menu?.filter((res: any) => res.country_id === selectedCountry)?.map((res: any, key: number) => (
+                                    // eslint-disable-next-line react/jsx-key
+                                    <div className="col-lg-2 col-6" key={key}>
+                                      <div className="col-megamenu">
 
-                                      <a onClick={() => router.push(`/listing?region=${res.id}`)} className={"top-menu"}> <h6 className="title text">{ res.name }</h6> </a>
+                                        <a onClick={() => router.push(`/listing?region=${res.id}`)} className={"top-menu"}> <h6 className="title text">{res.name}</h6> </a>
 
-                                      <img src={res.full_path} alt="" className="nav-image" />
-                                      <ul className="list-unstyled mt-2">
-                                        { res?.destinatoins?.length ?
-                                          res?.destinatoins?.map((resDes:any, key: number) => (
-                                            // eslint-disable-next-line react/jsx-key
-                                            <li key={key} className="d-flex px-0 gap-2" onClick={() => router.push(`/destinations/${resDes.id}`)}>
-                                              <i className="fa fa-chevron-right my-auto mr-2 fa-sm"></i> <a href="#" className="lh-1">{ resDes.name }</a>
+                                        <img src={res.full_path} alt="" className="nav-image" />
+                                        <ul className="list-unstyled mt-2">
+                                          {res?.destinatoins?.length ?
+                                            res?.destinatoins?.map((resDes: any, key: number) => (
+                                              // eslint-disable-next-line react/jsx-key
+                                              <li key={key} className="d-flex px-0 gap-2" onClick={() => router.push(`/destinations/${resDes.id}`)}>
+                                                <i className="fa fa-chevron-right my-auto mr-2 fa-sm"></i> <a href="#" className="lh-1">{resDes.name}</a>
+                                              </li>
+                                            )) : <li className="px-0">
+                                              <a href="#"><i className="fa fa-exclamation-circle mb-1"></i> No Data </a>
                                             </li>
-                                          )) : <li className="px-0">
-                                            <a href="#"><i className="fa fa-exclamation-circle mb-1"></i> No Data </a>
-                                          </li>
-                                        }
-                                    
-                                      </ul>
-                                    </div>{" "}
-                                    {/* col-megamenu.// */}
-                                  </div>
-                                )) : <li> <i className="fa fa-exclamation-circle"></i> No Data</li> 
+                                          }
+
+                                        </ul>
+                                      </div>{" "}
+                                      {/* col-megamenu.// */}
+                                    </div>
+                                  )) : <li> <i className="fa fa-exclamation-circle"></i> No Data</li>
                               }
                             </div>
                           </div>
@@ -140,24 +141,24 @@ const TopBar = () => {
                     </li>
 
                     <li className="nav-item">
-                      <Link href="/blogs" className="nav-link">
+                      <Link href="/blogs" className={`nav-link ${router.asPath === '/blogs' ? 'active' : ''}`}>
                         Blogs
                       </Link>
                     </li>
 
                     <li className="nav-item">
-                      <Link href="/our_team" className="nav-link">
+                      <Link href="/our_team" className={`nav-link ${router.asPath === '/our_team' ? 'active' : ''}`}>
                         Our Team
                       </Link>
                     </li>
 
                     <li className="nav-item">
-                      <Link href="/videos" className="nav-link">
+                      <Link href="/videos" className={`nav-link ${router.asPath === '/videos' ? 'active' : ''}`}>
                         Videos
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link href="/contact" className="nav-link">
+                      <Link href="/contact" className={`nav-link ${router.asPath === '/contact' ? 'active' : ''}`}>
                         Contact
                       </Link>
                     </li>

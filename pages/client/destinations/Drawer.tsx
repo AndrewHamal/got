@@ -70,7 +70,7 @@ function BookPackageDrawer({ packDrawer, closeDrawer }: any) {
 
 
   return (
-    <Drawer width={"30%"} style={{ top: '90px' }} title={"Book Package"} placement="right" onClose={closeDrawer} open={packDrawer} visible={!!packDrawer}>
+    <Drawer width={"40%"} style={{ top: '90px' }} title={"Book Package"} placement="right" onClose={closeDrawer} open={packDrawer} visible={!!packDrawer}>
       <form onSubmit={handleSubmit(bookPackageHandler)}>
         {/* Package Name */}
         <div className="form-group mb-3">

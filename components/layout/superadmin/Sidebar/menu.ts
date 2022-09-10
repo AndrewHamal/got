@@ -5,6 +5,21 @@ export const SuperadminSidebarMenus = [
         icon: "fas fa-tachometer-alt"
     },
     {
+        title: "Profile",
+        parent: true,
+        icon: "fa fa-user-cog",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/faq/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/faq"
+            },
+        ]
+    },
+    {
         title: "Location",
         parent: true,
         icon: "fas fa-globe",
