@@ -47,6 +47,7 @@ function CreateHotels() {
     if (data) {
       formMethods.reset({
         day: data.day,
+        youtube_link: data.youtube_link,
         title: data.title,
         content: JSON.parse(data.content),
         destination_id: data.destination_id,

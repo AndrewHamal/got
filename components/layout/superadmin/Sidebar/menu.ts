@@ -132,4 +132,19 @@ export const SuperadminSidebarMenus = [
             },
         ]
     },
+    {
+        title: "Contacts",
+        parent: true,
+        icon: "fas fa-ellipsis-v",
+        children: [
+            {
+                title: "Booking",
+                link: "/superadmin/contact/package-booking"
+            },
+            {
+                title: "Contact Us",
+                link: "/superadmin/contact/contact"
+            }
+        ]
+    },
 ]

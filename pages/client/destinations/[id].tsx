@@ -118,23 +118,23 @@ function DestinationById() {
                                         </h2>
                                         <div id={"k" + it.id} className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                           <div className="accordion-body">
-                                            <div className='row'>
-                                              <div className='col-md-4'>
-                                                <Editor
-                                                  //@ts-ignore
-                                                  toolbarHidden
-                                                  contentState={JSON.parse(it.content)}
-                                                  readOnly
-                                                />
-                                              </div>
-                                              <div className='col-md-8 mt-3'>
+                                            {
+                                              it.youtube_link &&
+                                              <div className='text-center mt-4 mb-3'>
                                                 <YoutubeFrame
-                                                  width="90%"
+                                                  width="500px"
                                                   height="250px"
-                                                  id="Ou4u4kOatck"
+                                                  id={it.youtube_link}
                                                 />
                                               </div>
-                                            </div>
+                                            }
+
+                                            <Editor
+                                              //@ts-ignore
+                                              toolbarHidden
+                                              contentState={JSON.parse(it.content)}
+                                              readOnly
+                                            />
                                           </div>
                                         </div>
                                       </div>

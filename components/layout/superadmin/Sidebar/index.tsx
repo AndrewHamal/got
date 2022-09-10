@@ -88,7 +88,7 @@ function SuperadminSidebar({ sidebarBoolean }: any) {
                     <i className={menu.icon} alt={menu.title}></i>
                   </div>
                   <div className="nav_title">
-                    <span>Navs</span>
+                    <span>{menu.title}</span>
                   </div>
                 </a>
               </li>
