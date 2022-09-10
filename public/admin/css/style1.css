@@ -4520,7 +4520,6 @@ body::-webkit-scrollbar {
     transition: .5s;
     position: relative;
     min-height: 100vh;
-    padding-bottom: 70px;
     overflow: hidden
 }
 
