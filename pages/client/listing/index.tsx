@@ -1,42 +1,58 @@
 import ClientLayout from "@/components/layout/client/ClientLayout";
 import { Carousel, Empty, Skeleton } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 
 function ListingById() {
     const router = useRouter();
-    let { region }: any = router.query;
+    let { region, greater_than, less_than, no_of_days }: any = router.query;
+    let regRef: any = useRef();
 
     const [regions, setRegions] = useState(region);
+    const [lessThan, setLessThan] = useState('');
+    const [noOfDays, setNoOfDays] = useState('');
+    const [greaterThan, setGreaterThan] = useState('');
 
-    const { data: destinationHeader, error: destinationHeaderError } = useSWR(`user/region/filter?regions=${regions || ''}`);
+    const { data: destinationHeader, error: destinationHeaderError } = 
+    useSWR(`user/region/filter?regions=${regions || ''}&less_than=${lessThan || ''}&greater_than=${greaterThan || ''}&no_of_days=${noOfDays || ''}`);
     const { data: allRegions, error } = useSWR(`user/regions`);
     const destLoading = !destinationHeader && !destinationHeaderError;
 
     function checkRegion(e: any)
     {
-      console.log(region)
-      // let id = e.target.value;
-      // if(region)
-      //   id = region + ',' + id;
-      // else
-      //   id = id;
-
-      // router.push({
-      //   pathname: '/listing',
-      //   query: {region: id}
-      // })
-
-      // setRegions(id);
+      regRef.click();
     }
+
+    const submitRegion = (event: any) => {
+      event.preventDefault();
+      let form = new FormData(event.target);
+
+      let regionIds: any = [];
+      for(var pair of form.entries()) {
+        regionIds.push(pair[1]);
+      }
+
+      regionIds = regionIds.join(',');
+      setRegions(regionIds);
+      router.push({
+        pathname: '/listing',
+        query: { 
+          region: regionIds,
+          less_than: less_than,
+          greater_than: greater_than,
+          no_of_days: no_of_days 
+        }
+      })
+    };
+  
 
     return (
       <ClientLayout>
         {/* Common Banner Area */}
-         <section>
+         {/* <section>
           {destLoading ?
-          <img style={{ height: "400px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
+          <img style={{ height: "200px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
           :
           // Banner Area 
           <Carousel autoplay dotPosition={'right'} effect="scrollx">
@@ -45,7 +61,7 @@ function ListingById() {
                 // eslint-disable-next-line react/jsx-key
                 <div className="carousel" key={key}>
                   <div className="overlay"></div>
-                  <img style={{ height: '400px' }} src={res?.full_path ?? "/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={res?.name} />
+                  <img style={{ height: '200px' }} src={res?.full_path ?? "/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={res?.name} />
                   <div className="carousel-caption d-none mt-4 d-md-block">
                     <h2 className="text-white font-38">Destination by Region</h2>
                     <p className="heading-2 text-faded"> { destinationHeader[0]?.region?.name }  <i className="fa fa-chevron-right"></i></p>
@@ -56,12 +72,13 @@ function ListingById() {
           </Carousel>}
 
           { destinationHeader?.length === 0 && <div className="my-5"></div> }
-        </section>
+        </section> */}
 
         {/* Destinations Areas */}
         <section id="top_testinations" className="section_padding">
           
-          <div className="container">
+          <div className="container mt-5">
+            <div className="py-3"></div>
             {/* Section Heading */}
             { destinationHeader?.length > 0 && <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -78,14 +95,16 @@ function ListingById() {
                       <h5>Filter by Regions</h5>
                     </div>
                     <div className="mt-0">
-                      <form className="mt-4">
+                      <form className="mt-4" onSubmit={submitRegion}>
                         {
-                          allRegions?.map((res: any, key: number) => (
+                          !allRegions ? <Skeleton/> : allRegions?.map((res: any, key: number) => (
                             // eslint-disable-next-line react/jsx-key
                             <div className="form-check mb-2" key={key}>
                               <input
                                 className="form-check-input"
                                 type="checkbox"
+                                name="region[]"
+                                checked={region?.split(',').includes(res.id.toString()) ? true : false}
                                 defaultValue={res.id}
                                 id={`flexCheckDefault${res.id}`}
                                 onChange={checkRegion}
@@ -96,6 +115,8 @@ function ListingById() {
                               >
                                 { res.name }
                               </label>
+
+                              <button hidden type="submit" ref={(e: any) => regRef = e} ></button>
                             </div>
                           ))
                         }
@@ -111,201 +132,66 @@ function ListingById() {
                     <div className="mt-4 mb-3">
                       <label htmlFor=""> Greater than ($) </label>
                       <div className="d-flex gap-3">
-                        <input className="form-control"/>
-                        <button className="btn btn-primary w-100">Search</button>
+                        <input defaultValue={greater_than} onKeyUp={(e: any) => { 
+                          router.push({
+                            pathname: '/listing',
+                            query: { 
+                              region: region,
+                              less_than: less_than,
+                              greater_than: e.target.value,
+                              no_of_days: no_of_days 
+                            }
+                          }); 
+                          setGreaterThan(e.target.value)}} className="form-control"/>
                       </div>
                     </div>
 
                     <div className="">
                       <label htmlFor=""> Less than ($) </label>
                       <div className="d-flex gap-3">
-                        <input className="form-control"/>
-                        <button className="btn btn-primary w-100">Search</button>
+                        <input defaultValue={greater_than}  className="form-control" onKeyUp={(e: any) => { 
+                          setLessThan(e.target.value);
+                          router.push({
+                            pathname: '/listing',
+                            query: { 
+                              region: region,
+                              less_than: e.target.value,
+                              greater_than: greater_than,
+                              no_of_days: no_of_days 
+                            }
+                          });
+                        }} />
                       </div>
                     </div>
                   </div>
    
                   <div className="left_side_search_boxed">
                     <div className="left_side_search_heading">
-                      <h5>Tour type</h5>
+                      <h5>No of Days</h5>
                     </div>
                     <div className="tour_search_type">
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue=""
-                          id="flexCheckDefaultf1"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefaultf1"
-                        >
-                          <span className="area_flex_one">
-                            <span>Ecotourism</span>
-                            <span>17</span>
-                          </span>
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue=""
-                          id="flexCheckDefaultf2"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefaultf2"
-                        >
-                          <span className="area_flex_one">
-                            <span>Escorted tour </span>
-                            <span>14</span>
-                          </span>
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue=""
-                          id="flexCheckDefaultf3"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefaultf3"
-                        >
-                          <span className="area_flex_one">
-                            <span>Family trips</span>
-                            <span>30</span>
-                          </span>
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue=""
-                          id="flexCheckDefaultf4"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefaultf4"
-                        >
-                          <span className="area_flex_one">
-                            <span>Group tour</span>
-                            <span>22</span>
-                          </span>
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue=""
-                          id="flexCheckDefaultf5"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefaultf5"
-                        >
-                          <span className="area_flex_one">
-                            <span>City trips</span>
-                            <span>41</span>
-                          </span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="left_side_search_boxed">
-                    <div className="left_side_search_heading">
-                      <h5>Facilities</h5>
-                    </div>
-                    <div className="tour_search_type">
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue=""
-                          id="flexCheckDefaultt1"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefaultt1"
-                        >
-                          <span className="area_flex_one">
-                            <span>Gymnasium</span>
-                            <span>20</span>
-                          </span>
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue=""
-                          id="flexCheckDefaultt2"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefaultt2"
-                        >
-                          <span className="area_flex_one">
-                            <span>Mountain Bike</span>
-                            <span>14</span>
-                          </span>
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue=""
-                          id="flexCheckDefaultt3"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefaultt3"
-                        >
-                          <span className="area_flex_one">
-                            <span>Wifi</span>
-                            <span>62</span>
-                          </span>
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue=""
-                          id="flexCheckDefaultt4"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefaultt4"
-                        >
-                          <span className="area_flex_one">
-                            <span>Aerobics Room</span>
-                            <span>08</span>
-                          </span>
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          defaultValue=""
-                          id="flexCheckDefaultt5"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefaultt5"
-                        >
-                          <span className="area_flex_one">
-                            <span>Golf Cages</span>
-                            <span>12</span>
-                          </span>
-                        </label>
+                      <div className="">
+                        <label htmlFor="">Select Trip days </label>
+                        <div className="d-flex gap-3">
+                          {/* <input className="form-control" onKeyUp={(e: any) => setLessThan(e.target.value)} /> */}
+                          <select className="form-control" onChange={(e) => {
+                              setNoOfDays(e.target.value);
+                              router.push({
+                                pathname: '/listing',
+                                query: { 
+                                  region: region,
+                                  less_than: less_than,
+                                  greater_than: greater_than,
+                                  no_of_days: e.target.value 
+                                }
+                              });
+                            }}>
+                            {[2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29].map((res: any, key: number) => (
+                              // eslint-disable-next-line react/jsx-key
+                              <option value={res} selected={no_of_days?.toString() === res?.toString() ? true : false} key={key}>{res}</option>
+                            ))}
+                          </select>
+                        </div>
                       </div>
                     </div>
                   </div>
