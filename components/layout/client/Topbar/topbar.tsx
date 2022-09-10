@@ -118,40 +118,9 @@ const TopBar = () => {
                       </ul>
                     </li>
 
-                    {/* <li className="nav-item">
-                      <a href="#" className="nav-link">
-                        Experience
-                        <i className="fas fa-angle-down" />
-                      </a>
-                      <ul className="dropdown-menu">
-                        <li className="nav-item">
-                          <a
-                            href="flight-search-result.html"
-                            className="nav-link"
-                          >
-                            Flight
-                          </a>
-                        </li>
-                        <li className="nav-item">
-                          <a
-                            href="flight-booking-submission.html"
-                            className="nav-link"
-                          >
-                            Flight Booking
-                          </a>
-                        </li>
-                      </ul>
-                    </li> */}
-
                     <li className="nav-item">
                       <Link href="/blogs" className="nav-link">
                         Blogs
-                      </Link>
-                    </li>
-
-                    <li className="nav-item">
-                      <Link href="/blogs" className="nav-link">
-                        Packages
                       </Link>
                     </li>
 
@@ -178,13 +147,6 @@ const TopBar = () => {
 
             <div className="others-option-for-responsive d-block my-auto ml-auto">
               <div className="container-fluid">
-                {/* <div className="dot-menu">
-                <div className="inner">
-                  <div className="circle circle-one" />
-                  <div className="circle circle-two" />
-                  <div className="circle circle-three" />
-                </div>
-              </div> */}
                 <div className="container">
                   <div className="option-inner">
                     <div className="others-options d-flex align-items-center">

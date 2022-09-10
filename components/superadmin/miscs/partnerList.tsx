@@ -1,9 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { deleteRegion, deleteTeammember, updateRegion, updateTeammember } from '@/api/superadmin/miscs';
+import { deletePartner, updatePartner } from '@/api/superadmin/miscs';
 import { capitalizeInitials, cropTitle, objectToFormData, responseErrorHandler } from '@/services/helper';
-import { Form, Input, message, Popconfirm, Skeleton, Table, Typography, Upload } from 'antd';
-import { RcFile } from 'antd/lib/upload';
-import Router from 'next/router';
+import { Form, Input, Popconfirm, Skeleton, Table, Typography } from 'antd';
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
@@ -58,8 +56,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
   );
 };
 
-const TeamList: React.FC = () => {
-  const { data, mutate, error } = useSWR('/admin/team');
+const PartnerList: React.FC = () => {
+  const { data, mutate, error } = useSWR('/admin/partner');
 
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number | null | any>(null);
@@ -123,7 +121,7 @@ const TeamList: React.FC = () => {
         const editable = isEditing(record);
         return editable ? (
           <span>
-            <Typography.Link onClick={() => updateTeamHandler(record.id)} style={{ marginRight: 8 }}>
+            <Typography.Link onClick={() => updatePartnerHandler(record.id)} style={{ marginRight: 8 }}>
               Save
             </Typography.Link>
             <Typography.Link onClick={cancel}>
@@ -135,7 +133,7 @@ const TeamList: React.FC = () => {
             <Typography.Link style={{ marginRight: 8 }} disabled={editingKey !== null} onClick={() => edit(record)}>
               Edit
             </Typography.Link>
-            <Popconfirm title="Are you sure to delete the member?" onConfirm={() => deleteTeamHandler(record)}>
+            <Popconfirm title="Are you sure to delete the partner?" onConfirm={() => deletePartnerHandler(record)}>
               <Typography.Link disabled={editingKey !== null}>
                 Delete
               </Typography.Link>
@@ -176,7 +174,7 @@ const TeamList: React.FC = () => {
           return region
         }
       }), false)
-      updateTeammember(uploadImageId, objectToFormData({ photo: file }))
+      updatePartner(uploadImageId, objectToFormData({ photo: file }))
         .then((res: any) => {
           toast.success(res.message);
         })
@@ -186,25 +184,25 @@ const TeamList: React.FC = () => {
 
   }
 
-  function updateTeamHandler(id: any) {
+  function updatePartnerHandler(id: any) {
     const updatedName = capitalizeInitials(form.getFieldValue("name"));
     const updatedLink = capitalizeInitials(form.getFieldValue("youtube_link"));
 
     setEditingKey(null);
 
     // update locally
-    mutate(data?.map((team: any) => {
-      if (team.id === id) {
+    mutate(data?.map((partner: any) => {
+      if (partner.id === id) {
         return ({
-          ...team,
+          ...partner,
           name: updatedName,
           youtube_link: updatedLink,
         })
       } else {
-        return team
+        return partner
       }
     }), false)
-    updateTeammember(id, { name: updatedName, youtube_link: updatedLink })
+    updatePartner(id, { name: updatedName, youtube_link: updatedLink })
       .then((res: any) => {
         toast.success(res.message);
       })
@@ -212,11 +210,11 @@ const TeamList: React.FC = () => {
       .finally(mutate)
   }
 
-  function deleteTeamHandler(record: any) {
+  function deletePartnerHandler(record: any) {
 
-    mutate(data?.filter((team: any) => team.id !== record.id), false)
+    mutate(data?.filter((partner: any) => partner.id !== record.id), false)
     setEditingKey(null);
-    deleteTeammember(record.id)
+    deletePartner(record.id)
       .then((res: any) => {
         toast.success(res.message);
       })
@@ -240,12 +238,12 @@ const TeamList: React.FC = () => {
               }}
               bordered
               // @ts-ignore
-              dataSource={data?.map((team, i) => ({
-                ...team,
+              dataSource={data?.map((partner, i) => ({
+                ...partner,
                 sn: i + 1,
                 youtube_link: (
-                  <a href={team.youtube_link} target={"_blank"} rel="noreferrer">
-                    <i className='fa fa-link'></i> {cropTitle(team.youtube_link, 20)}
+                  <a href={partner.youtube_link} target={"_blank"} rel="noreferrer">
+                    <i className='fa fa-link'></i> {cropTitle(partner.youtube_link, 20)}
                   </a>
                 )
               }))}
@@ -268,4 +266,4 @@ const TeamList: React.FC = () => {
 };
 
 
-export default TeamList;
+export default PartnerList;
