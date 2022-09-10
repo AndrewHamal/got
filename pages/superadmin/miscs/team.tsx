@@ -96,12 +96,12 @@ function CreateTeams() {
                     }
                   </div>
                   <div className="col">
-                    <label className="form-label">Youtube Video Link</label>
+                    <label className="form-label">Youtube Video Id</label>
                     <input
-                      {...register("youtube_link", { required: "Video Link is required!" })}
+                      {...register("youtube_link", { required: "Video Id is required!" })}
                       aria-invalid={!!errors?.youtube_link?.message}
                       className="form-control"
-                      placeholder="Enter Youtube Link Here"
+                      placeholder="Enter Youtube Id"
                     />
                     {errors?.youtube_link?.message &&
                       <div className="text-danger">
@@ -110,7 +110,20 @@ function CreateTeams() {
                     }
                   </div>
                 </div>
-
+                <div className='form-group mt-4'>
+                  <label className="form-label">Designation<span className='text-danger'> *</span></label>
+                  <input
+                    {...register("designation", { required: "Designation is required!" })}
+                    aria-invalid={!!errors?.youtube_link?.message}
+                    className="form-control"
+                    placeholder="Enter Designation Here"
+                  />
+                  {errors?.designation?.message &&
+                    <div className="text-danger">
+                      {errors?.designation?.message + ""}
+                    </div>
+                  }
+                </div>
                 <div className="form-group my-4">
                   <label className="form-label">Photo<span className='text-danger'> *</span></label>
                   <Controller

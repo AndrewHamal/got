@@ -96,6 +96,11 @@ const TeamList: React.FC = () => {
       editable: true,
     },
     {
+      title: 'Designation',
+      dataIndex: 'designation',
+      editable: true,
+    },
+    {
       title: 'Image',
       dataIndex: 'image',
       width: '40%',
@@ -188,6 +193,7 @@ const TeamList: React.FC = () => {
 
   function updateTeamHandler(id: any) {
     const updatedName = capitalizeInitials(form.getFieldValue("name"));
+    const updatedDesignation = form.getFieldValue("designation");
     const updatedLink = capitalizeInitials(form.getFieldValue("youtube_link"));
 
     setEditingKey(null);
@@ -199,12 +205,13 @@ const TeamList: React.FC = () => {
           ...team,
           name: updatedName,
           youtube_link: updatedLink,
+          designation: updatedDesignation,
         })
       } else {
         return team
       }
     }), false)
-    updateTeammember(id, { name: updatedName, youtube_link: updatedLink })
+    updateTeammember(id, { name: updatedName, youtube_link: updatedLink, designation: updatedDesignation })
       .then((res: any) => {
         toast.success(res.message);
       })
