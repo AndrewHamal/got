@@ -4513,7 +4513,6 @@ body::-webkit-scrollbar {
 }
 
 .main_content {
-    backgroun: '#f6f7fb';
     padding-left: 270px;
     width: 100%;
     padding-top: 0 !important;
