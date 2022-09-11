@@ -271,3 +271,54 @@ a.top-menu h6.title.text:hover {
   object-fit: cover;
   object-position: top;
 }
+
+.ant-notification {
+  z-index: 999999999999!important;
+}
+
+.mean-bar {
+  background: transparent!important;
+}
+
+@media only screen and (max-width: 800px) {
+  .main-responsive-nav .container,.others-option-for-responsive .option-inner .others-options.d-flex {
+    display: none!important;
+  }
+
+  .navbar-collapse {
+    overflow: hidden;
+  }
+
+  .main-navbar .navbar .navbar-nav .nav-item:first-child {
+    margin-left: 15px!important;
+    margin-top: 40px;
+  } 
+  ul.navbar-nav {
+    padding-left: 0px!important
+  }
+
+  .has-megamenu {
+    position: unset!important;
+  }
+
+  .megamenu {
+    z-index: 99999999999!important;
+  }
+
+  .megamenu {
+    overflow-y: scroll;
+    height: calc(100vh - 8rem);
+  }
+
+  .ant-carousel  {
+    margin-bottom: 350px!important;
+  }
+
+  .carousel-caption {
+    top: 2%!important;
+  }
+
+  #footer_img {
+    display: none;
+  }
+}

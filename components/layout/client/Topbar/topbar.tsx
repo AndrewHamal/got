@@ -44,9 +44,23 @@ const TopBar = () => {
 
         {/* Navbar Bar */}
         <div className="navbar-area d-flex">
-          <div className="main-responsive-nav">
+          <div className="main-responsive-nav mean-container">
+            <div className="mean-bar">
+              <a href="#nav" onClick={() => {$('.navbar-collapse').toggleClass('show')}} className="meanmenu-reveal mt-3" style={{right:'0',left:'auto'}}>
+                <span>
+                    <span>
+                      <span>
+                      </span>
+                      <span className="mt-1">
+                      </span>
+                      <span className="mt-1">
+                      </span>
+                  </span>
+                </span></a>
+            </div>
             <div className="container">
               <div className="main-responsive-menu">
+          
                 <div className="logo">
                   <Link href="/">
                     <img src={LogoImage.src} alt="logo" width={'60'} />
@@ -56,6 +70,7 @@ const TopBar = () => {
             </div>
           </div>
           <div className="main-navbar d-flex w-100">
+
             <div className="container-fluid">
               <nav className="navbar navbar-expand-md navbar-light">
                 <div className="cursor-pointer">
@@ -91,7 +106,7 @@ const TopBar = () => {
                         <i className="fas fa-angle-down" />
                       </a>
                       <div className="dropdown-menu megamenu p-4" role="menu">
-                        <div className="d-flex gap-5">
+                        <div className="d-flex flex-wrap gap-5">
                           <div className="">
                             <h5 className="mt-0">Countries</h5>
                             {

@@ -1221,7 +1221,20 @@ section {
 
 /* --Footer Area-- */
 #footer_area {
+  position: relative;
   padding: 100px 0px;
+
+}
+
+#footer_img {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -53px;
+  bottom: 0;
+  z-index: -1;
+  opacity: .2;
+  object-fit: cover;
 }
 
 .footer_heading_area h5 {

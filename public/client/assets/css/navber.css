@@ -653,7 +653,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 99;
+    z-index: 99999999;
     -webkit-box-shadow: 0 2px 28px 0 rgba(0, 0, 0, .06);
     box-shadow: 0 2px 28px 0 rgba(0, 0, 0, .06);
     background: #000000 !important;
@@ -1445,7 +1445,7 @@
 
 
 .megamenu {
-    width: calc(100vw - 2rem)!important;
+    width: calc(100vw - 1.5rem)!important;
     right: 0!important;
     top: 50px!important ;
 }

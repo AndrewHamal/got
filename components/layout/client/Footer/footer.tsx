@@ -7,6 +7,7 @@ const Footer = () => {
   return (
     <>
       <footer id="footer_area">
+        <img src={'/client/assets/landscape.jpg'} id="footer_img" alt="" />
         <div className="container">
           <div className="row">
             <div className="col-lg-4 col-md-6 col-sm-6 col-12">
@@ -18,7 +19,7 @@ const Footer = () => {
                   <h5>Call 24/7 for any help</h5>
                   <h3>
                     {" "}
-                    <a href="tel:+00-123-456-789">+977-9868109912</a>
+                    <a href="tel:+977-9868109912">+977-9868109912</a>
                   </h3>
                 </div>
                 <div className="footer_inquery_area">
@@ -111,11 +112,6 @@ const Footer = () => {
                 <p>Copyright © 2022 All Rights Reserved</p>
               </div>
             </div>
-            {/* <div className="co-lg-6 col-md-6 col-sm-12 col-12">
-              <div className="copyright_right">
-                <img src="client/assets/img/common/cards.png" alt="img" />
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

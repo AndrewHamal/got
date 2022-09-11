@@ -119,7 +119,7 @@ function Index() {
                 <div className="carousel" key={key}>
                   <div className="overlay"></div>
                   <img src={res?.file_slider?.full_path ?? "/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={res?.name} />
-                  <div className="carousel-caption d-none d-md-block">
+                  <div className="carousel-caption">
                     <h2 className="text-white font-38">{res?.name}</h2>
                     <p className="heading-2 text-faded">{JSON.parse(res?.overview)?.blocks[0]?.text?.substring(0, 130)}...</p>
 
@@ -154,7 +154,7 @@ function Index() {
                               <div className="oneway_search_form">
                                 <form action="#!">
                                   <div className="row">
-                                    <div className="col-lg-2  col-md-6 col-sm-12 col-12">
+                                    <div className="col-lg-2  col-md-6 col-sm-12 col-6">
                                       <div className="flight_Search_boxed dropdown_passenger_area text-center">
                                         <div className="dropdown">
                                           <i className="fas fa-certificate font-38 mb-2 mt-1"></i>
@@ -163,7 +163,7 @@ function Index() {
                                       </div>
                                     </div>
 
-                                    <div className="col-lg-2  col-md-6 col-sm-12 col-12">
+                                    <div className="col-lg-2  col-md-6 col-sm-12 col-6">
                                       <div className="flight_Search_boxed dropdown_passenger_area">
                                         <div className="dropdown text-center">
                                           <i className="fas fa-clock font-38 mb-2 mt-1"></i>
@@ -172,7 +172,7 @@ function Index() {
                                       </div>
                                     </div>
 
-                                    <div className="col-lg-2  col-md-6 col-sm-12 col-12">
+                                    <div className="col-lg-2  col-md-6 col-sm-12 col-6">
                                       <div className="flight_Search_boxed dropdown_passenger_area">
                                         <div className="dropdown text-center">
                                           <i className="fas fa-network-wired font-38 mb-2 mt-1"></i>
@@ -181,7 +181,7 @@ function Index() {
                                       </div>
                                     </div>
 
-                                    <div className="col-lg-2  col-md-6 col-sm-12 col-12">
+                                    <div className="col-lg-2  col-md-6 col-sm-12 col-6">
                                       <div className="flight_Search_boxed dropdown_passenger_area">
                                         <div className="dropdown text-center">
                                           <i className="fa fa-users font-38 mb-2 mt-1"></i>
@@ -190,7 +190,7 @@ function Index() {
                                       </div>
                                     </div>
 
-                                    <div className="col-lg-2  col-md-6 col-sm-12 col-12">
+                                    <div className="col-lg-2  col-md-6 col-sm-12 col-6">
                                       <div className="flight_Search_boxed dropdown_passenger_area">
                                         <div className="dropdown text-center">
                                           <i className="fas fa-building font-38 mb-2 mt-1"></i>
@@ -199,7 +199,7 @@ function Index() {
                                       </div>
                                     </div>
 
-                                    <div className="col-lg-2  col-md-6 col-sm-12 col-12">
+                                    <div className="col-lg-2  col-md-6 col-sm-12 col-6">
                                       <div className="flight_Search_boxed dropdown_passenger_area">
                                         <div className="dropdown text-center">
                                           <i className="fa fa-globe font-38 mb-2 mt-1"></i>
@@ -867,7 +867,7 @@ function Index() {
               {
                 !topThree ?  <div className="col-lg-3 col-md-6 col-sm-6 col-12"> <Skeleton active /> </div> : topThree?.map((res:any, key: number) => (
                   // eslint-disable-next-line react/jsx-key
-                  <div className="col-lg-3 col-md-6 col-sm-6 col-12 pointer-cursor" key={key} onClick={() => router.push(`/destinations/${res?.id}`)}>
+                  <div className="col-lg-3 col-md-6 col-sm-6 col-12 pointer-cursor mb-4 mb-md-0" key={key} onClick={() => router.push(`/destinations/${res?.id}`)}>
                     <div className="imagination_boxed">
                         <img
                           src={res?.file_slider?.full_path}
@@ -1012,7 +1012,7 @@ function Index() {
             </div>
             <div className="row">
               <div className="col-lg-12">
-                <div className="promotional_tour_slider owl-theme owl-carousel dot_style d-flex gap-3">
+                <div className="promotional_tour_slider owl-theme owl-carousel flex-wrap dot_style d-flex gap-3">
                   {
                     destinationHeader?.slice(0, 5)?.map((res: any, key: number) => (
                       // eslint-disable-next-line react/jsx-key
@@ -1067,7 +1067,7 @@ function Index() {
               <div className="col-lg-10 offset-lg-1">
                 <div className="theme_nav_tab">
                   <nav className="theme_nav_tab_item">
-                    <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                    <div className="nav nav-tabs gap-3" id="nav-tab" role="tablist">
                       {
                         countries?.map((res: any, key: number) => (
                           // eslint-disable-next-line react/jsx-key
@@ -1139,386 +1139,6 @@ function Index() {
 
                     </div>
                   </div>
-                  <div
-                    className="tab-pane fade"
-                    id="nav-malaysia"
-                    role="tabpanel"
-                    aria-labelledby="nav-malaysia-tab"
-                  >
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small2.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">Kathmundu tour</a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$85.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small3.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Beautiful pokhara
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$100.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small4.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Annapurna region
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$75.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small6.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Langtang region
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$105.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="nav-indonesia"
-                    role="tabpanel"
-                    aria-labelledby="nav-indonesia-tab"
-                  >
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small3.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Beautiful pokhara
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$100.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small4.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Annapurna region
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$75.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small6.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Langtang region
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$105.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="nav-turkey"
-                    role="tabpanel"
-                    aria-labelledby="nav-turkey-tab"
-                  >
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small2.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">Kathmundu tour</a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$85.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small3.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Beautiful pokhara
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$100.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small4.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Annapurna region
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$75.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="nav-china"
-                    role="tabpanel"
-                    aria-labelledby="nav-china-tab"
-                  >
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small4.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Annapurna region
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$75.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small6.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Langtang region
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$105.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="nav-darjeeling"
-                    role="tabpanel"
-                    aria-labelledby="nav-darjeeling-tab"
-                  >
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small4.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Annapurna region
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$75.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="nav-italy"
-                    role="tabpanel"
-                    aria-labelledby="nav-italy-tab"
-                  >
-                    <div className="row">
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small4.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Annapurna region
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$75.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                        <div className="tab_destinations_boxed">
-                          <div className="tab_destinations_img">
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination-small6.png"
-                                alt="img"
-                              />
-                            </a>
-                          </div>
-                          <div className="tab_destinations_conntent">
-                            <h3>
-                              <a href="top-destinations.html">
-                                Langtang region
-                              </a>
-                            </h3>
-                            <p>
-                              Price starts at <span>$105.00</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -1537,7 +1157,7 @@ function Index() {
             </div>
 
             <div className="row">
-              <div className="col-lg-6">
+              <div className="col-lg-6 mb-4 mb-md-0">
                 <div className="home_news_left_wrapper">
                   {
                     !blogs ? <Skeleton /> :
