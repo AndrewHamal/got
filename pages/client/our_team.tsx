@@ -1,12 +1,13 @@
 import CommonBanner from '@/components/common/Common_Banner'
 import ClientLayout from '@/components/layout/client/ClientLayout'
+import { Skeleton } from 'antd';
 import React from 'react'
 import useSWR from 'swr'
 
 function OurTeam() {
 
   const { data } = useSWR('/user/blogs');
-  // const { data: teams } = useSWR('/user/teams');
+  const { data: teams } = useSWR('/user/teams');
 
   return (
     <ClientLayout>
@@ -21,23 +22,25 @@ function OurTeam() {
             </div>
           </div>
           <div className="row">
-            <div className="col-lg-12">
-              <div className="guide_heading_area pt-5">
-                <h3>Our Team</h3>
-              </div>
-            </div>
-            <div className="col-lg-3 col-md-6 col-sm-12 col-12">
-              <div className="tour_guides_boxed">
-                <img src="/client/assets/img/tour-guides/guide-5.png" alt="img" />
-                <div className="tour_guide_content">
-                  <ul>
-                    <li><a href="https://www.youtube.com/watch?v=uUHb3cBvWMY" target={"_blank"} rel="noreferrer"><i className="fab fa-youtube" /></a></li>
-                  </ul>
-                  <h3>Anna naomi</h3>
-                  <p>CTO</p>
+       
+
+            { !teams ? <div className="col-lg-3 col-md-6 col-sm-12 col-12"> <Skeleton active/> </div>
+            : teams.map((res: any, key: number) => (
+              // eslint-disable-next-line react/jsx-key
+              <div className="col-lg-3 col-md-6 col-sm-12 col-12">
+                <div className="tour_guides_boxed">
+                  <img src={res.full_path} alt="img" />
+                  <div className="tour_guide_content">
+                    <ul>
+                      <li><a href={res.youtube_link} target={"_blank"} rel="noreferrer"><i className="fab fa-youtube" /></a></li>
+                    </ul>
+                    <h3>{ res.name }</h3>
+                    <p className='text-capitalize'>{ res.designation }</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )) 
+            }
           </div>
         </div>
       </section>

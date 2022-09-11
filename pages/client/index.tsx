@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 // @ts-nocheck
 import ClientLayout from "@/components/layout/client/ClientLayout";
-import { Carousel, Empty, Skeleton } from "antd";
+import { Carousel, Empty, Modal, Skeleton } from "antd";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
-import Moment from "react-moment";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axiosUser from "@/services/axios/axiosUser";
@@ -16,6 +15,10 @@ function Index() {
   const { data: countries } = useSWR('user/countries');
   const { data: blogs } = useSWR('user/blogs', (resource, init) => axiosUser(resource, init).then(res => res.data.data));
   const { data: regions } = useSWR('user/region-chunk');
+  const { data: teams } = useSWR('user/teams');
+  const { data: partners } = useSWR('user/partners');
+  const { data: topThree, error } = useSWR('user/top-three');
+
   const [selectedCountry, setSelectedCountry] = useState();
   let router = useRouter();
 
@@ -69,7 +72,7 @@ function Index() {
     });
 
     if (destinationHeader)
-      setSelectedCountry(destinationHeader[0].region?.country_id);
+      setSelectedCountry(destinationHeader[0]?.region?.country_id);
 
   }, [destinationHeader, regions]);
 
@@ -855,56 +858,30 @@ function Index() {
               <div className="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div className="heading_left_area">
                   <h2>
-                    Go beyond your <span>imagination</span>
+                    Get Life Time <span>Experience</span>
                   </h2>
-                  <h5>Discover your ideal experience with us</h5>
+                  <h5>Match your trip expectation</h5>
                 </div>
               </div>
-              <div className="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div className="imagination_boxed">
-                  <a href="top-destinations.html">
-                    <img
-                      src="client/assets/img/imagination/imagination1.png"
-                      alt="img"
-                    />
-                  </a>
-                  <h3>
-                    <a href="top-destinations.html">
-                      7% Discount for all <span>Airlines</span>
-                    </a>
-                  </h3>
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div className="imagination_boxed">
-                  <a href="top-destinations.html">
-                    <img
-                      src="client/assets/img/imagination/imagination2.png"
-                      alt="img"
-                    />
-                  </a>
-                  <h3>
-                    <a href="#!">
-                      Travel around<span>the world</span>
-                    </a>
-                  </h3>
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div className="imagination_boxed">
-                  <a href="top-destinations.html">
-                    <img
-                      src="client/assets/img/imagination/imagination3.png"
-                      alt="img"
-                    />
-                  </a>
-                  <h3>
-                    <a href="top-destinations.html">
-                      Luxury resorts<span>top deals</span>
-                    </a>
-                  </h3>
-                </div>
-              </div>
+
+              {
+                !topThree ?  <div className="col-lg-3 col-md-6 col-sm-6 col-12"> <Skeleton active /> </div> : topThree?.map((res:any, key: number) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <div className="col-lg-3 col-md-6 col-sm-6 col-12 pointer-cursor" key={key} onClick={() => router.push(`/destinations/${res?.id}`)}>
+                    <div className="imagination_boxed">
+                        <img
+                          src={res?.file_slider?.full_path}
+                          alt="img"
+                        />
+                        <div className="overlay"></div>
+                      <h3 className="px-3 text-white">
+                          <span>{res?.name}</span>
+                      </h3>
+                    </div>
+                  </div>
+                ))
+              }
+
             </div>
           </div>
         </section>
@@ -924,22 +901,20 @@ function Index() {
             <div className="row">
 
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
-                <div className="destinations_content_box img_animation">
+                <div className="destinations_content_box img_animation main">
                   <img
-                    src="client/assets/img/destination/big-img.png"
+                    src={regions && regions[0][0]?.full_path}
                     alt="img"
                   />
+                  <div className="overlay"></div>
                   <div className="destinations_content_inner">
-                    <h2>Up to</h2>
-                    <div className="destinations_big_offer">
-                      <h1>50</h1>
-                      <h6>
-                        <span>%</span> <span>Off</span>
-                      </h6>
+                    <h2>Book Your best</h2>
+                    <div className="destinations_big_offer mb-0">
+                      <h2 className="f-58 mb-0">Package</h2>
                     </div>
-                    <h2>Holiday packages</h2>
+                    <h2>Now</h2>
                     <a
-                      href="top-destinations.html"
+                      onClick={() => router.push('/listing')}
                       className="btn btn_theme btn_md"
                     >
                       Book now
@@ -950,31 +925,6 @@ function Index() {
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
                 <div className="row">
                   {!regions ? <Skeleton active /> : region()}
-                  {/* {
-                  regions?.map((res: any, key: number) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <div className="col-lg-4 col-md-4 col-sm-12 col-12" key={key}>
-                      {
-                        Array.from(res)?.map((resData: any, key: number) => (
-                          // eslint-disable-next-line react/jsx-key
-                          <div className="destinations_content_box img_animation" key={key}>
-                            <a href="top-destinations.html">
-                              <img
-                                src="client/assets/img/destination/destination1.png"
-                                alt="img"
-                              />
-                            </a>
-                            <div className="destinations_content_inner">
-                              <h3>
-                                <a href="top-destinations.html">{resData.name}</a>
-                              </h3>
-                            </div>
-                          </div>
-                        ))
-                      }
-                   </div>
-                  ))
-                } */}
                 </div>
               </div>
             </div>
@@ -1048,60 +998,7 @@ function Index() {
             </div>
           </div>
         </section>
-        {/* Offer Area */}
-        <section id="offer_area" className="section_padding_top">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-6 col-md-12 col-sm-12 col-12">
-                <div className="offer_area_box d-none-phone img_animation">
-                  <img src="client/assets/img/offer/offer1.png" alt="img" />
-                  <div className="offer_area_content">
-                    <h2>Special Offers</h2>
-                    <p>
-                      Invidunt ut labore et dolore magna aliquyam erat, sed diam
-                      voluptua. At vero eos et accusam et justo duo dolores et
-                      ea rebum. Stet clita kasd dolor sit amet. Lorem ipsum
-                      dolor sit amet.
-                    </p>
-                    <a href="#!" className="btn btn_theme btn_md">
-                      Holiday deals
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-6 col-sm-12 col-12">
-                <div className="offer_area_box img_animation">
-                  <img src="client/assets/img/offer/offer2.png" alt="img" />
-                  <div className="offer_area_content">
-                    <h2>News letter</h2>
-                    <p>
-                      Invidunt ut labore et dolore magna aliquyam erat, sed diam
-                      voluptua. At vero eos et.
-                    </p>
-                    <a href="#!" className="btn btn_theme btn_md">
-                      Subscribe now
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-6 col-sm-12 col-12">
-                <div className="offer_area_box img_animation">
-                  <img src="client/assets/img/offer/offer3.png" alt="img" />
-                  <div className="offer_area_content">
-                    <h2>Travel tips</h2>
-                    <p>
-                      Invidunt ut labore et dolore magna aliquyam erat, sed diam
-                      voluptua. At vero eos et.
-                    </p>
-                    <a href="#!" className="btn btn_theme btn_md">
-                      Get tips
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+
         {/*Promotional Tours Area */}
         <section id="promotional_tours" className="section_padding_top">
           <div className="container">
@@ -1634,7 +1531,7 @@ function Index() {
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div className="section_heading_center">
-                  <h2>Latest travel news</h2>
+                  <h2>Latest travel blogs</h2>
                 </div>
               </div>
             </div>
@@ -1705,81 +1602,71 @@ function Index() {
             </div>
           </div>
         </section>
-        {/* Our partners Area */}
+        {/* Our team Area */}
         <section id="our_partners" className="section_padding">
           <div className="container">
             {/* Section Heading */}
             <div className="row">
               <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div className="section_heading_center">
-                  <h2>Our partners</h2>
+                  <h2>Our Team</h2>
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="partner_slider_area owl-theme owl-carousel">
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/1.png" alt="logo" />
-                    </a>
-                  </div>
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/2.png" alt="logo" />
-                    </a>
-                  </div>
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/3.png" alt="logo" />
-                    </a>
-                  </div>
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/4.png" alt="logo" />
-                    </a>
-                  </div>
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/5.png" alt="logo" />
-                    </a>
-                  </div>
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/6.png" alt="logo" />
-                    </a>
-                  </div>
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/7.png" alt="logo" />
-                    </a>
-                  </div>
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/8.png" alt="logo" />
-                    </a>
-                  </div>
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/5.png" alt="logo" />
-                    </a>
-                  </div>
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/3.png" alt="logo" />
-                    </a>
-                  </div>
-                  <div className="partner_logo">
-                    <a href="#!">
-                      <img src="client/assets/img/partner/2.png" alt="logo" />
-                    </a>
-                  </div>
-                </div>
-              </div>
+            <div className="d-flex gap-5">
+                {
+                  !teams ? <Skeleton active/> : teams.map((res:any, key: number) => (
+                    <div key={key} className="teams text-center">
+                 
+                      <div className="position-relative">
+                        <a href={res.youtube_link} target="_blank" rel="noreferrer">
+                          <img src={res.full_path} className="team" alt="" />
+                          <div className="inside d-flex pointer-cursor">
+                            <i className="fab fa-youtube m-auto text-danger fa-2x pb-2"></i>
+                          </div>
+                        </a>
+                      </div>
+                      <h5 className="text-dark fw-bold mt-2 mb-0">{ res.name}</h5>
+                      <h6 className="text-capitalize">{ res?.designation }</h6>
+                    </div>
+                  ))
+                }
             </div>
           </div>
         </section>
-        {/* Cta Area */}
+
+           {/* Our team Area */}
+        <section id="our_partners" className=" pb-5">
+          <div className="container">
+            {/* Section Heading */}
+            <div className="row">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div className="section_heading_center">
+                  <h2>Our Partners</h2>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex gap-5">
+                {
+                  !partners ? <Skeleton active/> : partners.map((res:any, key: number) => (
+                    <div key={key} className="teams text-center">
+                 
+                      <div className="position-relative">
+                        {/* <a href={res.youtube_link} target="_blank" rel="noreferrer"> */}
+                          <img src={res.full_path} className="team rounded-circle border" alt="" />
+                          {/* <div className="inside d-flex pointer-cursor">
+                            <i className="fab fa-youtube m-auto text-danger fa-2x pb-2"></i>
+                          </div> */}
+                        {/* </a> */}
+                      </div>
+                      {/* <h5 className="text-dark fw-bold mt-2 mb-0">{ res.name}</h5> */}
+                    </div>
+                  ))
+                }
+            </div>
+          </div>
+        </section>
+
       </div>
     </ClientLayout>
   );

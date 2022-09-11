@@ -177,8 +177,8 @@ const TopBar = () => {
                         </a>
                       </div>
                       <div className="option-item">
-                        <a href="contact.html" className="btn  btn_navber">
-                          Get free quote
+                        <a onClick={() => router.push('/listing')} className="btn  btn_navber">
+                          All Destination
                         </a>
                       </div>
                     </div>

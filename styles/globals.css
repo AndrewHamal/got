@@ -151,7 +151,7 @@ textarea[aria-invalid="true"] {
 
 #theme_search_form {
   position: absolute;
-  top: calc(78% - 120.5px);
+  top: calc(600px - 81.5px);
   width: 100%;
   margin: 0px;
 }
@@ -223,4 +223,51 @@ textarea[aria-invalid="true"] {
 
 a.top-menu h6.title.text:hover {
   color: red!important;
+}
+
+.team {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.teams {
+  position: relative;
+  overflow: hidden;
+}
+
+.inside {
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+  top: 49%;
+  bottom: 0;
+  border-radius: 0 0 20px 20px;
+  background: #8b3eeaa1;
+}
+
+.imagination_boxed img{
+  height: 200px;
+}
+
+.destinations_content_box.img_animation img {
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.destinations_content_box.img_animation.main  {
+  height: calc(100% - 1.4rem);
+}
+
+.f-58 {
+  font-size: 88px!important;
+}
+
+.tour_guides_boxed img{
+  height: 300px!important;
+  object-fit: cover;
+  object-position: top;
 }

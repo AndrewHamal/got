@@ -1,6 +1,9 @@
+import { useRouter } from "next/router";
 import React from "react";
 
 const Footer = () => {
+  const router = useRouter();
+  
   return (
     <>
       <footer id="footer_area">
@@ -22,7 +25,7 @@ const Footer = () => {
                   <h5>Mail to our support team</h5>
                   <h3>
                     {" "}
-                    <a href="mailto:support@xyz.com">support@xyz.com</a>
+                    <a href="mailto:support@xyz.com">contact@godoftrek.com</a>
                   </h3>
                 </div>
                 <div className="footer_inquery_area">
@@ -62,19 +65,10 @@ const Footer = () => {
                     <a href="about.html">About Us</a>
                   </li>
                   <li>
-                    <a href="testimonials.html">Testimonials</a>
+                    <a onClick={() => router.push('/our_team')}>Meet the Team </a>
                   </li>
                   <li>
-                    <a href="faqs.html">Rewards</a>
-                  </li>
-                  <li>
-                    <a href="terms-service.html">Work with Us</a>
-                  </li>
-                  <li>
-                    <a href="tour-guides.html">Meet the Team </a>
-                  </li>
-                  <li>
-                    <a href="news.html">Blog</a>
+                    <a onClick={() => router.push('/blogs')}>Blog</a>
                   </li>
                 </ul>
               </div>
