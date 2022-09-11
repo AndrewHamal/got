@@ -4513,14 +4513,13 @@ body::-webkit-scrollbar {
 }
 
 .main_content {
-    backgroun: '#f6f7fb';
+    background: aliceblue;
     padding-left: 270px;
     width: 100%;
     padding-top: 0 !important;
     transition: .5s;
     position: relative;
     min-height: 100vh;
-    padding-bottom: 70px;
     overflow: hidden
 }
 

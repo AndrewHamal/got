@@ -2,8 +2,7 @@
 import CommonBanner from '@/components/common/Common_Banner';
 import YoutubeFrame from '@/components/common/YoutubeFrame';
 import ClientLayout from '@/components/layout/client/ClientLayout'
-import { UpOutlined } from '@ant-design/icons';
-import { Carousel, Collapse, Drawer, Modal, Skeleton, Tabs } from 'antd';
+import { Carousel, Skeleton, Tabs } from 'antd';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -18,7 +17,6 @@ function DestinationById() {
   const router = useRouter();
   const { id } = router.query;
 
-  const [activeItenary, setActiveItenary] = useState<any>(1);
   const [packDrawer, setPackDrawer] = useState<any>(false);
 
   const { data, error } = useSWR(id ? `/user/destination/${id}` : null);
@@ -118,23 +116,23 @@ function DestinationById() {
                                         </h2>
                                         <div id={"k" + it.id} className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                           <div className="accordion-body">
-                                            <div className='row'>
-                                              <div className='col-md-4'>
-                                                <Editor
-                                                  //@ts-ignore
-                                                  toolbarHidden
-                                                  contentState={JSON.parse(it.content)}
-                                                  readOnly
-                                                />
-                                              </div>
-                                              <div className='col-md-8 mt-3'>
+                                            {
+                                              it.youtube_link &&
+                                              <div className='text-center mt-4 mb-3'>
                                                 <YoutubeFrame
-                                                  width="90%"
+                                                  width="500px"
                                                   height="250px"
-                                                  id="Ou4u4kOatck"
+                                                  id={it.youtube_link}
                                                 />
                                               </div>
-                                            </div>
+                                            }
+
+                                            <Editor
+                                              //@ts-ignore
+                                              toolbarHidden
+                                              contentState={JSON.parse(it.content)}
+                                              readOnly
+                                            />
                                           </div>
                                         </div>
                                       </div>

@@ -13,17 +13,17 @@ const Editor = dynamic(
 );
 import Moment from 'react-moment';
 import { cropTitle } from '@/services/helper';
+import axiosUser from '@/services/axios/axiosUser';
 
 function DestinationById() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: blogs } = useSWR(`/user/blogs`);
+  // @ts-ignore
+  const { data: blogs } = useSWR(`/user/blogs`, (resource, init) => axiosUser(resource, init).then(res => res.data.data));
   const { data, error } = useSWR(id ? `/user/blog/${id}` : null);
 
   const loading = !data && !error;
-
-  console.log({ data })
 
   return (
     <ClientLayout>

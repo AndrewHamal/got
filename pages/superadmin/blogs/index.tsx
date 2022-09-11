@@ -35,7 +35,7 @@ const App: React.FC = () => {
       dataIndex: 'category'
     },
     {
-      title: 'Youtube Link',
+      title: 'Youtube Id',
       dataIndex: 'youtube_link'
     },
     {
@@ -79,7 +79,7 @@ const App: React.FC = () => {
           :
           <Table
             columns={columns}
-            dataSource={data?.map((dest: any) => ({
+            dataSource={data?.data?.map((dest: any) => ({
               ...dest,
               category: dest.category?.title,
               body: cropTitle(JSON.parse(dest.body)?.blocks[0]?.text, 50)

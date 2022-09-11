@@ -1,3 +1,5 @@
+import axiosUser from "./axios/axiosUser"
+
 export const EXCLUDE_ROUTES = [
   '/register',
   '/login',

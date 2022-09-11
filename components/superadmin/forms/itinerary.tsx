@@ -123,12 +123,12 @@ function CreateOrUpdateItenaryForm({ submitHandler, formMethods, loading }: IPro
         </div>
         <div className="col-md-6">
           <div className="form-group mb-3">
-            <label className="form-label">Youtube Embed Link<span className='text-danger'> *</span></label>
+            <label className="form-label">Youtube Video Id<span className='text-danger'> *</span></label>
             <input
-              {...register("youtube_link", { required: "Youtube Link is required!" })}
+              {...register("youtube_link", { required: "Youtube Video Id is required!" })}
               aria-invalid={!!errors?.youtube_link?.message}
               className="form-control"
-              placeholder="Enter Youtube Link"
+              placeholder="Enter Youtube Video Id"
             />
             {errors?.youtube_link?.message &&
               <div className="text-danger">
