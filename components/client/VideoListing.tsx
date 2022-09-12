@@ -69,9 +69,13 @@ const VideoListing: React.FC = ({ keyword }: any) => {
           className='row-infinite'
           dataSource={data?.data}
           renderItem={(item: any) => (
-            <div key={item?.id} className='col-md-6 mb-4'>
-              <p className='f-20 mb-2 text-dark'><CropTitle className='f-22 mb-2 text-dark' text={item.title} wordLimit={20} /></p>
-              <YoutubeFrame id={item.youtube_link} />
+            <div key={item?.id} className='col-md-6 col-12 pb-0 mb-4 px-2'>
+              <div className='shadow-sm pt-3'>
+                <p className='f-20 mb-2 text-dark'>
+                  <CropTitle className='f-22 mb-2 text-dark text-capitalize fw-600 pb-2' text={item.title} wordLimit={20} />
+                </p>
+                <YoutubeFrame id={item.youtube_link} />
+              </div>
             </div>
 
           )}

@@ -37,6 +37,7 @@ function DestinationById() {
           imageUrl={data?.full_path}
           title={data?.name}
         />
+        
         {
           loading ? <div className="p-5"><Skeleton active /></div>
             :
@@ -54,9 +55,9 @@ function DestinationById() {
                           </div>
                         </div>
                         <div className="tour_details_img_wrapper">
-                          <div className="carousel">
+                          <div className="carousel blog">
                             <div className="overlay"></div>
-                            <img src={data?.full_path} className="d-block w-100" alt={data?.title} />
+                            <img src={data?.full_path} className="d-block w-100 blog-img" alt={data?.title} />
                           </div>
                         </div>
                         {/* overview */}

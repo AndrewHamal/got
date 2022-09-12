@@ -384,7 +384,7 @@ function Index() {
             </div>
             <div className="row">
               <div className="col-lg-12">
-                <div className="promotional_tour_slider owl-theme owl-carousel flex-wrap dot_style d-flex gap-3">
+                <div className="promotional_tour_slider owl-theme owl-carousel dot_style d-flex gap-3">
                   {
                     destinationHeader?.slice(0, 5)?.map((res: any, key: number) => (
                       // eslint-disable-next-line react/jsx-key

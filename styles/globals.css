@@ -329,6 +329,37 @@ a.top-menu h6.title.text:hover {
   .first {
     display: none!important;
   }
+
+  .promotional_tour_slider {
+    flex-wrap: wrap;
+  }
+
+  .section_heading_center {
+    margin-top: 0!important;
+  }
+
+  .contact_main_form_area {
+    padding-top: 0!important;
+  }
+  .contact_main_form_area .col-lg-8.offset-lg-2.mt-5{
+    padding-left: 25px!important;
+  }
+
+  #common_banner {
+    height: 200px!important;
+    object-fit: cover!important;
+    padding: 50px 0 130px 0!important;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .carousel img {
+    height: 300px!important;
+  }
+
+  .d-block.blog-img, .blog .overlay {
+    border-radius: 10px!important;
+  }
 }
 
 .destination img, .destination .overlay  {

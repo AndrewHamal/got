@@ -1,6 +1,6 @@
 import React from 'react'
 
-function YoutubeFrame({ width = 560, height = 315, id }: any) {
+function YoutubeFrame({ width = '100%', height = 315, id }: any) {
 
   // only id
   return (
