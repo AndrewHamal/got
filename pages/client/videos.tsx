@@ -7,7 +7,7 @@ import useSWR from 'swr'
 function OurTeam() {
 
   const { data } = useSWR('/user/blogs');
-  // const { data: teams } = useSWR('/user/teams');
+  const { data: teams } = useSWR('/user/video');
 
   return (
     <ClientLayout>

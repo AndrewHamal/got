@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@types/axios": "^0.14.0",
+    "@types/lodash": "^4.14.185",
     "antd": "^4.22.4",
     "axios": "^0.27.2",
     "cookies-next": "^2.1.1",
@@ -21,6 +22,7 @@
     "immutable": "^4.1.0",
     "install": "^0.13.0",
     "jquery": "^3.6.0",
+    "lodash": "^4.17.21",
     "metismenu": "^3.0.7",
     "moment": "^2.29.4",
     "next": "12.2.4",

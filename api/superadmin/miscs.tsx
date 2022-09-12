@@ -43,3 +43,19 @@ export const updatePartner = async (id: any, data: object) =>
 
 export const deletePartner = async (id: any) =>
   await axiosInstance.post(`/admin/partner/delete/${id}`)
+
+// video trailer
+
+export const createOrUpdateVideoTrailer = async (data: object) =>
+  await axiosInstance.post(`/admin/video-trailer/store`, data)
+
+// video listing
+
+export const createVideoListing = async (data: object) =>
+  await axiosInstance.post(`/admin/video/store`, data)
+
+export const updateVideoListing = async (id: any, data: object) =>
+  await axiosInstance.post(`/admin/video/${id}/update`, data)
+
+export const deleteVideoListing = async (data: object) =>
+  await axiosInstance.post(`/admin/video/store`, data)
