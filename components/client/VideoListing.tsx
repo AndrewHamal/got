@@ -41,15 +41,12 @@ const VideoListing: React.FC = ({ keyword }: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyword]);
 
-  console.log(data)
   return (
     <div
       id="scrollableDiv"
       style={{
-        // minHeight: 400,
         overflow: 'auto',
         padding: '0 16px',
-        // border: '1px solid rgba(140, 140, 140, 0.35)',
       }}
     >
       <InfiniteScroll
@@ -58,7 +55,7 @@ const VideoListing: React.FC = ({ keyword }: any) => {
         dataLength={data?.data?.length ?? 0}
         next={loadMoreData}
         hasMore={data?.current_page < data?.last_page}
-        loader={<Skeleton active />}
+        loader={<Skeleton active paragraph={{ rows: 2 }} />}
         endMessage={<Divider style={{ alignItems: "flex-start" }}>
           <p className="f-14">End Of Results</p>
         </Divider>}
@@ -80,9 +77,6 @@ const VideoListing: React.FC = ({ keyword }: any) => {
 
           )}
         />
-        {/* <div className='col-md-6 mb-4'>
-          <YoutubeFrame id="Ou4u4kOatck" />
-        </div> */}
       </InfiniteScroll>
     </div>
   );

@@ -57,6 +57,7 @@ function VideoSection() {
                 }}
                 className='w-50 border form-control mb-4' placeholder='Search Video' />
             </div>
+            {/* @ts-ignore */}
             <VideoListing keyword={search} />
           </div>
         </div>
