@@ -97,39 +97,6 @@ function DestinationById() {
                     </div>
                   </div>
                 </div>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-8">
-                      <div className="write_your_review_wrapper">
-                        <h3 className="heading_theme">Contact Us</h3>
-                        <div className="write_review_inner_boxed">
-                          <form action="https://andit.co/projects/html/and-tour/!#" id="news_comment_form">
-                            <div className="row">
-                              <div className="col-lg-6">
-                                <div className="form-froup">
-                                  <input type="text" className="form-control bg_input" placeholder="Enter full name" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6">
-                                <div className="form-froup">
-                                  <input type="text" className="form-control bg_input" placeholder="Enter email address" />
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="form-froup">
-                                  <textarea rows={6} placeholder="Write your comments" className="form-control bg_input" defaultValue={""} />
-                                </div>
-                                <div className="comment_form_submit">
-                                  <button className="btn btn_theme btn_md">Send</button>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </section>
             </div>
         }

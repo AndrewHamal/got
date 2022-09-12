@@ -159,6 +159,62 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
         </div>
       </div>
       {/* 3rd row */}
+      <div className='row'>
+        <div className='col-md-4'>
+          <div className="form-group mb-3">
+            <label className="form-label">Latitude<span className='text-danger'> *</span></label>
+            <input
+              {...register("lat", {
+                required: "Price is required!",
+                validate: val => !isNaN(val) || "Latitude must be a number"
+              })}
+              aria-invalid={!!errors?.lat?.message}
+              className="form-control"
+              placeholder="Enter Destination Latitude"
+            />
+            {errors?.lat?.message &&
+              <div className="text-danger">
+                {errors?.lat?.message + ""}
+              </div>
+            }
+          </div>
+        </div>
+        <div className='col-md-4'>
+          <div className="form-group mb-3">
+            <label className="form-label">Longitude<span className='text-danger'> *</span></label>
+            <input
+              {...register("long", {
+                required: "Longitude is required!",
+                validate: val => !isNaN(val) || "Longitude must be a number"
+              })}
+              aria-invalid={!!errors?.long?.message}
+              className="form-control"
+              placeholder="Enter Destination Longitude"
+            />
+            {errors?.long?.message &&
+              <div className="text-danger">
+                {errors?.long?.message + ""}
+              </div>
+            }
+          </div>
+        </div>
+        <div className='col-md-4'>
+          <div className="form-group mb-3">
+            <label className="form-label">Address</label>
+            <input
+              {...register("whole_location")}
+              className="form-control"
+              placeholder="Enter Address"
+            />
+            {errors?.whole_location?.message &&
+              <div className="text-danger">
+                {errors?.whole_location?.message + ""}
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      {/* 4th row */}
       <div className="row">
         <div className="col-md-12">
           <div className="form-group mb-3">
@@ -196,44 +252,8 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
             />
           </div>
         </div>
-        {/* <div className="col-md-6">
-          <div className="form-group mb-3">
-            <label className="form-label">Itenaries<span className='text-danger'> *</span></label>
-            <Controller name="itinarery"
-              control={control}
-              rules={{
-                required: "Itenaries is required!",
-                validate: val => val?.blocks[0]?.text.length || "Itenaries is required!"
-              }}
-              render={({ field: { value = null, onChange } }) =>
-                <>
-                  <div className='wysiwyg-wrapper'>
-                    {
-                      hasRTFValue.itinarery
-                        ? <Editor
-                          // @ts-ignore
-                          contentState={value}
-                          onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, itinarery: false })}
-                        />
-                        : <Editor
-                          // @ts-ignore
-                          initialContentState={value}
-                          onContentStateChange={onChange}
-                        />
-                    }
-                  </div>
-                  {errors?.itinarery?.message &&
-                    <div className="text-danger">
-                      {errors?.itinarery?.message + ""}
-                    </div>
-                  }
-                </>
-              }
-            />
-          </div>
-        </div> */}
       </div>
-      {/* 4th row */}
+      {/* 5th row */}
       <div className="row">
         <div className="col-md-6">
           <div className="form-group mb-3">
@@ -308,7 +328,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           </div>
         </div>
       </div>
-      {/* 7th row */}
+      {/* 6th row */}
       <div className="form-group mb-3">
         <label className="form-label">Additional Trek Info</label>
         <Controller name="trek_info"
@@ -339,7 +359,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           }
         />
       </div>
-      {/* 8th row */}
+      {/* 7th row */}
       <div className="form-group my-4">
         <label className="form-label">Images<span className='text-danger'> *</span></label>
         <Controller
@@ -365,6 +385,38 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
               {errors?.files?.message &&
                 <div className="text-danger">
                   {errors?.files?.message + ""}
+                </div>
+              }
+            </>
+          }
+        />
+      </div>
+      {/* 8th row */}
+      <div className="form-group my-4">
+        <label className="form-label">Featured Image<span className='text-danger'> *</span></label>
+        <Controller
+          control={control}
+          name="featured_image"
+          rules={{ required: "Atleast one file required!" }}
+          render={({ field: { value, onChange } }) =>
+            <>
+              <Upload
+                onRemove={val => { typeof val.uid === 'number' && deleteDestinationFiles(val.uid) }}
+                beforeUpload={beforeUpload}
+                maxCount={1}
+                listType="picture-card"
+                fileList={value}
+                onPreview={handlePreview}
+                onChange={({ fileList }: any) => onChange(fileList)}
+              >
+                {value?.length >= 1 ? null : uploadButton}
+              </Upload>
+              <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
+                <img alt="example2" style={{ width: '100%' }} src={previewImage} />
+              </Modal>
+              {errors?.featured_image?.message &&
+                <div className="text-danger">
+                  {errors?.featured_image?.message + ""}
                 </div>
               }
             </>

@@ -52,6 +52,10 @@ function DestinationById() {
                         <div className="tour_details_heading_wrapper">
                           <div className="tour_details_top_heading">
                             <h2>{data.name}</h2>
+                            {data?.location?.whole_location
+                              ? <h5><i className="fas fa-globe" /> Address- {data?.location?.whole_location}</h5>
+                              : null
+                            }
                             <h5><i className="fas fa-map-marker-alt" /> Region- {data.region.name}</h5>
                             <h5><i className="fas fa-clock" /> Duration- {data.no_of_days}</h5>
                           </div>
@@ -183,12 +187,24 @@ function DestinationById() {
                         }
 
                         {/* map location */}
-                        {/* <div className="tour_details_boxed">
-                          <h3 className="heading_theme">Tours location</h3>
-                          <div className="map_area">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3677.6962663570607!2d89.56355961427838!3d22.813715829827952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ff901efac79b59%3A0x5be01a1bc0dc7eba!2sAnd+IT!5e0!3m2!1sen!2sbd!4v1557901943656!5m2!1sen!2sbd" />
-                          </div>
-                        </div> */}
+                        {
+                          data?.location?.lat && data.location.long ?
+                            <div className="tour_details_boxed">
+                              <h3 className="heading_theme">Tours location</h3>
+                              <div className="google-map-code">
+                                <iframe
+                                  src={`https://maps.google.com/maps?q=${data.location.lat},${data.location.long}&hl=es;z=14&output=embed`}
+                                  width="100%"
+                                  height="450"
+                                  frameBorder="0"
+                                  style={{ border: 0 }}
+                                  allowFullScreen={true}
+                                  aria-hidden="false"
+                                  tabIndex={0}></iframe>
+                              </div>
+                            </div>
+                            : null
+                        }
                       </div>
                     </div>
                     <div className="col-lg-4">
@@ -271,43 +287,7 @@ function DestinationById() {
                     </div>
                   </div>
                 </div>
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-8">
-                      <div className="write_your_review_wrapper">
-                        <h3 className="heading_theme">Contact Us</h3>
-                        <div className="write_review_inner_boxed">
-                          <form action="https://andit.co/projects/html/and-tour/!#" id="news_comment_form">
-                            <div className="row">
-                              <div className="col-lg-6">
-                                <div className="form-froup">
-                                  <input type="text" className="form-control bg_input" placeholder="Enter full name" />
-                                </div>
-                              </div>
-                              <div className="col-lg-6">
-                                <div className="form-froup">
-                                  <input type="text" className="form-control bg_input" placeholder="Enter email address" />
-                                </div>
-                              </div>
-                              <div className="col-lg-12">
-                                <div className="form-froup">
-                                  <textarea rows={6} placeholder="Write your comments" className="form-control bg_input" defaultValue={""} />
-                                </div>
-                                <div className="comment_form_submit">
-                                  <button className="btn btn_theme btn_md">Send</button>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
               </section>
-              {/*Related tour packages Area */}
-
             </div>
         }
       </div >

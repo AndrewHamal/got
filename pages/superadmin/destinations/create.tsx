@@ -17,6 +17,7 @@ function CreateHotels() {
     const dto = {
       ...data,
       files: data.files.map((file: UploadFile) => file.originFileObj),
+      featured_image: data.featured_image[0].originFileObj,
       overview: JSON.stringify(data.overview),
       itinarery: JSON.stringify(data.itinarery),
       included: JSON.stringify(data.included),

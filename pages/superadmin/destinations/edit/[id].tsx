@@ -20,6 +20,7 @@ function CreateHotels() {
     const dto = {
       ...data,
       files: data.files.map((file: UploadFile) => file.originFileObj),
+      featured_image: data.featured_image[0].originFileObj,
       overview: JSON.stringify(data.overview),
       itinarery: JSON.stringify(data.itinarery),
       included: JSON.stringify(data.included),
@@ -28,7 +29,6 @@ function CreateHotels() {
     }
 
     const { files, ...destinationDTO } = dto;
-
 
     const filesToUpload = files.filter((file: any) => !!file)
 
@@ -67,6 +67,9 @@ function CreateHotels() {
         region_id: data.region_id,
         no_of_days: data.no_of_days,
         starting_from: data.starting_from,
+        long: data?.location?.long,
+        lat: data?.location?.lat,
+        whole_location: data?.location?.whole_location,
         overview: JSON.parse(data.overview),
         itinarery: JSON.parse(data.itinarery),
         included: JSON.parse(data.included),
@@ -77,7 +80,12 @@ function CreateHotels() {
           name: `image.${file.type}`,
           url: file.full_path,
         }
-        ))
+        )),
+        featured_image: [data.featured_image ? {
+          uid: 1,
+          name: `image.${data.featured_image.split('.')[1]}`,
+          url: data.full_path,
+        } : null]
       })
     }
 
