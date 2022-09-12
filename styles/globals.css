@@ -280,7 +280,7 @@ a.top-menu h6.title.text:hover {
   background: transparent!important;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 700px) {
   .main-responsive-nav .container,.others-option-for-responsive .option-inner .others-options.d-flex {
     display: none!important;
   }
@@ -321,4 +321,16 @@ a.top-menu h6.title.text:hover {
   #footer_img {
     display: none;
   }
+
+  .megamenu-inner {
+    flex-wrap: wrap;
+  }
+
+  .first {
+    display: none!important;
+  }
+}
+
+.destination img, .destination .overlay  {
+  border-radius: 20px!important;
 }
