@@ -14,7 +14,7 @@ const VideoListing: React.FC = ({ keyword }: any) => {
       return;
     }
     setLoading(true);
-    axiosUser(`/user/videos?keyword=${keyword ?? ""}&page=${newKeyword ? 1 : data?.current_page + 1}&per_page=1`)
+    axiosUser(`/user/videos?keyword=${keyword ?? ""}&page=${newKeyword ? 1 : data?.current_page + 1}`)
       .then(res => {
         const paginationData = res.data;
         setData({
@@ -45,7 +45,6 @@ const VideoListing: React.FC = ({ keyword }: any) => {
     <div
       id="scrollableDiv"
       style={{
-        height: 100,
         overflow: 'auto',
         padding: '0 16px',
       }}
