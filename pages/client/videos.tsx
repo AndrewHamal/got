@@ -1,13 +1,26 @@
+import VideoListing from '@/components/client/VideoListing';
 import CommonBanner from '@/components/common/Common_Banner'
 import YoutubeFrame from '@/components/common/YoutubeFrame';
 import ClientLayout from '@/components/layout/client/ClientLayout'
-import React from 'react'
+import { Skeleton } from 'antd';
+import React, { useCallback, useState } from 'react'
 import useSWR from 'swr'
+import _debounce from "lodash/debounce";
 
-function OurTeam() {
+function VideoSection() {
 
   const { data } = useSWR('/user/blogs');
-  // const { data: teams } = useSWR('/user/teams');
+  const { data: trailer, error: trailerError } = useSWR('/user/video-trailer');
+  const trailerLoading = !trailer && !trailerError;
+
+  const [search, setSearch] = useState<any>('');
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debounceFn = useCallback(_debounce(handleDebounceFn, 1000), []);
+
+  function handleDebounceFn(inputValue: any) {
+    setSearch(inputValue);
+  }
 
   return (
     <ClientLayout>
@@ -15,14 +28,18 @@ function OurTeam() {
       <section id="tour_guides_area" className="section_padding">
         <div className="container">
           <div className="row">
-            <div className="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div className="col-12">
               <div className="section_heading_center">
                 <h2 className="mb-5">Trailer Video</h2>
-                <YoutubeFrame
-                  width="853"
-                  height="480"
-                  id="uUHb3cBvWMY"
-                />
+                {
+                  trailerLoading ? <Skeleton className='px-5' active />
+                    :
+                    <YoutubeFrame
+                      width="853"
+                      height="480"
+                      id={trailer.youtube_link}
+                    />
+                }
               </div>
             </div>
           </div>
@@ -32,36 +49,15 @@ function OurTeam() {
                 <h3>Our Collections</h3>
               </div>
             </div>
-            <div className="col-md-6 col-sm-12 col-12 text-center mb-5">
-              <YoutubeFrame
-                id="Ou4u4kOatck"
-              />
+            <div className='d-flex justify-content-center'>
+              <input
+                onChange={(e) => {
+                  e.preventDefault();
+                  debounceFn(e?.target?.value);
+                }}
+                className='w-25 border form-control mb-4' placeholder='Search Video' />
             </div>
-            <div className="col-md-6 col-sm-12 col-12 text-center mb-5">
-              <YoutubeFrame
-                id="Ou4u4kOatck"
-              />
-            </div>
-            <div className="col-md-6 col-sm-12 col-12 text-center mb-5">
-              <YoutubeFrame
-                id="Ou4u4kOatck"
-              />
-            </div>
-            <div className="col-md-6 col-sm-12 col-12 text-center mb-5">
-              <YoutubeFrame
-                id="Ou4u4kOatck"
-              />
-            </div>
-            <div className="col-md-6 col-sm-12 col-12 text-center mb-5">
-              <YoutubeFrame
-                id="Ou4u4kOatck"
-              />
-            </div>
-            <div className="col-md-6 col-sm-12 col-12 text-center mb-5">
-              <YoutubeFrame
-                id="Ou4u4kOatck"
-              />
-            </div>
+            <VideoListing keyword={search} />
           </div>
         </div>
       </section>
@@ -69,4 +65,4 @@ function OurTeam() {
   )
 }
 
-export default OurTeam
+export default VideoSection

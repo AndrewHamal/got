@@ -100,7 +100,7 @@ function News() {
                       <div className="col-lg-12">
                         <div className="pagination_area">
                           <Pagination
-                            style={{ visibility: data?.last_page > 2 ? "visible" : "hidden" }}
+                            style={{ visibility: data?.last_page > 1 ? "visible" : "hidden" }}
                             onChange={setPage}
                             className='pagination'
                             defaultCurrent={data.current_page}

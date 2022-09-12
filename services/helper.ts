@@ -1,5 +1,7 @@
 import { toast } from "react-toastify";
 import Crypto from "crypto-js";
+import { useSWRConfig } from "swr";
+import _ from 'lodash'
 
 export function responseErrorHandler(res: any, setError?: any) {
   if (res && res?.data && res?.data?.errors) {
@@ -139,4 +141,27 @@ export function cropWysiwygText(content: string, wordLimit = 100) {
   const croppedText = cropTitle(contentFormat?.blocks[0]?.text, wordLimit);
 
   return croppedText;
+}
+
+export function useMatchMutate() {
+  const { cache, mutate } = useSWRConfig();
+  // @ts-ignore
+  return (matcher, ...args) => {
+    if (!(cache instanceof Map)) {
+      throw new Error(
+        "matchMutate requires the cache provider to be a Map instance"
+      );
+    }
+
+    const keys = [];
+    // @ts-ignore
+    for (const key of cache.keys()) {
+      if (_.includes(key, matcher)) {
+        keys.push(key);
+      }
+    }
+
+    const mutations = keys.map((key) => mutate(key, ...args));
+    return Promise.all(mutations);
+  };
 }
