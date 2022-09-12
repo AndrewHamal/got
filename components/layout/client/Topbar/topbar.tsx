@@ -106,7 +106,7 @@ const TopBar = () => {
                         <i className="fas fa-angle-down" />
                       </a>
                       <div className="dropdown-menu megamenu p-4" role="menu">
-                        <div className="d-flex flex-wrap gap-5">
+                        <div className="d-flex gap-5 megamenu-inner">
                           <div className="">
                             <h5 className="mt-0">Countries</h5>
                             {
@@ -187,11 +187,6 @@ const TopBar = () => {
                 <div className="container">
                   <div className="option-inner">
                     <div className="others-options d-flex align-items-center">
-                      <div className="option-item">
-                        <a href="#" className="search-box">
-                          <i className="fas fa-search" />
-                        </a>
-                      </div>
                       <div className="option-item">
                         <a onClick={() => router.push('/listing')} className="btn  btn_navber">
                           All Destination

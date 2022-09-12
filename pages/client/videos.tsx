@@ -35,7 +35,7 @@ function VideoSection() {
                   trailerLoading ? <Skeleton className='px-5' active />
                     :
                     <YoutubeFrame
-                      width="853"
+                      width="100%"
                       height="480"
                       id={trailer.youtube_link}
                     />
@@ -55,7 +55,7 @@ function VideoSection() {
                   e.preventDefault();
                   debounceFn(e?.target?.value);
                 }}
-                className='w-25 border form-control mb-4' placeholder='Search Video' />
+                className='w-50 border form-control mb-4' placeholder='Search Video' />
             </div>
             {/* @ts-ignore */}
             <VideoListing keyword={search} />

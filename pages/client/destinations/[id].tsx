@@ -71,14 +71,14 @@ function DestinationById() {
                             </div>
                           </div> */}
                         </div>
-                        <div className="tour_details_img_wrapper">
+                        <div className="tour_details_img_wrapper destination">
                           <Carousel dotPosition={'right'} effect="fade" >
                             {
                               data.files?.map((res: any, key: number) => (
                                 // eslint-disable-next-line react/jsx-key
                                 <div className="carousel" key={key}>
                                   <div className="overlay"></div>
-                                  <img src={res?.full_path} className="d-block w-100" alt={res?.name} />
+                                  <img src={res?.full_path} className="d-block w-100 rounded" alt={res?.name} />
                                   <div className="carousel-caption d-none d-md-block">
                                     <h2 className="text-white font-38">{res?.name}</h2>
                                   </div>
@@ -172,7 +172,7 @@ function DestinationById() {
                         {/* trek info */}
                         {
                           data.trek_info ?
-                            <div className="tour_details_boxed">
+                            <div className="tour_details_boxed  mt-5">
                               <h3 className="heading_theme">Trek Info</h3>
                               <div className="tour_details_boxed_inner">
                                 <Editor
