@@ -53,13 +53,13 @@ function CreateOrUpdateItenaryForm({ submitHandler, formMethods, loading }: IPro
             <label className="form-label">Day(eg: 1)<span className='text-danger'> *</span></label>
             <input
               {...register("day", { required: "Day is required!" })}
-              aria-invalid={!!errors?.name?.message}
+              aria-invalid={!!errors?.day?.message}
               className="form-control"
               placeholder="Enter Day"
             />
-            {errors?.name?.message &&
+            {errors?.day?.message &&
               <div className="text-danger">
-                {errors?.name?.message + ""}
+                {errors?.day?.message + ""}
               </div>
             }
           </div>
@@ -70,13 +70,13 @@ function CreateOrUpdateItenaryForm({ submitHandler, formMethods, loading }: IPro
             <label className="form-label">Title<span className='text-danger'> *</span></label>
             <input
               {...register("title", { required: "Title is required!" })}
-              aria-invalid={!!errors?.name?.message}
+              aria-invalid={!!errors?.title?.message}
               className="form-control"
               placeholder="Enter Title"
             />
-            {errors?.name?.message &&
+            {errors?.title?.message &&
               <div className="text-danger">
-                {errors?.name?.message + ""}
+                {errors?.title?.message + ""}
               </div>
             }
           </div>
@@ -101,7 +101,7 @@ function CreateOrUpdateItenaryForm({ submitHandler, formMethods, loading }: IPro
                         value={value}
                         onChange={onChange}
                         allowClear
-                        status={errors?.region_id?.message && "error"}
+                        status={errors?.destination_id?.message && "error"}
                         size='large'
                         className="form-control"
                         placeholder="Select Destination"
@@ -110,9 +110,9 @@ function CreateOrUpdateItenaryForm({ submitHandler, formMethods, loading }: IPro
                           destinations.map((cat: any) => <Option key={cat.id} value={cat.id}>{cat.name.toUpperCase()}</Option>)
                         }
                       </Select>
-                      {errors?.region_id?.message &&
+                      {errors?.destination_id?.message &&
                         <div className="text-danger">
-                          {errors?.region_id?.message + ""}
+                          {errors?.destination_id?.message + ""}
                         </div>
                       }
                     </>
@@ -166,9 +166,9 @@ function CreateOrUpdateItenaryForm({ submitHandler, formMethods, loading }: IPro
                         />
                     }
                   </div>
-                  {errors?.itinarery?.message &&
+                  {errors?.content?.message &&
                     <div className="text-danger">
-                      {errors?.itinarery?.message + ""}
+                      {errors?.content?.message + ""}
                     </div>
                   }
                 </>
