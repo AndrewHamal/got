@@ -109,7 +109,7 @@ function Index() {
     <ClientLayout>
       <div>
         {destLoading ?
-          <img style={{ height: "600px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
+          <img style={{ height: "680px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
           :
           // Banner Area 
           <Carousel dotPosition={'right'} effect="scrollx" autoplay>

@@ -30,7 +30,7 @@ function CommonBanner({ loading, breadcrumb, title, imageUrl }: IProps): ReactEl
         <div className="row">
           <div className="col-lg-12">
             <div className="common_bannner_text">
-              <h2>{title}</h2>
+              <h2 className='mt-5'>{title}</h2>
               <ul>
                 <li><Link href="/">Home</Link></li>
                 {
