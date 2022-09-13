@@ -9,6 +9,7 @@ import "@/public/admin/css/custom.css"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { deleteCookie } from 'cookies-next';
 import { logout } from '@/api/superadmin/auth';
+import NextNProgress from "nextjs-progressbar";
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -33,6 +34,7 @@ function App({ Component, pageProps }: AppProps) {
         fetcher: (resource, init) => axiosClient(resource, init).then(res => res)
       }}
     >
+      <NextNProgress />
       <ToastContainer />
       <Component {...pageProps} />
     </SWRConfig>

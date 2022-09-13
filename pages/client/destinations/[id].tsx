@@ -32,7 +32,7 @@ function DestinationById() {
         <CommonBanner
           loading={loading}
           breadcrumb={[
-            { name: "Destinations", link: '/destinations' },
+            { name: "Destinations", link: '/listing' },
             { name: data?.name }
           ]}
           imageUrl={data?.files[0]?.full_path}
@@ -57,7 +57,7 @@ function DestinationById() {
                               : null
                             }
                             <h5><i className="fas fa-map-marker-alt" /> Region- {data.region.name}</h5>
-                            <h5><i className="fas fa-clock" /> Duration- {data.no_of_days}</h5>
+                            <h5><i className="fas fa-clock" /> Duration- {data.no_of_days} days</h5>
                           </div>
                           {/* <div className="toru_details_top_bottom_item">
                             <div className="tour_details_top_bottom_icon">
