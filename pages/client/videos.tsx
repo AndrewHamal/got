@@ -24,7 +24,7 @@ function VideoSection() {
 
   return (
     <ClientLayout>
-      <CommonBanner title='Our Team' loading={!data} imageUrl={data?.data[0]?.full_path} breadcrumb={[{ name: "Our Team" }]} />
+      <CommonBanner title='Our Team' loading={!data} imageUrl={data?.data.lenght ? data?.data[0]?.full_path : ""} breadcrumb={[{ name: "Our Team" }]} />
       <section id="tour_guides_area" className="section_padding">
         <div className="container">
           <div className="row">

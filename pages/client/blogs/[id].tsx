@@ -37,7 +37,7 @@ function DestinationById() {
           imageUrl={data?.full_path}
           title={data?.name}
         />
-        
+
         {
           loading ? <div className="p-5"><Skeleton active /></div>
             :
@@ -80,7 +80,7 @@ function DestinationById() {
                         <div className="news_details_right_item">
                           <h3>Other Blogs</h3>
                           {
-                            !blogs ? <Skeleton active />
+                            !blogs || !blogs.length ? <Skeleton active />
                               :
                               blogs?.map((blog: any) =>
                                 <div className="recent_news_item" key={blog.id}>

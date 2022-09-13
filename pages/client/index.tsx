@@ -237,17 +237,17 @@ function Index() {
               </div>
 
               {
-                !topThree ?  <div className="col-lg-3 col-md-6 col-sm-6 col-12"> <Skeleton active /> </div> : topThree?.map((res:any, key: number) => (
+                !topThree ? <div className="col-lg-3 col-md-6 col-sm-6 col-12"> <Skeleton active /> </div> : topThree?.map((res: any, key: number) => (
                   // eslint-disable-next-line react/jsx-key
                   <div className="col-lg-3 col-md-6 col-sm-6 col-12 pointer-cursor mb-4 mb-md-0" key={key} onClick={() => router.push(`/destinations/${res?.id}`)}>
                     <div className="imagination_boxed">
-                        <img
-                          src={res?.file_slider?.full_path}
-                          alt="img"
-                        />
-                        <div className="overlay"></div>
+                      <img
+                        src={res?.file_slider?.full_path}
+                        alt="img"
+                      />
+                      <div className="overlay"></div>
                       <h3 className="px-3 text-white">
-                          <span>{res?.name}</span>
+                        <span>{res?.name}</span>
                       </h3>
                     </div>
                   </div>
@@ -484,7 +484,7 @@ function Index() {
                             destinationHeader?.filter(res => res?.region?.country_id === selectedCountry)
                               .map((res: any, key: number) => (
                                 // eslint-disable-next-line react/jsx-key
-                                <div className="col-lg-4 col-md-6 col-sm-12 col-12" key={key} onClick={() => router.push(`destinations/${resDes.id}`)}>
+                                <div className="col-lg-4 col-md-6 col-sm-12 col-12" key={key} onClick={() => router.push(`destinations/${res.id}`)}>
                                   <div className="tab_destinations_boxed">
                                     <div className="tab_destinations_img">
                                       <a href="top-destinations.html">
@@ -496,7 +496,7 @@ function Index() {
                                     </div>
                                     <div className="tab_destinations_conntent">
                                       <h3>
-                                        <a href="top-destinations.html">
+                                        <a>
                                           {res?.name.substring(0, 20)}...
                                         </a>
                                       </h3>
@@ -606,28 +606,28 @@ function Index() {
               </div>
             </div>
             <div className="d-flex gap-5">
-                {
-                  !teams ? <Skeleton active/> : teams.map((res:any, key: number) => (
-                    <div key={key} className="teams text-center">
-                 
-                      <div className="position-relative">
-                        <a href={res.youtube_link} target="_blank" rel="noreferrer">
-                          <img src={res.full_path} className="team" alt="" />
-                          <div className="inside d-flex pointer-cursor">
-                            <i className="fab fa-youtube m-auto text-danger fa-2x pb-2"></i>
-                          </div>
-                        </a>
-                      </div>
-                      <h5 className="text-dark fw-bold mt-2 mb-0">{ res.name}</h5>
-                      <h6 className="text-capitalize">{ res?.designation }</h6>
+              {
+                !teams ? <Skeleton active /> : teams.map((res: any, key: number) => (
+                  <div key={key} className="teams text-center">
+
+                    <div className="position-relative">
+                      <a href={res.youtube_link} target="_blank" rel="noreferrer">
+                        <img src={res.full_path} className="team" alt="" />
+                        <div className="inside d-flex pointer-cursor">
+                          <i className="fab fa-youtube m-auto text-danger fa-2x pb-2"></i>
+                        </div>
+                      </a>
                     </div>
-                  ))
-                }
+                    <h5 className="text-dark fw-bold mt-2 mb-0">{res.name}</h5>
+                    <h6 className="text-capitalize">{res?.designation}</h6>
+                  </div>
+                ))
+              }
             </div>
           </div>
         </section>
 
-           {/* Our team Area */}
+        {/* Our team Area */}
         <section id="our_partners" className=" pb-5">
           <div className="container">
             {/* Section Heading */}
@@ -639,22 +639,22 @@ function Index() {
               </div>
             </div>
             <div className="d-flex gap-5">
-                {
-                  !partners ? <Skeleton active/> : partners.map((res:any, key: number) => (
-                    <div key={key} className="teams text-center">
-                 
-                      <div className="position-relative">
-                        {/* <a href={res.youtube_link} target="_blank" rel="noreferrer"> */}
-                          <img src={res.full_path} className="team rounded-circle border" alt="" />
-                          {/* <div className="inside d-flex pointer-cursor">
+              {
+                !partners ? <Skeleton active /> : partners.map((res: any, key: number) => (
+                  <div key={key} className="teams text-center">
+
+                    <div className="position-relative">
+                      {/* <a href={res.youtube_link} target="_blank" rel="noreferrer"> */}
+                      <img src={res.full_path} className="team rounded-circle border" alt="" />
+                      {/* <div className="inside d-flex pointer-cursor">
                             <i className="fab fa-youtube m-auto text-danger fa-2x pb-2"></i>
                           </div> */}
-                        {/* </a> */}
-                      </div>
-                      {/* <h5 className="text-dark fw-bold mt-2 mb-0">{ res.name}</h5> */}
+                      {/* </a> */}
                     </div>
-                  ))
-                }
+                    {/* <h5 className="text-dark fw-bold mt-2 mb-0">{ res.name}</h5> */}
+                  </div>
+                ))
+              }
             </div>
           </div>
         </section>

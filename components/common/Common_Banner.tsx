@@ -15,7 +15,7 @@ interface IProps {
 
 function CommonBanner({ loading, breadcrumb, title, imageUrl }: IProps): ReactElement {
 
-  if (loading) {
+  if (loading && !imageUrl) {
     return (
       <section>
         <img style={{ height: "400px", objectFit: "cover" }} src={"/client/assets/img/imageplaceholder.jpg"} className="d-block w-100" alt={"placeholder"} />
