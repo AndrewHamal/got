@@ -76,7 +76,7 @@ const TopBar = () => {
               <nav className="navbar navbar-expand-md navbar-light">
                 <div className="cursor-pointer">
                   <Link className="navbar-brand" href='/'>
-                    <img src={LogoImage.src} alt="logo" width={"110"} />
+                    <img src={LogoImage.src} alt="logo" width={"90"} />
                   </Link>
                 </div>
                 <div
@@ -110,7 +110,7 @@ const TopBar = () => {
                         <div className="d-flex gap-5 megamenu-inner">
                           <div className="">
                             <h5 className="mt-0">Countries</h5>
-                            {
+                            { !countries ? <Skeleton active/> :
                               countries?.map((res: any, key: number) => (
                                 // eslint-disable-next-line react/jsx-key
                                 <div key={key} className={`my-3 ${selectedCountry === res.id ? 'bg-danger' : 'bg-dark '} p-2 rounded pointer-cursor w-fit`} onClick={() => setSelectedCountry(res?.id)}>
@@ -122,7 +122,7 @@ const TopBar = () => {
                           </div>
                           <div className="">
                             <div className="row g-3">
-                              {!menu ? <Skeleton active paragraph={false} /> :
+                              {!menu ? <div className="col-lg-2 col-6" ><Skeleton active/></div> :
                                 menu?.filter((res: any) => res.country_id === selectedCountry).length ?
                                   menu?.filter((res: any) => res.country_id === selectedCountry)?.map((res: any, key: number) => (
                                     // eslint-disable-next-line react/jsx-key

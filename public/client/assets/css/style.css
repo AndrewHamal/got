@@ -57,9 +57,9 @@ Default CSS
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,400;1,900&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,900&amp;display=swap");
 
 :root {
-  --main-color: #8b3eea;
+  --main-color: #5684C2;
   --white-color: #ffffff;
-  --black-color: #2b2540;
+  --black-color: #0B0D0F;
   --black-color-opacity: #2b2540c4;
   --paragraph-color: #818090;
   --bg-color: #f3f6fd;
@@ -319,7 +319,7 @@ section {
 
 .btn_theme {
   color: var(--white-color) !important;
-  background-color: var(--main-color) !important;
+  background-color: #6F60A6 !important;
   transition: var(--transition) !important;
   box-shadow: none !important;
   overflow: hidden;
@@ -372,8 +372,8 @@ section {
 
 .btn_navber {
   color: #fff;
-  border: 2px solid var(--main-color) !important;
-  background: var(--main-color) !important;
+  border: 2px solid var(#4a3a79) !important;
+  background: var(#4a3a79) !important;
   padding: 7px 10px;
   transition: var(--transition);
   box-shadow: none;
@@ -396,7 +396,7 @@ section {
   z-index: -1;
   -webkit-transform-origin: top center;
   transform-origin: top center;
-  background: var(--main-color);
+  background: #4a3a79;
   -webkit-transform: translateX(-51%) translateY(27%) scale(0.8);
   transform: translateX(-51%) translateY(27%) scale(0.8);
   transition: var(--transition);
@@ -1230,7 +1230,6 @@ section {
   position: absolute;
   left: 0;
   right: 0;
-  top: -53px;
   bottom: 0;
   z-index: -1;
   opacity: .2;
@@ -4226,7 +4225,7 @@ textarea {
 }
 
 .carousel img {
-  height: 600px;
+  height: 680px;
   width: 100vw;
   object-fit: cover;
   border-radius: 0 !important;
@@ -4234,7 +4233,7 @@ textarea {
 }
 
 .overlay {
-  background: linear-gradient(100deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.45) 25%);
+  background: linear-gradient(100deg, rgba(0, 0, 0, 0.49) 0%, rgba(0, 0, 0, 0.49) 25%);
   position: absolute;
   left: 0;
   right: 0;
@@ -4290,7 +4289,7 @@ textarea {
 }
 
 .flight_Search_boxed i {
-  color: #2DA2DB!important;
+  color: #6F60A6!important;
   font-size: 28px!important;
 }
 
