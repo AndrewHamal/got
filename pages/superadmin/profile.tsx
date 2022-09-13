@@ -6,9 +6,10 @@ import CreateOrUpdateItenaryForm from '@/components/superadmin/forms/itinerary'
 import CreateOrUpdateProfileForm from '@/components/superadmin/forms/profile';
 import { objectToFormData, responseErrorHandler } from '@/services/helper';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import useSWR from 'swr';
 
 function Profile() {
 
@@ -16,8 +17,9 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const formMethods = useForm();
 
-  function updateProfileHandler(data: any) {
+  const { data: profile } = useSWR('/admin/profile');
 
+  function updateProfileHandler(data: any) {
     setLoading(true);
     updateProfile(data)
       .then((destRes: any) => {
@@ -26,6 +28,18 @@ function Profile() {
       .catch((err: any) => { responseErrorHandler(err, formMethods.setError) })
       .finally(() => setLoading(false))
   }
+
+  useEffect(() => {
+    if (profile) {
+      formMethods.reset({
+        facebook_link: profile[0].facebook_link,
+        instagram_link: profile[0].instagram_link,
+        linkedin_link: profile[0].linkedin_link,
+        phone: profile[0].phone,
+        contact_email: profile[0].contact_email
+      })
+    }
+  }, [profile])
 
   return (
     <SuperadminLayout title="Profile">
@@ -40,6 +54,7 @@ function Profile() {
           </div>
           <div className="white_card_body">
             <CreateOrUpdateProfileForm
+              profile={profile}
               loading={loading}
               formMethods={formMethods}
               submitHandler={updateProfileHandler}

@@ -4,12 +4,14 @@ import { UseFormReturn } from 'react-hook-form'
 import { isValidUrl } from '@/services/helper';
 
 interface IProps {
+  profile: any | null
   loading: boolean
   formMethods: UseFormReturn
   submitHandler: (data: object) => void;
 }
 
-function CreateOrPfielItenaryForm({ submitHandler, formMethods, loading }: IProps) {
+function CreateOrPfielItenaryForm({ profile, submitHandler, formMethods, loading }: IProps) {
+
   const { register, formState: { errors }, handleSubmit } = formMethods;
 
   return (
@@ -100,7 +102,7 @@ function CreateOrPfielItenaryForm({ submitHandler, formMethods, loading }: IProp
       <div className="row">
         <div className="col-md-6">
           <div className="form-group mb-3">
-            <label className="form-label">Phone</label>
+            <label className="form-label">Phone<span className="text-danger"> *</span></label>
             <input
               {...register("phone", { required: "Phone is required!" })}
               aria-invalid={!!errors?.phone?.message}
@@ -117,7 +119,7 @@ function CreateOrPfielItenaryForm({ submitHandler, formMethods, loading }: IProp
 
         <div className="col-md-6">
           <div className="form-group mb-3">
-            <label className="form-label">Contact Email</label>
+            <label className="form-label">Contact Email<span className="text-danger"> *</span></label>
             <input
               {...register("contact_email", { required: "Contact Email is required!" })}
               aria-invalid={!!errors?.contact_email?.message}

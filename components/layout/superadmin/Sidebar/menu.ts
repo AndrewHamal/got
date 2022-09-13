@@ -6,18 +6,8 @@ export const SuperadminSidebarMenus = [
     },
     {
         title: "Profile",
-        parent: true,
-        icon: "fa fa-user-cog",
-        children: [
-            {
-                title: "Create",
-                link: "/superadmin/faq/create"
-            },
-            {
-                title: "Listing",
-                link: "/superadmin/faq"
-            },
-        ]
+        link: "/superadmin/profile",
+        icon: "fa fa-user-cog"
     },
     {
         title: "Location",
@@ -132,19 +122,19 @@ export const SuperadminSidebarMenus = [
             },
         ]
     },
-    {
-        title: "FAQ",
-        parent: true,
-        icon: "fas fa-question",
-        children: [
-            {
-                title: "Create",
-                link: "/superadmin/faq/create"
-            },
-            {
-                title: "Listing",
-                link: "/superadmin/faq"
-            },
-        ]
-    }
+    // {
+    //     title: "FAQ",
+    //     parent: true,
+    //     icon: "fas fa-question",
+    //     children: [
+    //         {
+    //             title: "Create",
+    //             link: "/superadmin/faq/create"
+    //         },
+    //         {
+    //             title: "Listing",
+    //             link: "/superadmin/faq"
+    //         },
+    //     ]
+    // }
 ]

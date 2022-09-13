@@ -13,6 +13,7 @@ const TopBar = () => {
   const countriesLoading = !countries && !error || isValidating;
 
   const [selectedCountry, setSelectedCountry] = useState();
+  const { data: profile } = useSWR('user/profile');
 
   useEffect(() => {
     if (menu) {
@@ -34,8 +35,8 @@ const TopBar = () => {
                     <a href="#!"><i className="fab fa-twitter-square"></i></a>
                     <a href="#!"><i className="fab fa-linkedin"></i></a>
                   </li>
-                  <li><a href="#!"><span>+977 9860425223</span></a></li>
-                  <li><a href="#!"><span>contact@godoftrek.com</span></a></li>
+                  <li><a href="#!"><span>{profile?.length && profile[0]?.phone}</span></a></li>
+                  <li><a href="#!"><span>{profile?.length && profile[0]?.contact_email}</span></a></li>
                 </ul>
               </div>
             </div>
@@ -46,21 +47,21 @@ const TopBar = () => {
         <div className="navbar-area d-flex">
           <div className="main-responsive-nav mean-container">
             <div className="mean-bar">
-              <a href="#nav" onClick={() => {$('.navbar-collapse').toggleClass('show')}} className="meanmenu-reveal mt-3" style={{right:'0',left:'auto'}}>
+              <a href="#nav" onClick={() => { $('.navbar-collapse').toggleClass('show') }} className="meanmenu-reveal mt-3" style={{ right: '0', left: 'auto' }}>
                 <span>
+                  <span>
                     <span>
-                      <span>
-                      </span>
-                      <span className="mt-1">
-                      </span>
-                      <span className="mt-1">
-                      </span>
+                    </span>
+                    <span className="mt-1">
+                    </span>
+                    <span className="mt-1">
+                    </span>
                   </span>
                 </span></a>
             </div>
             <div className="container">
               <div className="main-responsive-menu">
-          
+
                 <div className="logo">
                   <Link href="/">
                     <img src={LogoImage.src} alt="logo" width={'60'} />

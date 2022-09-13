@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
 import React from "react";
+import useSWR from "swr";
 
 const Footer = () => {
   const router = useRouter();
-  
+  const { data: profile } = useSWR('user/profile');
+
   return (
     <>
       <footer id="footer_area">
@@ -19,14 +21,14 @@ const Footer = () => {
                   <h5>Call 24/7 for any help</h5>
                   <h3>
                     {" "}
-                    <a href="tel:+977-9868109912">+977-9868109912</a>
+                    <a href={`tel:${profile?.length && profile[0]?.phone}`}>{profile?.length && profile[0]?.phone}</a>
                   </h3>
                 </div>
                 <div className="footer_inquery_area">
                   <h5>Mail to our support team</h5>
                   <h3>
                     {" "}
-                    <a href="mailto:support@xyz.com">contact@godoftrek.com</a>
+                    <a href={`mailto:${profile?.length && profile[0]?.contact_email}`}>{profile?.length && profile[0]?.contact_email}</a>
                   </h3>
                 </div>
                 <div className="footer_inquery_area">
