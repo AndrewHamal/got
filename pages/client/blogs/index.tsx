@@ -32,7 +32,7 @@ function News() {
         breadcrumb={[
           { name: 'Blogs' }
         ]}
-        imageUrl={data?.data[0]?.full_path}
+        imageUrl={data?.data?.length ? data?.data[0]?.full_path : ""}
         title={data?.name}
       />
       {

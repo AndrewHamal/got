@@ -174,6 +174,11 @@ const TopBar = () => {
                       </Link>
                     </li>
                     <li className="nav-item">
+                      <Link href="/about-us" className={`nav-link ${router.asPath === '/about-us' ? 'active' : ''}`}>
+                        About Us
+                      </Link>
+                    </li>
+                    <li className="nav-item">
                       <Link href="/contact" className={`nav-link ${router.asPath === '/contact' ? 'active' : ''}`}>
                         Contact
                       </Link>

@@ -35,7 +35,7 @@ function DestinationById() {
             { name: "Destinations", link: '/listing' },
             { name: data?.name }
           ]}
-          imageUrl={data?.files[0]?.full_path}
+          imageUrl={data?.files?.length ? data?.files[0]?.full_path : ""}
           title={data?.name}
         />
 
