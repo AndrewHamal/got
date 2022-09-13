@@ -83,22 +83,13 @@ const Footer = () => {
               <div className="footer_link_area">
                 <ul>
                   <li>
-                    <a href="dashboard.html">Account</a>
-                  </li>
-                  <li>
-                    <a href="faq.html">Faq</a>
-                  </li>
-                  <li>
-                    <a href="testimonials.html">Legal</a>
-                  </li>
-                  <li>
-                    <a href="contact.html">Contact</a>
-                  </li>
-                  <li>
-                    <a href="top-destinations.html"> Affiliate Program</a>
+                    <a onClick={() => router.push('/contacts')}>Contact</a>
                   </li>
                   <li>
                     <a href="privacy-policy.html">Privacy Policy</a>
+                  </li>
+                  <li>
+                    <a href="faq.html">Tearm and Conditions</a>
                   </li>
                 </ul>
               </div>

@@ -151,7 +151,7 @@ textarea[aria-invalid="true"] {
 
 #theme_search_form {
   position: absolute;
-  top: calc(600px - 81.5px);
+  top: calc(680px - 81.5px);
   width: 100%;
   margin: 0px;
 }
@@ -285,6 +285,14 @@ a.top-menu h6.title.text:hover {
     display: none!important;
   }
 
+  #our_partners .d-flex.gap-5 {
+    gap: 10px!important;
+  }
+
+  #our_partners .d-flex.gap-5 .teams {
+    width: 100%;
+  }
+
   .navbar-collapse {
     overflow: hidden;
   }
@@ -364,4 +372,8 @@ a.top-menu h6.title.text:hover {
 
 .destination img, .destination .overlay  {
   border-radius: 20px!important;
+}
+
+#footer_area {
+  overflow: hidden;
 }
