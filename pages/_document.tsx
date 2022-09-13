@@ -19,7 +19,6 @@ class CustomDocument extends Document {
             sizes="180x180"
             href="/images/apple-touch-icon.png"
           />
-          <link rel="shortcut icon" href="/images/favicon.png" />
           <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -44,7 +43,7 @@ class CustomDocument extends Document {
           <link rel="stylesheet" href="/client/assets/css/navber.css" />
           <link rel="stylesheet" href="/client/assets/css/meanmenu.css" />
           <link rel="stylesheet" href="/client/assets/css/responsive.css" />
-          <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+          {/* <link rel="icon" type="image/png" href="assets/img/favicon.png" /> */}
           <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css"

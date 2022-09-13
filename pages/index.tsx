@@ -9,9 +9,9 @@ const Home: NextPage = () => {
       <Head>
         <title>God Of Trek</title>
         <meta name="description" content="Best Tour and tourism agency in nepal" />
-        <link rel="icon" href="/favicon.ico" />
+        {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
-      
+
 
       <main className={styles.main}>
         <h1 className={styles.title}>
