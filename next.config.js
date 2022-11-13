@@ -1,17 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   swcMinify: true,
+  reactStrictMode: true,
   ignoreDuringBuilds: true,
-  basePath: '/listing',
-  async rewrites() {
-    return [
-       {
-          source: '/',
-          destination: '/'
-       }
-    ]
- }
+  basePath: '/',
 }
 
 module.exports = nextConfig
