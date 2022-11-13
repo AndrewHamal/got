@@ -64,7 +64,9 @@ function CreateHotels() {
     if (data) {
       formMethods.reset({
         name: data.name,
+        offer: data.offer,
         region_id: data.region_id,
+        tourortrek: data.tourortrek,
         no_of_days: data.no_of_days,
         starting_from: data.starting_from,
         long: data?.location?.long,
@@ -74,19 +76,20 @@ function CreateHotels() {
         itinarery: JSON.parse(data.itinarery),
         included: JSON.parse(data.included),
         not_included: JSON.parse(data.not_included),
+        essentials_gears: data.essentials_gears,
         trek_info: data.trek_info ? JSON.parse(data.trek_info) : null,
         files: data.files.map((file: any) => ({
-          uid: file.id,
+          uid: file?.id,
           name: `image.${file.type}`,
           url: file.full_path,
         }
         )),
         featured_image: [data.featured_image ? {
-          uid: 1,
-          name: `image.${data.featured_image.split('.')[1]}`,
-          url: data.full_path,
-        } : null]
-      })
+            uid: 1,
+            name: `image.${data.featured_image.split('.')[1]}`,
+            url: data.full_path,
+          } : null]
+        })
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

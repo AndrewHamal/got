@@ -7,6 +7,7 @@ import useSWR from "swr";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axiosUser from "@/services/axios/axiosUser";
+import YoutubeFrame from "@/components/common/YoutubeFrame";
 
 function Index() {
 
@@ -18,6 +19,8 @@ function Index() {
   const { data: teams } = useSWR('user/teams');
   const { data: partners } = useSWR('user/partners');
   const { data: topThree, error } = useSWR('user/top-three');
+  const { data: testimonial } = useSWR(`/user/videos?type=2`);
+
 
   const [selectedCountry, setSelectedCountry] = useState();
   let router = useRouter();
@@ -280,16 +283,16 @@ function Index() {
                   />
                   <div className="overlay"></div>
                   <div className="destinations_content_inner">
-                    <h2>Book Your best</h2>
+                    <h2 className="pb-0">Try Our</h2>
                     <div className="destinations_big_offer mb-0">
-                      <h2 className="f-58 mb-0">Package</h2>
+                      <h2 className="f-40 mb-0 fw-bolder">Customize Trip</h2>
                     </div>
                     <h2>Now</h2>
                     <a
-                      onClick={() => router.push('/listing')}
+                      onClick={() => router.push('/customize-trip')}
                       className="btn btn_theme btn_md"
                     >
-                      Book now
+                      Customize Trip
                     </a>
                   </div>
                 </div>
@@ -325,12 +328,15 @@ function Index() {
                   >
                     <div className="row">
                       {!destinationHeader ? <Skeleton /> :
-                        destinationHeader?.map((res: any, key: number) => (
+                        destinationHeader?.slice(0, 8)?.map((res: any, key: number) => (
 
                           // eslint-disable-next-line react/jsx-key
-                          <div className="col-lg-3 col-md-6 col-sm-6 col-12" key={key} onClick={() => router.push(`destinations/${res.id}`)}>
+                          <div className="col-lg-3 col-md-6 col-sm-6 col-12 position-relative" key={key} onClick={() => router.push(`destinations/${res.id}`)}>
+                            
+                            {(res?.offer != '') && <p className="position-absolute offer">{res?.offer}</p>}
                             <div className="theme_common_box_two img_hover">
                               <div className="theme_two_box_img">
+                 
                                 <a href="hotel-details.html">
                                   <img
                                     src={res?.file_slider?.full_path}
@@ -386,9 +392,10 @@ function Index() {
               <div className="col-lg-12">
                 <div className="promotional_tour_slider owl-theme owl-carousel dot_style d-flex gap-3">
                   {
-                    destinationHeader?.slice(0, 5)?.map((res: any, key: number) => (
+                    destinationHeader?.slice(0, 5)?.filter(res => res?.tourortrek == '1')?.map((res: any, key: number) => (
                       // eslint-disable-next-line react/jsx-key
                       <div className="theme_common_box_two img_hover w-100" key={key} onClick={() => router.push(`destinations/${res.id}`)}>
+                        {(res?.offer != '') && <p className="position-absolute offer">{res?.offer}</p>}
                         <div className="theme_two_box_img">
                           <a href="hotel-details.html">
                             <img
@@ -612,7 +619,7 @@ function Index() {
 
                     <div className="position-relative">
                       <a href={res.youtube_link} target="_blank" rel="noreferrer">
-                        <img src={res.full_path} className="team" alt="" />
+                        <img src={res.full_path} className="team w-100" alt="" />
                         <div className="inside d-flex pointer-cursor">
                           <i className="fab fa-youtube m-auto text-danger fa-2x pb-2"></i>
                         </div>
@@ -627,8 +634,35 @@ function Index() {
           </div>
         </section>
 
+        {/* Our Testimonial */}
+         <section id="our_partners" className="mb-5 ">
+          <div className="container">
+            {/* Section Heading */}
+            <div className="row">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div className="section_heading_center">
+                  <h2>Our Testimonial</h2>
+                </div>
+              </div>
+            </div>
+            <div className="row gap-5">
+              {
+                !testimonial ? <Skeleton active /> : testimonial?.data?.slice(0, 3)?.map((res: any, key: number) => (
+                  <div key={key} className="col-md-4 teams text-center rounded shadow pt-2">
+
+                    <div className="position-relative">
+                      <YoutubeFrame id={res.youtube_link} />
+                    </div>
+                    <h5 className="text-dark fw-bold my-2 mb-3">{res.title}</h5>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </section>
+
         {/* Our team Area */}
-        <section id="our_partners" className=" pb-5">
+        <section id="our_partners" className="pt-5 pb-5">
           <div className="container">
             {/* Section Heading */}
             <div className="row">
@@ -644,14 +678,8 @@ function Index() {
                   <div key={key} className="teams text-center">
 
                     <div className="position-relative">
-                      {/* <a href={res.youtube_link} target="_blank" rel="noreferrer"> */}
                       <img src={res.full_path} className="team rounded-circle border" alt="" />
-                      {/* <div className="inside d-flex pointer-cursor">
-                            <i className="fab fa-youtube m-auto text-danger fa-2x pb-2"></i>
-                          </div> */}
-                      {/* </a> */}
                     </div>
-                    {/* <h5 className="text-dark fw-bold mt-2 mb-0">{ res.name}</h5> */}
                   </div>
                 ))
               }

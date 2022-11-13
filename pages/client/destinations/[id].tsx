@@ -20,6 +20,7 @@ function DestinationById() {
   const [packDrawer, setPackDrawer] = useState<any>(false);
 
   const { data, error } = useSWR(id ? `/user/destination/${id}` : null);
+  const { data: gears, error:errGears } = useSWR(`/user/essential`);
   const loading = !data && !error;
 
   return (
@@ -51,25 +52,29 @@ function DestinationById() {
                       <div className="tour_details_leftside_wrapper">
                         <div className="tour_details_heading_wrapper">
                           <div className="tour_details_top_heading">
-                            <h2>{data.name}</h2>
-                            {data?.location?.whole_location
-                              ? <h5><i className="fas fa-globe" /> Address- {data?.location?.whole_location}</h5>
-                              : null
-                            }
-                            <h5><i className="fas fa-map-marker-alt" /> Region- {data.region.name}</h5>
-                            <h5><i className="fas fa-clock" /> Duration- {data.no_of_days} days</h5>
+                            <h2 className='mb-0'>{data.name}</h2>
+                            <div className='d-flex gap-3'>
+                              {data?.location?.whole_location
+                                ? <h5><i className="fas fa-globe" /> Address- {data?.location?.whole_location}</h5>
+                                : null
+                              }
+                              <h5><i className="fas fa-map-marker-alt" /> Region- {data.region.name}</h5>
+                              <h5><i className="fas fa-clock" /> Duration- {data.no_of_days} days</h5>
+                            </div>
+
+                            {data?.essentials_gears?.length > 0 && <><h4 className='mt-4'>Essential Gears</h4>
+                            <div className='d-flex gap-3 pt-2'>
+                              {
+                                gears?.filter((res: any) => data?.essentials_gears?.includes(res.id.toString()))?.map((res: any, key: number) => (
+                                  <div className='d-flex shadow-sm rounded p-2 px-4' key={key}>
+                                    <p className='my-auto fw-bold'>{res.title}</p>
+                                    <img width={"50"} height="50" src={res.full_path} alt="" />
+                                  </div>
+                                ))
+                              }
+                            </div></>}
+                    
                           </div>
-                          {/* <div className="toru_details_top_bottom_item">
-                            <div className="tour_details_top_bottom_icon">
-                              <i className="fas fa-clock" />
-                            </div>
-                            <div className="tour_details_top_bottom_text">
-                              <div className="d-flex align-items-center">
-                                <h5>Duration</h5>
-                                <p>{data.no_of_days} days</p>
-                              </div>
-                            </div>
-                          </div> */}
                         </div>
                         <div className="tour_details_img_wrapper destination">
                           <Carousel dotPosition={'right'} effect="fade" >
@@ -159,14 +164,14 @@ function DestinationById() {
                                 readOnly
                               />
                             </Tabs.TabPane>
-                            <Tabs.TabPane tab={<h4 className="">Excluded</h4>} key="item-2">
+                            {/* <Tabs.TabPane tab={<h4 className="">Excluded</h4>} key="item-2">
                               <Editor
                                 //@ts-ignore
                                 toolbarHidden
                                 contentState={JSON.parse(data.not_included)}
                                 readOnly
                               />
-                            </Tabs.TabPane>
+                            </Tabs.TabPane> */}
                           </Tabs>
                         </div>
                         {/* trek info */}

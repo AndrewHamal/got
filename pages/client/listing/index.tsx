@@ -6,22 +6,56 @@ import useSWR from "swr";
 
 function ListingById() {
     const router = useRouter();
-    let { region, greater_than, less_than, no_of_days }: any = router.query;
+    let { region, greater_than, less_than, no_of_days, keyword: topKey }: any = router.query;
     let regRef: any = useRef();
 
     const [regions, setRegions] = useState(region);
+    const [tour, setTour] = useState(false);
+    const [keyword, setKeyword] = useState();
+    const [trek, setTrek] = useState(false);
     const [lessThan, setLessThan] = useState('');
     const [noOfDays, setNoOfDays] = useState('');
     const [greaterThan, setGreaterThan] = useState('');
 
     const { data: destinationHeader, error: destinationHeaderError } = 
-    useSWR(`user/region/filter?regions=${regions || ''}&less_than=${lessThan || ''}&greater_than=${greaterThan || ''}&no_of_days=${noOfDays || ''}`);
+    useSWR(`user/region/filter?regions=${regions || ''}&less_than=${lessThan || ''}&greater_than=${greaterThan || ''}&no_of_days=${noOfDays || ''}&tour=${tour}&trek=${trek}&keyword=${keyword || ''}`);
     const { data: allRegions, error } = useSWR(`user/regions`);
     const destLoading = !destinationHeader && !destinationHeaderError;
+
+    useEffect(() => {
+      if(topKey){
+        setKeyword(topKey)
+      }
+    }, [topKey])
 
     function checkRegion(e: any)
     {
       regRef.click();
+    }
+
+    function checkTour(e: any)
+    {
+      if(e.target.checked)
+      {
+        setTour(true);
+      }else{
+        setTour(false);
+      }
+    }
+
+    function checkTrek(e: any)
+    {
+      if(e.target.checked)
+      {
+        setTrek(true);
+      }else{
+        setTrek(false);
+      }
+    }
+
+    function search(e: any)
+    {
+      setKeyword(e.target.value);
     }
 
     const submitRegion = (event: any) => {
@@ -30,9 +64,10 @@ function ListingById() {
 
       let regionIds: any = [];
       for(var pair of form.entries()) {
+        console.log(pair)
         regionIds.push(pair[1]);
       }
-
+      
       regionIds = regionIds.join(',');
       setRegions(regionIds);
       router.push({
@@ -41,11 +76,18 @@ function ListingById() {
           region: regionIds,
           less_than: less_than,
           greater_than: greater_than,
-          no_of_days: no_of_days 
+          no_of_days: no_of_days,
+          trek: trek,
+          tour: tour
         }
       })
     };
-  
+    
+    useEffect(() => {
+      if(tour){
+
+      }
+    }, [tour, trek])
 
     return (
       <ClientLayout>
@@ -89,6 +131,7 @@ function ListingById() {
             </div>}
             <div className="row">
               <div className="col-lg-3">
+                <input className="form-control border mb-3" onKeyUp={search} placeholder="Search By Keyword" />
                 <div className="left_side_search_area">
                 <div className="left_side_search_boxed">
                     <div className="left_side_search_heading">
@@ -122,6 +165,51 @@ function ListingById() {
                         }
                     
                       </form>
+                    </div>
+                  </div>
+
+                  <div className="left_side_search_boxed">
+                    <div className="left_side_search_heading">
+                      <h5 className="mb-0">Filter by Tour/Trek</h5>
+                    </div>
+                    <div className="mt-4">
+                      <div className="d-flex gap-3">
+                        <div className="form-check mb-2">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            name="tour"
+                            value={1}
+                            id={`flexCheckDefaultss`}
+                            onChange={checkTour}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`flexCheckDefaultss`}
+                          >
+                            Tour
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="d-flex gap-3">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            name="trek"
+                            value={2}
+                            id={`flexCheckDefaultsss`}
+                            onChange={checkTrek}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`flexCheckDefaultsss`}
+                          >
+                            Trek
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -201,7 +289,8 @@ function ListingById() {
                 <div className="row">
                   { !destinationHeader ? <Skeleton/> : destinationHeader?.length ? destinationHeader?.map((res: any, key: number) => (
                     // eslint-disable-next-line react/jsx-key
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-12" key={key}>
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-12 position-relative left-0" key={key}>
+                    {(res?.offer !== '') && <p className="position-absolute offer">{res?.offer}</p>}
                     <div className="top_destinations_box img_hover pointer-cursor" onClick={() => router.push(`destinations/${res.id}`)}>
                       <div className="heart_destinations bg-danger px-1 rounded">
                         { res.no_of_days } days

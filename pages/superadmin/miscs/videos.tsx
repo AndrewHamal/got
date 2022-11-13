@@ -131,6 +131,24 @@ function CreateTeams() {
                           </div>
                         }
                       </div>
+
+                      <div className="col-md-6 mt-3">
+                        <label className="form-label">Select Video Type<span className='text-danger'> *</span></label>
+                        <select
+                          {...register("for", { required: "Type is required!" })}
+                          aria-invalid={!!errors?.for?.message}
+                          className="form-control"
+                          placeholder="Enter Video Id"
+                        >
+                          <option value="1">Video</option>
+                          <option value="2">Testimonial</option>
+                        </select>
+                        {errors?.for?.message &&
+                          <div className="text-danger">
+                            {errors?.for?.message + ""}
+                          </div>
+                        }
+                      </div>
                     </div>
                   </div>
                   <Button loading={videoloading} htmlType="submit" className="btn btn-admin-primary">Submit</Button>

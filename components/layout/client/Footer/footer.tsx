@@ -12,7 +12,7 @@ const Footer = () => {
         <img src={'/client/assets/landscape.jpg'} id="footer_img" alt="" />
         <div className="container">
           <div className="row">
-            <div className="col-lg-4 col-md-6 col-sm-6 col-12">
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12">
               <div className="footer_heading_area">
                 <h5>Need any help?</h5>
               </div>
@@ -58,14 +58,14 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6 col-sm-6 col-12">
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12">
               <div className="footer_heading_area">
                 <h5>Company</h5>
               </div>
               <div className="footer_link_area">
                 <ul>
                   <li>
-                    <a href="about.html">About Us</a>
+                    <a onClick={() => router.push('/about-us')}>About Us</a>
                   </li>
                   <li>
                     <a onClick={() => router.push('/our_team')}>Meet the Team </a>
@@ -76,7 +76,7 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className="col-lg-4 col-md-4 col-sm-6 col-12">
+            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
               <div className="footer_heading_area">
                 <h5>Support</h5>
               </div>
@@ -92,6 +92,12 @@ const Footer = () => {
                     <a href="faq.html">Tearm and Conditions</a>
                   </li>
                 </ul>
+              </div>
+            </div>
+
+            <div className="col-lg-3 col-md-6 col-sm-6 col-12">
+              <div className="position" style={{ zIndex: 999, top: '30%' }}>
+                <iframe src="https://www.hamropatro.com/widgets/calender-small.php" style={{border:'none', overflow:'hidden', width:'250px', height:'300px'}}></iframe>
               </div>
             </div>
           </div>

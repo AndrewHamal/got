@@ -70,6 +70,21 @@ export const SuperadminSidebarMenus = [
         ]
     },
     {
+        title: "Essential Gears",
+        parent: true,
+        icon: "fa fa-file-alt",
+        children: [
+            {
+                title: "Create",
+                link: "/superadmin/essential-gear/create"
+            },
+            {
+                title: "Listing",
+                link: "/superadmin/essential-gear"
+            },
+        ]
+    },
+    {
         title: "Contacts",
         parent: true,
         icon: "fas fa-envelope",
@@ -100,6 +115,17 @@ export const SuperadminSidebarMenus = [
             {
                 title: "Categories",
                 link: "/superadmin/blogs/categories"
+            },
+        ]
+    },
+    {
+        title: "Customize Trip",
+        parent: true,
+        icon: "fas fa-mountain",
+        children: [
+            {
+                title: "Listing",
+                link: "/superadmin/customize-trip"
             },
         ]
     },

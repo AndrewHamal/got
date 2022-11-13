@@ -35,6 +35,8 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
   const { control, register, formState: { errors }, handleSubmit } = formMethods;
   const { data: countries, error: countryError } = useSWR('/admin/regions');
 
+  const { data: gears, error: gearError } = useSWR('/admin/essential');
+
   // for setting default value on edit for wysiwyg
   const [hasRTFValue, setHasRTFValue] = useState({
     overview: !!id,
@@ -70,7 +72,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
     <form onSubmit={handleSubmit(submitHandler)}>
       {/* 1st row */}
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-4">
           <div className="form-group mb-3">
             <label className="form-label">Destination Name<span className='text-danger'> *</span></label>
             <input
@@ -86,7 +88,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
             }
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-4">
           <label className="form-label">Region<span className='text-danger'> *</span></label>
           <div className='custom-select'>
             {
@@ -122,10 +124,26 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
             }
           </div>
         </div>
+        <div className="col-md-4">
+        <label className="form-label">Offer</label>
+          <div className='custom-select'>
+              <input
+                {...register("offer")}
+                aria-invalid={!!errors?.no_of_days?.message}
+                className="form-control"
+                placeholder="Discount from $2000, Featured"
+              />
+              {errors?.no_of_days?.message &&
+                <div className="text-danger">
+                  {errors?.no_of_days?.message + ""}
+                </div>
+              }
+          </div>
+        </div>
       </div>
       {/* 2nd row */}
       <div className='row'>
-        <div className='col-md-6'>
+        <div className='col-md-4'>
           <div className="form-group mb-3">
             <label className="form-label">Trip Duration (in days)<span className='text-danger'> *</span></label>
             <input
@@ -141,7 +159,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
             }
           </div>
         </div>
-        <div className='col-md-6'>
+        <div className='col-md-4'>
           <div className="form-group mb-3">
             <label className="form-label">Starting Price<span className='text-danger'> *</span></label>
             <input
@@ -155,6 +173,37 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
                 {errors?.starting_from?.message + ""}
               </div>
             }
+          </div>
+        </div>
+        <div className="col-md-4">
+          <label className="form-label">Tour/Treak (Select)<span className='text-danger'> *</span></label>
+          <div className='custom-select'>
+                <Controller
+                  control={control}
+                  name="tourortrek"
+                  rules={{ required: "Tour/Trek is required!" }}
+                  render={({ field: { onChange, value } }) =>
+                    <>
+                      <Select
+                        value={value}
+                        onChange={onChange}
+                        allowClear
+                        status={errors?.tourortrek?.message && "error"}
+                        size='large'
+                        className="form-control"
+                        placeholder="Select tour/trek"
+                      >
+                        <Option value={1}>Tour</Option>
+                        <Option value={2}>Trek</Option>
+                      </Select>
+                      {errors?.tourortrek?.message &&
+                        <div className="text-danger">
+                          {errors?.tourortrek?.message + ""}
+                        </div>
+                      }
+                    </>
+                  }
+                />
           </div>
         </div>
       </div>
@@ -255,7 +304,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
       </div>
       {/* 5th row */}
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-12">
           <div className="form-group mb-3">
             <label className="form-label">Included<span className='text-danger'> *</span></label>
             <Controller name="included"
@@ -284,42 +333,6 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
                   {errors?.included?.message &&
                     <div className="text-danger">
                       {errors?.included?.message + ""}
-                    </div>
-                  }
-                </>
-              }
-            />
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div className="form-group mb-3">
-            <label className="form-label">Excluded<span className='text-danger'> *</span></label>
-            <Controller name="not_included"
-              control={control}
-              rules={{
-                required: "Exclusions is required!",
-                validate: val => val?.blocks[0]?.text.length || "Exclusions is required!"
-              }}
-              render={({ field: { value = null, onChange } }) =>
-                <>
-                  <div className='wysiwyg-wrapper'>
-                    {
-                      hasRTFValue.not_included
-                        ? <Editor
-                          // @ts-ignore
-                          contentState={value}
-                          onContentStateChange={() => setHasRTFValue({ ...hasRTFValue, not_included: false })}
-                        />
-                        : <Editor
-                          // @ts-ignore
-                          initialContentState={value}
-                          onContentStateChange={onChange}
-                        />
-                    }
-                  </div>
-                  {errors?.not_included?.message &&
-                    <div className="text-danger">
-                      {errors?.not_included?.message + ""}
                     </div>
                   }
                 </>
@@ -359,6 +372,25 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           }
         />
       </div>
+
+      <div className="form-group my-4">
+
+        <label htmlFor="">Essential Gears</label>
+        
+        <div className='d-flex gap-3 flex-wrap pt-2'>
+          {
+            gears?.map((res: any, key: number) => (
+              <div className='d-flex border p-2 gap-3' key={key}>
+                <input type="checkbox"  value={res.id} className='my-auto' {...register("essentials_gears[]")}/>
+                <label htmlFor="" className='pl-2 my-auto'>{res.title}</label>
+                <img width={"60"} className="my-auto" src={res.full_path} alt="" />
+              </div>
+            ))
+          }
+
+        </div>
+
+      </div>
       {/* 7th row */}
       <div className="form-group my-4">
         <label className="form-label">Images<span className='text-danger'> *</span></label>
@@ -369,7 +401,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           render={({ field: { value, onChange } }) =>
             <>
               <Upload
-                onRemove={val => { typeof val.uid === 'number' && deleteDestinationFiles(val.uid) }}
+                onRemove={val => { typeof val?.uid === 'number' && deleteDestinationFiles(val?.uid) }}
                 beforeUpload={beforeUpload}
                 maxCount={5}
                 listType="picture-card"
@@ -401,7 +433,7 @@ function CreateOrUpdateDestinationForm({ submitHandler, formMethods, loading }: 
           render={({ field: { value, onChange } }) =>
             <>
               <Upload
-                onRemove={val => { typeof val.uid === 'number' && deleteDestinationFiles(val.uid) }}
+                onRemove={val => { typeof val?.uid === 'number' && deleteDestinationFiles(val?.uid) }}
                 beforeUpload={beforeUpload}
                 maxCount={1}
                 listType="picture-card"

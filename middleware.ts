@@ -37,6 +37,7 @@ export const config = {
     '/',
     '/blogs',
     '/listing',
+    '/customize-trip',
     '/blogs/detail',
     '/contact',
     '/register',

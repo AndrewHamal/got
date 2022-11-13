@@ -43,6 +43,7 @@ class CustomDocument extends Document {
           <link rel="stylesheet" href="/client/assets/css/navber.css" />
           <link rel="stylesheet" href="/client/assets/css/meanmenu.css" />
           <link rel="stylesheet" href="/client/assets/css/responsive.css" />
+
           {/* <link rel="icon" type="image/png" href="assets/img/favicon.png" /> */}
           <link
             rel="stylesheet"

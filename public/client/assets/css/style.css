@@ -832,6 +832,10 @@ section {
   padding-bottom: 20px;
 }
 
+.f-40 {
+  font-size: 40px;
+}
+
 .destinations_big_offer h1 {
   color: var(--white-color);
   font-size: 150px;
@@ -2038,9 +2042,9 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .heart_destinations {
-  right: 17px;
+  left: 17px;
   position: absolute;
-  top: 12px;
+  top: 16px;
   cursor: pointer;
   z-index: 9;
 }

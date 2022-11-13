@@ -280,7 +280,62 @@ a.top-menu h6.title.text:hover {
   background: transparent!important;
 }
 
+.Toastify__toast-container.Toastify__toast-container--top-right
+{
+  z-index: 9999999!important;
+}
+
+input.form-control.top {
+    height: 55px;
+    /* border: 2px dashed #dddddd75; */
+    padding: 1px 15px;
+    font-size: 16px;
+    height: 40px;
+    font-size: 15px;
+    margin-right: 10px!important;
+}
+
+.offer {
+  z-index: 99;
+    right: 4px;
+    background: #fd517d !important;
+    color: #fff;
+    font-weight: bold;
+    padding: 0px 7px;
+    border-radius: 7px;
+    font-size: 10px;
+    text-transform: uppercase;
+    top: -9px;
+}
+
 @media only screen and (max-width: 700px) {
+  /* .main-navbar .container-fluid {
+    width: auto!important;
+  } */
+
+  #theme_search_form {
+    position : unset!important
+  }
+
+  .ant-carousel-vertical.ant-carousel {
+    margin-bottom: 40px!important;
+  }
+
+  #go_beyond_area {
+    margin-top: 0!important;
+    padding: 60px 0 0 0;
+  }
+
+  .navbar img {
+    width: 70px!important;
+  }
+  .option-inner {
+    margin-right: 36px;
+  }
+
+  .option-item:first-child{
+    display: none;
+  }
   .main-responsive-nav .container,.others-option-for-responsive .option-inner .others-options.d-flex {
     display: none!important;
   }
@@ -316,10 +371,6 @@ a.top-menu h6.title.text:hover {
   .megamenu {
     overflow-y: scroll;
     height: calc(100vh - 8rem);
-  }
-
-  .ant-carousel  {
-    margin-bottom: 350px!important;
   }
 
   .carousel-caption {
@@ -362,7 +413,7 @@ a.top-menu h6.title.text:hover {
   }
   
   .carousel img {
-    height: 300px!important;
+    height: 450px!important;
   }
 
   .d-block.blog-img, .blog .overlay {

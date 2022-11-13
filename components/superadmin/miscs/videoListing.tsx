@@ -56,7 +56,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
 const VideoList: React.FC = () => {
   const [page, setPage] = useState<number>(1);
-  const { data, mutate, error } = useSWR(`/admin/video?${page}`);
+  const { data, mutate, error } = useSWR(`/admin/video?page=${page}`);
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState<number | null | any>(null);
   const isEditing = (record: Item) => record.id === editingKey;
@@ -170,7 +170,7 @@ const VideoList: React.FC = () => {
 
   function deleteVideoHandler(record: any) {
 
-    mutate(data?.filter((video: any) => video.id !== record.id), false)
+    // mutate(data?.data?.filter((video: any) => video.id !== record.id), false)
     setEditingKey(null);
     deleteVideoListing(record.id)
       .then((res: any) => {

@@ -14,7 +14,7 @@ const VideoListing: React.FC = ({ keyword }: any) => {
       return;
     }
     setLoading(true);
-    axiosUser(`/user/videos?keyword=${keyword ?? ""}&page=${newKeyword ? 1 : data?.current_page + 1}`)
+    axiosUser(`/user/videos?keyword=${keyword ?? ""}&type=${1}&page=${newKeyword ? 1 : data?.current_page + 1}`)
       .then(res => {
         const paginationData = res.data;
         setData({

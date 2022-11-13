@@ -57,5 +57,5 @@ export const createVideoListing = async (data: object) =>
 export const updateVideoListing = async (id: any, data: object) =>
   await axiosInstance.post(`/admin/video/${id}/update`, data)
 
-export const deleteVideoListing = async (data: object) =>
-  await axiosInstance.post(`/admin/video/store`, data)
+export const deleteVideoListing = async (id: number) =>
+  await axiosInstance.post(`/admin/video/delete/${id}`, {})

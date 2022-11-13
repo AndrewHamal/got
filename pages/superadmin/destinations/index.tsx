@@ -38,6 +38,13 @@ const App: React.FC = () => {
       filterSearch: true,
     },
     {
+      title: 'Tour/Trek',
+      dataIndex: 'tourortrek',
+      // @ts-ignore
+      sorter: (a, b) => a.region > b.region,
+      filterSearch: true,
+    },
+    {
       title: 'No. of Days',
       dataIndex: 'no_of_days',
       sorter: (a, b) => a.no_of_days - b.no_of_days,
@@ -97,7 +104,8 @@ const App: React.FC = () => {
             dataSource={data?.map((dest: any) => ({
               ...dest,
               region: dest.region?.name,
-              overview: cropTitle(JSON.parse(dest.overview)?.blocks[0]?.text, 50)
+              overview: cropTitle(JSON.parse(dest.overview)?.blocks[0]?.text, 50),
+              tourortrek: dest?.tourortrek == '1' ? 'Tour' : 'Trek'
             }))}
             pagination={false}
           />

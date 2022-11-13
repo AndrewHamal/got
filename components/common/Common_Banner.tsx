@@ -34,11 +34,11 @@ function CommonBanner({ loading, breadcrumb, title, imageUrl }: IProps): ReactEl
               <ul>
                 <li><Link href="/">Home</Link></li>
                 {
-                  breadcrumb?.map((bd: IBreadcrumb) => {
+                  breadcrumb?.map((bd: IBreadcrumb, key) => {
                     if (bd.link) {
-                      return <li><span><i className="fas fa-circle" /></span><Link href={`${bd.link}`}>{bd.name}</Link></li>
+                      return <li key={key}><span><i className="fas fa-circle" /></span><Link href={`${bd.link}`}>{bd.name}</Link></li>
                     } else {
-                      return <li><span><i className="fas fa-circle" /></span>{bd.name}</li>
+                      return <li key={key}><span><i className="fas fa-circle" /></span>{bd.name}</li>
                     }
                   })
                 }

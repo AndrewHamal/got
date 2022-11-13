@@ -13,6 +13,7 @@ const TopBar = () => {
   const countriesLoading = !countries && !error || isValidating;
 
   const [selectedCountry, setSelectedCountry] = useState();
+  const [keyword, setKeyword] = useState('');
   const { data: profile } = useSWR('user/profile');
 
   useEffect(() => {
@@ -174,15 +175,16 @@ const TopBar = () => {
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link href="/about-us" className={`nav-link ${router.asPath === '/about-us' ? 'active' : ''}`}>
-                        About Us
-                      </Link>
-                    </li>
-                    <li className="nav-item">
                       <Link href="/contact" className={`nav-link ${router.asPath === '/contact' ? 'active' : ''}`}>
                         Contact
                       </Link>
                     </li>
+                    <li className="nav-item">
+                      <Link href="/about-us" className={`nav-link ${router.asPath === '/about-us' ? 'active' : ''}`}>
+                        About Us
+                      </Link>
+                    </li>
+
                   </ul>
                 </div>
               </nav>
@@ -192,10 +194,13 @@ const TopBar = () => {
               <div className="container-fluid">
                 <div className="container">
                   <div className="option-inner">
-                    <div className="others-options d-flex align-items-center">
+                    <div className=" d-flex gap-2 align-items-center">
                       <div className="option-item">
-                        <a onClick={() => router.push('/listing')} className="btn  btn_navber">
-                          All Destination
+                        <input defaultValue={keyword} onKeyUp={(e: any) => setKeyword(e.target.value)} className="form-control top w-100" style={{ margin: 0 }} placeholder="Search Destination"/>
+                      </div>
+                      <div className="option-item">
+                        <a onClick={() => router.push('/listing?keyword='+keyword)} className="btn  btn_navber">
+                          Search
                         </a>
                       </div>
                     </div>
