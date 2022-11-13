@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "19.0.1"
+    "node": "16.18.1"
   },
   "scripts": {
     "prod": "pm2 start npm --name TRAVEL-FRONT:3000 -- run dev",
@@ -28,6 +28,7 @@
     "lodash": "^4.17.21",
     "metismenu": "^3.0.7",
     "moment": "^2.29.4",
+    "netlify-cli": "^12.1.1",
     "next": "12.2.4",
     "nextjs-progressbar": "0.0.14",
     "npm": "^8.17.0",

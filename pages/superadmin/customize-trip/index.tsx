@@ -49,13 +49,13 @@ const App: React.FC = () => {
     {
       title: 'No. of Days',
       dataIndex: 'trip_duration',
-      sorter: (a, b) => a.trip_duration - b.trip_duration,
+      sorter: (a: any, b: any) => a.trip_duration - b.trip_duration,
       filterSearch: true,
     },
     {
       title: 'Guests',
       dataIndex: 'no_of_guests',
-      sorter: (a, b) => a.no_of_guests - b.no_of_guests,
+      sorter: (a: any, b: any) => a.no_of_guests - b.no_of_guests,
       filterSearch: true,
     },
     {
