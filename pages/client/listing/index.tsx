@@ -60,7 +60,7 @@ function ListingById() {
 
     const submitRegion = (event: any) => {
       event.preventDefault();
-      let form = new FormData(event.target);
+      let form: any = new FormData(event.target);
 
       let regionIds: any = [];
       for(var pair of form.entries()) {
