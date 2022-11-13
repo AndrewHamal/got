@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   ignoreDuringBuilds: true,
+  basePath: '/listing',
   async rewrites() {
     return [
        {
