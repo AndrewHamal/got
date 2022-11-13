@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "16.18.1"
+    "node": "19.0.1"
   },
   "scripts": {
     "prod": "pm2 start npm --name TRAVEL-FRONT:3000 -- run dev",
