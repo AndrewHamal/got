@@ -55,7 +55,7 @@ function SuperadminSidebar({ sidebarBoolean }: any) {
         {SuperadminSidebarMenus.map((menu, key) => {
           if (menu.parent) {
             return (
-              <li key={menu.title} key={key}>
+              <li key={menu.title}>
                 <a className="has-arrow" href="#" aria-expanded="false">
                   <div className="nav_icon_small">
                     {/* <img src={menu.icon} alt={menu.title} /> */}
