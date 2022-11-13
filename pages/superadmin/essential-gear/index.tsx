@@ -81,7 +81,7 @@ const App: React.FC = () => {
             columns={columns}
             dataSource={data?.map((dest: any) => ({
               ...dest,
-              image: <img width={"80"} src={dest.full_path}/>,
+              image: <img width={"80"} src={dest.full_path} alt={dest.title}/>,
             }))}
             pagination={false}
           />

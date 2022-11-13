@@ -52,10 +52,10 @@ function SuperadminSidebar({ sidebarBoolean }: any) {
 
       <ul id="sidebar_menu">
 
-        {SuperadminSidebarMenus.map((menu) => {
+        {SuperadminSidebarMenus.map((menu, key) => {
           if (menu.parent) {
             return (
-              <li key={menu.title}>
+              <li key={menu.title} key={key}>
                 <a className="has-arrow" href="#" aria-expanded="false">
                   <div className="nav_icon_small">
                     {/* <img src={menu.icon} alt={menu.title} /> */}
@@ -82,7 +82,7 @@ function SuperadminSidebar({ sidebarBoolean }: any) {
 
 
             return (
-              <li className>
+              <li className key={key}>
                 <a onClick={() => Router.push(menu.link)} aria-expanded="false">
                   <div className="nav_icon_small">
                     <i className={menu.icon} alt={menu.title}></i>

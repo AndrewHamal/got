@@ -39,7 +39,7 @@ function Profile() {
         contact_email: profile[0].contact_email
       })
     }
-  }, [profile])
+  }, [profile, formMethods])
 
   return (
     <SuperadminLayout title="Profile">

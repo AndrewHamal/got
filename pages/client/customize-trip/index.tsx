@@ -54,7 +54,7 @@ function Customize() {
                 <select name='destination_id' required className='form-control'>
                   {
                     data?.map((res: any, key: number) => (
-                      <option value={res.id}>{res.name}</option>
+                      <option value={res.id} key={key}>{res.name}</option>
                     ))
                   }
                 </select>}

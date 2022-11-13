@@ -42,16 +42,16 @@ function SuperadminLayout(props: IProps) {
                       </div>
                       <div className="d-flex">
                         {props.breadcrumbs?.length
-                          ? props.breadcrumbs.map((bd) => {
+                          ? props.breadcrumbs.map((bd, key) => {
                             if (bd.link) {
                               return (
-                                <Breadcrumb.Item>
+                                <Breadcrumb.Item key={key}>
                                   <Link href={bd.link}>{bd.name}</Link>
                                 </Breadcrumb.Item>
                               );
                             } else {
                               return (
-                                <Breadcrumb.Item><p style={{ color: "#8890b5" }}>{bd.name}</p></Breadcrumb.Item>
+                                <Breadcrumb.Item key={key}><p style={{ color: "#8890b5" }}>{bd.name}</p></Breadcrumb.Item>
                               );
                             }
                           })
